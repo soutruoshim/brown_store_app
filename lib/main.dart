@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Brown Store',
       debugShowCheckedModeBanner: false,
       theme: light,
-     home: SplashScreen(),
+     home: const SplashScreen(),
     );
   }
 }

@@ -70,9 +70,9 @@ class ColorResources {
   // static Color getFloatingBtn(BuildContext context) {
   //   return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF49698c) : Color(0xFF7DB6F5);
   // }
-  // static Color getPrimary(BuildContext context) {
-  //   return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF1B7FED) : Color(0xFF1B7FED);
-  // }
+  static Color getPrimary(BuildContext context) {
+    return Color(0xFFCC9900);
+  }
   // static Color getBottomSheetColor(BuildContext context) {
   //   return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF25282B) : Color(0xFFFCFCFC);
   // }

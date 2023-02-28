@@ -18,7 +18,7 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final TextInputType textInputType;
   final int maxLine;
-  final FocusNode focusNode;
+  FocusNode? focusNode;
   FocusNode? nextNode;
   final TextInputAction textInputAction;
   final bool isPhoneNumber;
@@ -43,7 +43,7 @@ class CustomTextField extends StatefulWidget {
         required this.hintText,
         this.textInputType = TextInputType.text,
         this.maxLine = 1,
-        required this.focusNode,
+        this.focusNode = null,
         this.nextNode = null,
         required this.textInputAction,
         this.isPhoneNumber = false,

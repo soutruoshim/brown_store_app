@@ -4,21 +4,25 @@ import '../../../utill/dimensions.dart';
 class CustomDropdown extends StatefulWidget {
   final bool border;
   late final String hintText;
-  CustomDropdown({this.hintText="", this.border = true});
+  final Function(String text) onChanged;
+  late List<String> items;
+
+  CustomDropdown({this.hintText="", this.border = true, required this.onChanged,required this.items});
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
-  final List<String> _animals = ["Cashier AM 3", "Cashier AM 4", "Cashier AM 5", "Cashier AM 6"];
+
   // the selected value
-  String? _selectedAnimal;
+  String? _selectedItem;
 
 
 
   @override
   Widget build(context) {
+    //print(widget.items);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
       width: double.infinity,
@@ -33,18 +37,19 @@ class _CustomDropdownState extends State<CustomDropdown> {
             BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
       ),
       child: DropdownButton<String>(
-        value: _selectedAnimal,
-        onChanged: (value) {
+        value: _selectedItem,
+        onChanged:  (value) {
+          widget.onChanged(value!);
           setState(() {
-            _selectedAnimal = value;
+            _selectedItem = value;
           });
         },
         hint: Container(
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 8.0, right: 0),
-            child: Text(
-              'Select Account',
-              style: TextStyle(color: Color(0xffcc9900)),
+            child:  Text(
+              widget.hintText,
+              style: TextStyle(color: Theme.of(context).primaryColor),
             )),
         // Hide the default underline
         underline: Container(margin: EdgeInsets.zero,),
@@ -57,7 +62,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
         isExpanded: true,
 
         // The list of options
-        items: _animals
+        items: widget.items
             .map((e) => DropdownMenuItem(
                   value: e,
                   child: Container(
@@ -71,10 +76,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
             .toList(),
 
         // Customize the selected item
-        selectedItemBuilder: (BuildContext context) => _animals
+        selectedItemBuilder: (BuildContext context) => widget.items
             .map((e) => Container(
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 8.0),
+                  margin: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     e,
                     style: const TextStyle(

@@ -5,7 +5,7 @@ import '../../utill/styles.dart';
 
 
 class CustomButton extends StatelessWidget {
-  final Function onTap;
+  final VoidCallback onTap;
   final String btnTxt;
   final bool isColor;
   final Color backgroundColor;
@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap.call(),
+      onTap: onTap,
       child: Container(
         height: 40,
         alignment: Alignment.center,

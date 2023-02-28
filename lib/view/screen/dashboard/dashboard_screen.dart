@@ -1,12 +1,12 @@
-import 'package:brown_store/view/screen/home/home_screen.dart';
+import 'package:brown_store/view/screen/product/product_screen.dart';
+import 'package:brown_store/view/screen/report/report_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utill/color_resources.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
 import '../../../utill/styles.dart';
 import '../order/order_screen.dart';
-import '../refund/refund_screen.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
 
@@ -24,9 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     _screens = [
-      HomeScreen(),
-      OrderScreen(),
-      RefundScreen(),
+        OrderScreen(),
+        ProductScreen(),
+        ReportScreen(),
     ];
 
   }
@@ -53,9 +53,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           currentIndex: _pageIndex,
           type: BottomNavigationBarType.fixed,
           items: [
-            _barItem(Images.home, "Home", 0),
-            _barItem(Images.order, "Order", 1),
-            _barItem(Images.refund, "Refund", 2),
+            _barItem(Images.home, "Order", 0),
+            _barItem(Images.order, "Product", 1),
+            _barItem(Images.refund, "Report", 2),
             _barItem(Images.menu, "More", 3)
           ],
           onTap: (int index) {
@@ -94,12 +94,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Container(width: index == _pageIndex ? Dimensions.ICON_SIZE_LARGE : Dimensions.ICON_SIZE_MEDIUM,
                 child: Image.asset(icon, color: index == _pageIndex ?
                 Theme.of(context).primaryColor : ColorResources.HINT_TEXT_COLOR,)),
-
           ],
         ),
       ),
       label: label,
-
     );
   }
   void _setPage(int pageIndex) {
