@@ -54,7 +54,24 @@ class AuthScreen extends StatelessWidget{
 
             SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-            SignInWidget()
+            SignInWidget(),
+            SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+            SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+            Stack(
+
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT,vertical: Dimensions.PADDING_SIZE_SMALL),
+                      child: Center(
+                        child: Text("Copyright©2009-2023 ",
+                            style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT, color: Theme.of(context).hintColor)),
+                      )
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),
