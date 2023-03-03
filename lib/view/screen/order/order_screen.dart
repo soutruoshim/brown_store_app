@@ -1,5 +1,5 @@
-import 'package:brown_store/view/screen/order/order_all.dart';
-import 'package:brown_store/view/screen/order/order_pending.dart';
+import 'package:brown_store/view/screen/order/page/order_all.dart';
+import 'package:brown_store/view/screen/order/page/order_pending.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utill/images.dart';
@@ -22,7 +22,12 @@ class _OrderScreenState extends State<OrderScreen> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).highlightColor,
-        title: Image.asset(Images.logo_with_app_name, height: 35),
+        title: Container(child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          Image.asset(Images.logo_with_app_name, height: 35),
+          Text("Stay: BROWN BKK", style: TextStyle(color: Colors.green, fontSize: 16),)
+        ],),),
           bottom: TabBar(
             indicatorColor: Theme.of(context).primaryColor,
             tabs: [

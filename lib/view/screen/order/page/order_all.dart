@@ -4,8 +4,8 @@ import 'package:brown_store/provider/parse_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
-import '../../../data/model/response/order.dart';
-import 'widget/order_widget.dart';
+import '../../../../data/model/response/order.dart';
+import '../widget/order_widget.dart';
 
 class OrderAll extends StatefulWidget {
 

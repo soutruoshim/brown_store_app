@@ -1,3 +1,4 @@
+import 'package:brown_store/view/screen/order/order_detail_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/model/response/order.dart';
 import '../../../../utill/color_resources.dart';
@@ -41,13 +42,23 @@ class OrderWidget extends StatelessWidget {
                               color: Theme.of(context).primaryColor.withOpacity(.05),
                               borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL)
                           ),
-                          child: Row(
-                            children: [
-                              Text('Order no# ',
-                                style: robotoRegular.copyWith(color: ColorResources.getPrimary(context),fontSize: Dimensions.FONT_SIZE_LARGE),),
-                              Text("${orderModel.orderNo}",
-                                style: robotoMedium.copyWith(color: Colors.black54,fontSize: Dimensions.FONT_SIZE_LARGE),),
-                            ],
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (context) => OrderDetailWidget()
+                                    ),
+                                  );
+                            },
+                            child: Row(
+                              children: [
+                                Text('Order no# ',
+                                  style: robotoRegular.copyWith(color: ColorResources.getPrimary(context),fontSize: Dimensions.FONT_SIZE_LARGE),),
+                                Text("${orderModel.orderNo}",
+                                  style: robotoMedium.copyWith(color: Colors.black54,fontSize: Dimensions.FONT_SIZE_LARGE),),
+                              ],
+                            ),
                           ),
                         ),
 
