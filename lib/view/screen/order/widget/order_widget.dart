@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import '../../../../data/model/response/order.dart';
 import '../../../../utill/color_resources.dart';
 import '../../../../utill/dimensions.dart';
 import '../../../../utill/images.dart';
 import '../../../../utill/styles.dart';
 
 class OrderWidget extends StatelessWidget {
-  //final Order orderModel;
+  final Order orderModel;
   final int index;
-  OrderWidget({this.index = 0});
+  OrderWidget({this.index = 0, required this.orderModel});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class OrderWidget extends StatelessWidget {
                             children: [
                               Text('Order no# ',
                                 style: robotoRegular.copyWith(color: ColorResources.getPrimary(context),fontSize: Dimensions.FONT_SIZE_LARGE),),
-                              Text('200',
+                              Text("${orderModel.orderNo}",
                                 style: robotoMedium.copyWith(color: Colors.black54,fontSize: Dimensions.FONT_SIZE_LARGE),),
                             ],
                           ),
@@ -60,7 +59,7 @@ class OrderWidget extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("\$ 20.09",
+                            child: Text("\$ ${orderModel.otherdetails!.grandTotal}",
                               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0,),),
                           ),),
                       ],
@@ -80,6 +79,26 @@ class OrderWidget extends StatelessWidget {
                         margin: EdgeInsets.only(left: 8.0),
                         child: Column(
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Ref No:",
+                                      style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
+                                  Text("${orderModel.objectId}",
+                                      style: robotoRegular.copyWith(color: Colors.black)),
+                                ],
+                              ),
+                              SizedBox(height: 8,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Order Date:",
+                                      style: robotoRegular.copyWith(color: Theme.of(context).hintColor)),
+                                  Text("${orderModel.otherdetails!.checkOutDateTime}",
+                                      style: robotoRegular.copyWith(color: Colors.black)),
+                                ],
+                              ),
+                              SizedBox(height: 8,),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -127,7 +146,7 @@ class OrderWidget extends StatelessWidget {
 
                                 ),),
                               Padding(padding: const EdgeInsets.all(8.0),
-                                child: Text("Pending",
+                                child: Text("Pending ${orderModel.status}",
                                     style: robotoRegular.copyWith(color: ColorResources.getPrimary(context))),
                               ),
                             ],

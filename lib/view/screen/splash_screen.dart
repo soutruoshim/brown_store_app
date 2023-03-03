@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../helper/network_info.dart';
 import '../../provider/auth_provider.dart';
+import '../../provider/parse_provider.dart';
 import '../../provider/splash_provider.dart';
 import '../../utill/images.dart';
 import 'dashboard/dashboard_screen.dart';
@@ -26,10 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
       if (isSuccess) {
         Provider.of<SplashProvider>(context, listen: false)
             .initShippingTypeList(context, '');
+        Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
+        Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 0);
+
         Timer(const Duration(seconds: 2), () {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
             Provider.of<AuthProvider>(context, listen: false)
                 .updateToken(context);
+
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) => const DashboardScreen()));
           } else {

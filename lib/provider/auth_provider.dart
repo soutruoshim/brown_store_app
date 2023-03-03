@@ -69,8 +69,7 @@ class AuthProvider with ChangeNotifier {
       authRepo.saveUserToken(token);
     } else {
       _isLoading = false;
-      showCustomSnackBar(
-          "invalid credential or account not verified yet", context);
+      showCustomSnackBar("invalid credential or account not verified yet", context);
     }
     notifyListeners();
     return apiResponse;

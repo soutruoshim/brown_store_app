@@ -1,7 +1,3 @@
-
-
-
-
 class AppConstants {
   static const String APP_NAME = 'Brown Store App';
   static const String APP_VERSION = '1.0';
@@ -144,5 +140,20 @@ class AppConstants {
   static const String TOPIC = 'six_valley_seller';
   static const String USER_EMAIL = 'user_email';
   static const String LANG_KEY = 'lang';
+
+
+  // static const String keyApplicationName = 'order-server';
+  // static const String keyParseApplicationId = 'order-server-id';
+  // static const String keyParseClientKey = '67890';
+  // static const String keyParseServerUrl = 'http://34.142.254.193:1337/parse/';
+  // static const String keyParseLiveServerUrl = 'ws://34.142.254.193:1337/parse/';
+  // static const bool keyDebug = true;
+
+  static const String keyApplicationName = 'store';
+  static const String keyParseApplicationId = '3OMCfj5gHZ0NRN2JIULqrMHX4qcmBoaWQX9tQyGo';
+  static const String keyParseClientKey = '8BYIGaRRT9sPd401mwDgEokoAhnI4FAVEdqkZuKD';
+  static const String keyParseServerUrl = 'https://parseapi.back4app.com';
+  static const String keyParseLiveServerUrl = 'ws://store.b4a.io/';
+  static const bool keyDebug = true;
 
 }
