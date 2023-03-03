@@ -65,12 +65,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _setPage(index);
               });
             } else {
-              // showModalBottomSheet(
-              //     context: context,
-              //     isScrollControlled: true,
-              //     backgroundColor: Colors.transparent,
-              //     builder: (con) => MenuBottomSheet()
-              // );
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (con) => _buildMoreMenu()
+              );
             }
           },
         ),
@@ -85,6 +85,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+
+  _buildMoreMenu(){
+    return  Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.only(
+            topLeft:  Radius.circular(25),
+            topRight: Radius.circular(25)),
+      ),
+      child: Column(mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: ()=> Navigator.pop(context),
+            child: Icon(Icons.keyboard_arrow_down_outlined,color: Theme.of(context).hintColor,
+              size: Dimensions.ICON_SIZE_LARGE,),
+          ),
+
+          SizedBox(height: Dimensions.PADDING_SIZE_VERY_TINY),
+          Container(
+            margin: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(Images.logo_with_app_name, height: 35),
+                    Text("Stay: BROWN BKK", style: TextStyle(color: Colors.green, fontSize: 16),)
+                  ],
+                ),
+                SizedBox(height: 32,),
+                Text("From humble beginnings grow great things. What started off as a staff of less than 10 has grown to a staff of over seven hundreds in just 10 years. We believe in treating our staff like family. Because when people love what they do, they do good work. The BROWN family is committed to excellence and to providing friendly and welcoming service. From our Baristas to our Chefs to our Head of Human Resources, we embrace an environment of teamwork and personal growth.",
+                  style: robotoRegular.copyWith(color: Theme.of(context).hintColor),
+                  maxLines: 10,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 32,),
+                Text("Thank You For good service.",
+                  style: robotoRegular.copyWith(color: Colors.green),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 32,),
+                Center(
+                  child:  Text("Copyright © 2009 - 2023 Brown Coffee", style: TextStyle(color: Color(0xFF603813), fontSize: 12),),
+                )
+
+              ],
+            )
+          )
+
+        ],
+      ),
+    );
+  }
+
   BottomNavigationBarItem _barItem(String icon, String label, int index) {
     return BottomNavigationBarItem(
       icon: Padding(

@@ -107,7 +107,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Switch(
-                              activeColor: Colors.orange,
+                              activeColor: Theme.of(context).primaryColor,
                               activeTrackColor: Colors.grey[300],
                               value: true,
                               onChanged: (value) {
@@ -188,7 +188,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Switch(
-                              activeColor: Colors.orange,
+                              activeColor: Theme.of(context).primaryColor,
                               activeTrackColor: Colors.grey[300],
                               value: true,
                               onChanged: (value) {
@@ -269,7 +269,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Switch(
-                              activeColor: Colors.orange,
+                              activeColor: Theme.of(context).primaryColor,
                               activeTrackColor: Colors.grey[300],
                               value: true,
                               onChanged: (value) {

@@ -41,7 +41,9 @@ class _OrderScreenState extends State<OrderScreen> {
           children: [
             OrderAll(),
             OrderPending(),
-            Icon(Icons.directions_car, size: 350),
+            Container(child: Center(
+              child: Text("In-Progress"),
+            ),),
           ],
         ),
       ),
