@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../provider/report_parse_provider.dart';
 import '../../../../utill/dimensions.dart';
 import '../../../../utill/images.dart';
 import '../../../../utill/styles.dart';
@@ -29,9 +31,9 @@ class CompletedOrderWidget extends StatelessWidget {
             OrderTypeButton(
               color: Color(0xFFFFAA47),
               icon: Images.delivered,
-              text: "Delivered",
+              text: "Done",
               index: 3,
-              numberOfOrder: 100
+              numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotal_totalDone,
             ),
 
             OrderTypeButton(
@@ -39,14 +41,14 @@ class CompletedOrderWidget extends StatelessWidget {
               icon: Images.cancelled,
               text: "Cancel",
               index: 6,
-              numberOfOrder: 10
+              numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalCancel,
             ),
 
             OrderTypeButton(
               color: Color(0xFFFFAA47),
               icon: Images.returned,
-              text: "Return", index: 4,
-              numberOfOrder: 9
+              text: "Request Cancel", index: 4,
+              numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalRequestCancel,
             ),
 
             OrderTypeButton(
@@ -54,7 +56,7 @@ class CompletedOrderWidget extends StatelessWidget {
               color: Color(0xFFFFAA47),
               icon: Images.failed,
               text: "Failed", index: 5,
-              numberOfOrder: 7
+              numberOfOrder: 0
             ),
           ],
         ),

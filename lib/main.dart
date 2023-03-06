@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brown_store/provider/parse_provider.dart';
+import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ParseProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ReportParseProvider>()),
     ],
     child: MyApp(),
   ));

@@ -1,13 +1,18 @@
+import 'package:brown_store/helper/status_check.dart';
 import 'package:brown_store/utill/color_resources.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/model/response/order.dart';
 import '../../../utill/images.dart';
 
 class OrderDetailWidget extends StatefulWidget {
   // String? cardSeletedImage;
   // String? transactionId;
   // OrderDetailWidget({Key? key, required this.cardSeletedImage, required this.transactionId}) : super(key: key);
+  late Order order;
+
+  OrderDetailWidget({required this.order});
 
   @override
   State<OrderDetailWidget> createState() => _OrderDetailWidgetState();
@@ -22,7 +27,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
     return Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.white,
-          elevation: 1,
+          elevation: 0,
           title: const Text('ORDER DETAIL', style: TextStyle(color: Color(0xFF5F3813), fontSize: 18),),
           actions: [
              IconButton(onPressed: (){}, icon: Icon(Icons.cancel_outlined, color: Colors.red,)),
@@ -63,7 +68,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "Order_pending_approval",
+                        StatusCheck.statusText(widget.order.status),
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 12,
@@ -86,7 +91,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "22/09/90",
+                        widget.order.otherdetails!.checkOutDateTime.toString(),
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 12,
@@ -111,7 +116,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: Text(
-                          "Brown BKK",
+                          widget.order.otherdetails!.storeName.toString(),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.end,
@@ -138,7 +143,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "100",
+                        widget.order.orderNo.toString(),
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 12,
@@ -215,7 +220,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
+                    itemCount: widget.order.ordereditems?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(0.0),
@@ -236,7 +241,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width * 0.45,
                                     child: Text(
-                                      "1001",
+                                      widget.order.ordereditems![index].foodname.toString(),
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -251,7 +256,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                 Positioned(
                                   right: MediaQuery.of(context).size.width * 0.373,
                                   child: Text(
-                                    "23",
+                                    widget.order.ordereditems![index].qty.toString(),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: mainColor,
@@ -280,7 +285,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    "3.4",
+                                    widget.order.ordereditems![index].price.toString(),
                                     style: TextStyle(
                                       color: mainColor,
                                       fontSize: 12,
@@ -291,14 +296,14 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                 ),
                               ],
                             ),
-                            true == false
+                            widget.order.ordereditems![index].isfree == false
                                 ? const SizedBox()
                                 : Align(
                               alignment: Alignment.centerLeft,
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 child: Text(
-                                  "redeem_point",
+                                  "Redeem point",
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -315,7 +320,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 3,
+                              itemCount: widget.order.ordereditems![index].modifycode?.length,
                               itemBuilder: (BuildContext context, int indexmodify) {
                                 return Padding(
                                   padding: const EdgeInsets.all(0.0),
@@ -331,7 +336,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                               child: Padding(
                                                 padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text(
-                                                  "Low Fat",
+                                                  widget.order.ordereditems![index].modifycode![indexmodify].toString(),
                                                   maxLines: 3,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
@@ -368,7 +373,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 3,
+                              itemCount: widget.order.ordereditems![index].addon?.length,
                               itemBuilder: (BuildContext context, int indexaddon) {
                                 return Padding(
                                   padding: const EdgeInsets.all(0.0),
@@ -384,7 +389,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                               child: Padding(
                                                 padding: const EdgeInsets.only(left: 12.0),
                                                 child: Text(
-                                                  "Expresso",
+                                                  widget.order.ordereditems![index].addon![indexaddon].addoncode.toString(),
                                                   textAlign: TextAlign.start,
                                                   maxLines: 3,
                                                   overflow: TextOverflow.ellipsis,
@@ -401,7 +406,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                           Positioned(
                                             right: MediaQuery.of(context).size.width * 0.373,
                                             child: Text(
-                                              "2",
+                                                widget.order.ordereditems![index].addon![indexaddon].qty.toString(),
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: mainColor,
@@ -427,7 +432,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                           Align(
                                             alignment: Alignment.centerRight,
                                             child: Text(
-                                              "2",
+                                              widget.order.ordereditems![index].addon![indexaddon].isfree.toString(),
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
                                                 color: mainColor,
@@ -471,7 +476,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "XCVB8373",
+                        widget.order.otherdetails!.couponNumber.toString(),
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 16.0,
@@ -502,7 +507,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Positioned(
                         right: positionCurrency,
                         child: Text(
-                          "- " + " 2",
+                          "- \$",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: mainColor,
@@ -515,7 +520,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "34",
+                          widget.order.otherdetails!.totalDiscount.toString(),
                           style: TextStyle(
                             color: mainColor,
                             fontSize: 14,
@@ -569,7 +574,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "100",
+                          widget.order.otherdetails!.subTotalItemFee.toString(),
                           textAlign: TextAlign.end,
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -665,7 +670,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "300",
+                          widget.order.otherdetails!.grandTotal.toString(),
                           textAlign: TextAlign.end,
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -684,7 +689,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "total_point_redeem",
+                        "Total Point Redeem",
                         style:  TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14,
@@ -693,7 +698,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "" == "" ? "0" : "200",
+                        widget.order.otherdetails!.subTotalSpendPoint.toString() == "" ? "0" : widget.order.otherdetails!.subTotalSpendPoint.toString(),
                         style:  TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14,
@@ -715,7 +720,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "40000",
+                        widget.order.otherdetails!.exchangeRate!,
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 16.0,
@@ -780,7 +785,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          "90",
+                          widget.order.otherdetails!.cashBack.toString(),
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: mainColor,
@@ -801,7 +806,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Text(
-                          "222",
+                          "Point Earned",
                           style: TextStyle(
                             color: mainColor,
                             fontSize: 12,
@@ -811,7 +816,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         ),
                       ),
                       Text(
-                        "100\$",
+                        widget.order.otherdetails!.cashBackPoint.toString(),
                         style: TextStyle(
                           color: mainColor,
                           fontSize: 12,
@@ -832,27 +837,31 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Pay With",
-                        style:  TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          decoration: TextDecoration.none,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      children: [
+                        Text(
+                          "Pay With",
+                          style:  TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            decoration: TextDecoration.none,
+                          ),
                         ),
-                      ),
-                      CachedNetworkImage(
-                        fadeOutDuration: const Duration(milliseconds: 10),
-                        fadeInDuration: const Duration(milliseconds: 5),
-                        imageUrl: "https://play-lh.googleusercontent.com/M8sf8G2_naFCFD17x_7CTIMYWBJvAyyMb9m8HmM2x5KFITvbJ2ctLOIckPK6utkidMU",
-                        fit: BoxFit.contain,
-                        width: 60,
-                        height: 40,
-                      ),
-                    ],
+                        CachedNetworkImage(
+                          fadeOutDuration: const Duration(milliseconds: 10),
+                          fadeInDuration: const Duration(milliseconds: 5),
+                          imageUrl: widget.order.otherdetails!.paymentOpt != "BROWN Card"? "https://play-lh.googleusercontent.com/M8sf8G2_naFCFD17x_7CTIMYWBJvAyyMb9m8HmM2x5KFITvbJ2ctLOIckPK6utkidMU":"https://uploads-ssl.webflow.com/5c65009b7405c91645f84783/623413d7b2ccda4fe8500597_Website%20logo-30.png",
+                          fit: BoxFit.contain,
+                          width: 60,
+                          height: 40,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

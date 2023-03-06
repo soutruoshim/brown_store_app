@@ -81,10 +81,12 @@ class Order {
 class Ordereditems {
   String? id;
   String? foodcode;
+  String? foodname;
   String? sizecode;
   String? qty;
   bool? isfree;
   String? currency;
+  String? price;
   List<String>? modifycode;
   List<Addon>? addon;
 
@@ -92,19 +94,23 @@ class Ordereditems {
       {this.id,
         this.foodcode,
         this.sizecode,
+        this.foodname,
         this.qty,
         this.isfree,
         this.currency,
+        this.price,
         this.modifycode,
         this.addon});
 
   Ordereditems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     foodcode = json['foodcode'];
+    foodname = json['foodname'];
     sizecode = json['sizecode'];
     qty = json['qty'];
     isfree = json['isfree'];
     currency = json['currency'];
+    price = json['price'].toString();
     modifycode = json['modifycode'].cast<String>();
     if (json['addon'] != null) {
       addon = <Addon>[];
@@ -118,10 +124,12 @@ class Ordereditems {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['foodcode'] = this.foodcode;
+    data['foodname'] = this.foodname;
     data['sizecode'] = this.sizecode;
     data['qty'] = this.qty;
     data['isfree'] = this.isfree;
     data['currency'] = this.currency;
+    data['price'] = this.price;
     data['modifycode'] = this.modifycode;
     if (this.addon != null) {
       data['addon'] = this.addon!.map((v) => v.toJson()).toList();
@@ -156,11 +164,18 @@ class Otherdetails {
   String? checkOutDateTime;
   String? type;
   String? userID;
+  String? cardNumber;
+  String? userName;
+  String? userPhone;
+  String? storeID;
   String? storeName;
+  String? storePhone;
+  String? addressType;
   String? address;
   String? zoneID;
   String? currency;
   String? subTotalItemFee;
+  String? subTotalItemFeeAfterDis;
   String? subTotalSpendPoint;
   String? totalDiscount;
   String? grandTotal;
@@ -171,16 +186,29 @@ class Otherdetails {
   String? cashBackPoint;
   String? serviceCharge;
   String? estimatePickUp;
+  String? paymentOpt;
+  String? brownCardSpendBalance;
+  String? brownCardSpendPoint;
+  String? couponNumber;
+  String? ulat;
+  String? ulong;
 
   Otherdetails(
       {this.checkOutDateTime,
         this.type,
         this.userID,
+        this.cardNumber,
+        this.userName,
+        this.userPhone,
+        this.storeID,
         this.storeName,
+        this.storePhone,
+        this.addressType,
         this.address,
         this.zoneID,
         this.currency,
         this.subTotalItemFee,
+        this.subTotalItemFeeAfterDis,
         this.subTotalSpendPoint,
         this.totalDiscount,
         this.grandTotal,
@@ -190,17 +218,30 @@ class Otherdetails {
         this.cashBack,
         this.cashBackPoint,
         this.serviceCharge,
-        this.estimatePickUp});
+        this.estimatePickUp,
+        this.paymentOpt,
+        this.brownCardSpendBalance,
+        this.brownCardSpendPoint,
+        this.couponNumber,
+        this.ulat,
+        this.ulong});
 
   Otherdetails.fromJson(Map<String, dynamic> json) {
     checkOutDateTime = json['CheckOut_DateTime'];
     type = json['Type'];
     userID = json['UserID'];
+    cardNumber = json['CardNumber'];
+    userName = json['UserName'];
+    userPhone = json['UserPhone'];
+    storeID = json['StoreID'];
     storeName = json['StoreName'];
+    storePhone = json['StorePhone'];
+    addressType = json['Address_Type'];
     address = json['Address'];
     zoneID = json['ZoneID'];
     currency = json['Currency'];
     subTotalItemFee = json['SubTotal_ItemFee'];
+    subTotalItemFeeAfterDis = json['SubTotal_ItemFee_After_Dis'];
     subTotalSpendPoint = json['SubTotal_SpendPoint'];
     totalDiscount = json['Total_Discount'];
     grandTotal = json['GrandTotal'];
@@ -211,6 +252,12 @@ class Otherdetails {
     cashBackPoint = json['CashBack_Point'];
     serviceCharge = json['Service_Charge'];
     estimatePickUp = json['EstimatePickUp'];
+    paymentOpt = json['payment_opt'];
+    brownCardSpendBalance = json['brownCardSpendBalance'];
+    brownCardSpendPoint = json['brownCardSpendPoint'];
+    couponNumber = json['couponNumber'];
+    ulat = json['Ulat'].toString();
+    ulong = json['Ulong'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -218,11 +265,18 @@ class Otherdetails {
     data['CheckOut_DateTime'] = this.checkOutDateTime;
     data['Type'] = this.type;
     data['UserID'] = this.userID;
+    data['CardNumber'] = this.cardNumber;
+    data['UserName'] = this.userName;
+    data['UserPhone'] = this.userPhone;
+    data['StoreID'] = this.storeID;
     data['StoreName'] = this.storeName;
+    data['StorePhone'] = this.storePhone;
+    data['Address_Type'] = this.addressType;
     data['Address'] = this.address;
     data['ZoneID'] = this.zoneID;
     data['Currency'] = this.currency;
     data['SubTotal_ItemFee'] = this.subTotalItemFee;
+    data['SubTotal_ItemFee_After_Dis'] = this.subTotalItemFeeAfterDis;
     data['SubTotal_SpendPoint'] = this.subTotalSpendPoint;
     data['Total_Discount'] = this.totalDiscount;
     data['GrandTotal'] = this.grandTotal;
@@ -233,6 +287,12 @@ class Otherdetails {
     data['CashBack_Point'] = this.cashBackPoint;
     data['Service_Charge'] = this.serviceCharge;
     data['EstimatePickUp'] = this.estimatePickUp;
+    data['payment_opt'] = this.paymentOpt;
+    data['brownCardSpendBalance'] = this.brownCardSpendBalance;
+    data['brownCardSpendPoint'] = this.brownCardSpendPoint;
+    data['couponNumber'] = this.couponNumber;
+    data['Ulat'] = this.ulat;
+    data['Ulong'] = this.ulong;
     return data;
   }
 }

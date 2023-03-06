@@ -11,22 +11,22 @@ import '../../../../data/model/response/order.dart';
 
 
 
-class OrderPending extends StatefulWidget {
-  const OrderPending({Key? key}) : super(key: key);
+class OrderRequestCancel extends StatefulWidget {
+  const OrderRequestCancel({Key? key}) : super(key: key);
 
   @override
-  State<OrderPending> createState() => _OrderPendingState();
+  State<OrderRequestCancel> createState() => _OrderRequestCancelState();
 }
 
-class _OrderPendingState extends State<OrderPending> {
+class _OrderRequestCancelState extends State<OrderRequestCancel> {
   ScrollController scrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
   int index = 0;
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListPending(
-        context, 1);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(
+        context, -1);
   }
 
 
@@ -51,7 +51,7 @@ class _OrderPendingState extends State<OrderPending> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
-          query: Provider.of<ParseProvider>(context, listen: false).getQueryPending,
+          query: Provider.of<ParseProvider>(context, listen: false).queryBuilderRequestCancel,
           key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
@@ -61,7 +61,7 @@ class _OrderPendingState extends State<OrderPending> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            print("reload pending.........");
+            print("reload cancel.........");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {

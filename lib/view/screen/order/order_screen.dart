@@ -1,7 +1,11 @@
 import 'package:brown_store/view/screen/order/page/order_all.dart';
 import 'package:brown_store/view/screen/order/page/order_pending.dart';
+import 'package:brown_store/view/screen/order/page/order_request_cancel.dart';
 import 'package:flutter/material.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:provider/provider.dart';
 
+import '../../../provider/parse_provider.dart';
 import '../../../utill/images.dart';
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
@@ -11,10 +15,17 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  @override
+  void initState() {
 
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
+
       length: 3,
       child: Scaffold(
         appBar: AppBar(
@@ -29,8 +40,15 @@ class _OrderScreenState extends State<OrderScreen> {
           Text("Stay: BROWN BKK", style: TextStyle(color: Colors.green, fontSize: 16),)
         ],),),
           bottom: TabBar(
+            isScrollable: true,
+            onTap: (index){
+               setState(() {
+
+               });
+            },
+
             indicatorColor: Theme.of(context).primaryColor,
-            tabs: [
+            tabs: const [
               Tab(text: "All",),
               Tab(text: "Pending"),
               Tab(text: "Request Cancel"),
@@ -40,10 +58,8 @@ class _OrderScreenState extends State<OrderScreen> {
         body: TabBarView(
           children: [
             OrderAll(),
-            OrderPending(),
-            Container(child: Center(
-              child: Text("In-Progress"),
-            ),),
+            const OrderPending(),
+            const OrderRequestCancel(),
           ],
         ),
       ),

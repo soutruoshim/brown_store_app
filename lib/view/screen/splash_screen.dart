@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +28,15 @@ class _SplashScreenState extends State<SplashScreen> {
       if (isSuccess) {
         Provider.of<SplashProvider>(context, listen: false)
             .initShippingTypeList(context, '');
+
         Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 0);
+        Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1);
+        Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1);
+
+        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 1);
+        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 2);
+        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 3);
+        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 4);
 
         Timer(const Duration(seconds: 2), () {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {

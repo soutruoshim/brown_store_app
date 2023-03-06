@@ -5,14 +5,16 @@ import '../../utill/app_constants.dart';
 
 class ParseRepo {
   Future<bool> initData() async {
-    await Parse().initialize(
+    if(Parse()!=null){
+      await Parse().initialize(
         AppConstants.keyParseApplicationId,
         AppConstants.keyParseServerUrl,
         clientKey: AppConstants.keyParseClientKey, // Required for some setups
-        debug: true, // When enabled, prints logs to console
+        debug: false, // When enabled, prints logs to console
         liveQueryUrl: AppConstants.keyParseLiveServerUrl, // Required if using LiveQuery
         //autoSendSessionId: true,
-    );
+      );
+    }
     return (await Parse().healthCheck()).success;
   }
 }

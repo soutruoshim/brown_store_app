@@ -10,7 +10,9 @@ class AuthScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(children: [
               Align(
@@ -57,8 +59,9 @@ class AuthScreen extends StatelessWidget{
             SignInWidget(),
             SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
             SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-            Stack(
 
+            Stack(
+              alignment: Alignment.bottomCenter,
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,

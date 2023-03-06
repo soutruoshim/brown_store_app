@@ -1,4 +1,6 @@
+import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../utill/dimensions.dart';
 import 'order_type_button_head.dart';
 
@@ -29,27 +31,27 @@ class OngoingOrderWidget extends StatelessWidget {
                 color: Color(0xFFFFAA47),
                 text: "Pending", index: 1,
                 subText: "Order",
-                numberOfOrder: 100,
+                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalPending,
               ),
 
               OrderTypeButtonHead(
                 color: Color(0xFF7C5D00),
                 text: "Processing", index: 2,
                 subText: "Order",
-                numberOfOrder: 90,
+                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalOutDelivery,
 
               ),
               OrderTypeButtonHead(
                 color: Color(0xFF157CFF),
                 text: "Confirmed", index: 7,
                 subText: "Order",
-                numberOfOrder: 20,
+                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalConfirm,
               ),
               OrderTypeButtonHead(
                 color: Color(0xFF0F6E54),
                 text: "Delivery", index: 8,
                 subText: "Order",
-                numberOfOrder: 58,
+                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalDelivered,
               ),
             ],
           ),

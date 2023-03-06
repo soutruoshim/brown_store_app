@@ -20,31 +20,36 @@ class _OrderAllState extends State<OrderAll> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListAll(
+        context, 0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(controller: _scrollController, slivers: [
-      SliverToBoxAdapter(
-        child: Column(
-          children: [
-            _buildListAll(),
-          ],
-        ),
-      )
-    ]);
+    // return CustomScrollView(controller: _scrollController, slivers: [
+    //   SliverToBoxAdapter(
+    //     child: Column(
+    //       children: [
+    //         _buildListAll(),
+    //       ],
+    //     ),
+    //   )
+    // ]);
+    return _buildListAll();
   }
   _buildListAll() {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child:  ParseLiveListWidget<ParseObject>(
-          query: Provider.of<ParseProvider>(context, listen: false).getQueryAll!,
+          query: Provider.of<ParseProvider>(context, listen: false).getQueryAll,
           key: UniqueKey(),
           duration: const Duration(seconds: 1),
           reverse: false,
           shrinkWrap: true,
+          listLoadingElement: Center(
+            child: CircularProgressIndicator(),
+          ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
             //print("reload");
@@ -54,11 +59,12 @@ class _OrderAllState extends State<OrderAll> {
               print("status : ${snapshot.loadedData!.get("status")}");
               Order order = Order.fromJson(jsonDecode(snapshot!.loadedData.toString()));
               return OrderWidget(orderModel: order,);
-            }else{
-              return const Center(child: ListTile(
-                leading: CircularProgressIndicator(),
-              )
-              );
+            }
+            else{
+              // return const Center(child: ListTile(
+              //   leading: CircularProgressIndicator(),
+              // )
+                return Container();
             }
       }),
     );

@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:brown_store/helper/status_check.dart';
 import 'package:brown_store/view/screen/order/order_detail_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/model/response/order.dart';
@@ -9,6 +12,8 @@ import '../../../../utill/styles.dart';
 class OrderWidget extends StatelessWidget {
   final Order orderModel;
   final int index;
+
+
   OrderWidget({this.index = 0, required this.orderModel});
 
   @override
@@ -47,7 +52,7 @@ class OrderWidget extends StatelessWidget {
                               Navigator.of(context).push(
                                     MaterialPageRoute(
                                       fullscreenDialog: true,
-                                      builder: (context) => OrderDetailWidget()
+                                      builder: (context) => OrderDetailWidget(order: orderModel,)
                                     ),
                                   );
                             },
@@ -152,19 +157,28 @@ class OrderWidget extends StatelessWidget {
                             children: [
                               Container(height: Dimensions.ICON_SIZE_SMALL, width: Dimensions.ICON_SIZE_SMALL,
 
-                                child: Image.asset(
-                                Images.order_pending_icon
+                                child: Image.asset(orderModel.status == 1?
+                                Images.order_pending_icon:
+                                orderModel.status == 3?
+                                Images.out_icon:
+                                orderModel.status == -2?
+                                Images.return_icon:
+                                orderModel.status == 4?
+                                Images.delivered_icon:
+                                Images.confirm_purchase
 
                                 ),),
+
                               Padding(padding: const EdgeInsets.all(8.0),
-                                child: Text("Pending ${orderModel.status}",
+                                child: Text(StatusCheck.statusText(orderModel.status),
                                     style: robotoRegular.copyWith(color: ColorResources.getPrimary(context))),
                               ),
+
                             ],
                           ),
 
                           Row(children: [
-
+                            StatusCheck.btnCancel(orderModel.status)?
                             Container(
                               decoration: BoxDecoration(
                                   color: Colors.red,
@@ -175,9 +189,9 @@ class OrderWidget extends StatelessWidget {
                                 child: Text("Cancel",
                                   style: robotoMedium.copyWith(color: Colors.white),),
                               ),
-                            ),
-                            SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                            Container(
+                            ):Container(),
+                            orderModel.status  == 1 ? SizedBox(width: Dimensions.PADDING_SIZE_SMALL):Container(),
+                            orderModel.status  == 1 ?Container(
                               decoration: BoxDecoration(
                                   color: Theme.of(context).primaryColor,
                                   borderRadius: BorderRadius.circular(50)
@@ -187,7 +201,8 @@ class OrderWidget extends StatelessWidget {
                                 child: Text("Accept",
                                   style: robotoMedium.copyWith(color: Colors.white),),
                               ),
-                            ),
+                            ):Container(),
+
                             // Text('ABA',
                             //     style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT, color: Theme.of(context).hintColor)),
                             // SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
@@ -206,5 +221,6 @@ class OrderWidget extends StatelessWidget {
       ),
     );
   }
+
 }
 
