@@ -3,8 +3,8 @@ class StatusCheck{
     String statusString = "Pending";
     switch(status) {
       case 1: statusString = "Pending"; break;
-      case 2: statusString = "Confirm Order"; break;
-      case 3: statusString = "Out Delivery"; break;
+      case 2: statusString = "Accepted"; break;
+      case 3: statusString = "Finish Cooking"; break;
       case 4: statusString = "Delivered"; break;
       case 5 : statusString = "Done"; break;
       case -1: statusString = "Request Cancel"; break;
@@ -29,3 +29,12 @@ class StatusCheck{
     return showHide;
   }
 }
+
+// - pending 1
+// - accept 2
+// - Finish cooking 3
+// - Pick-up 4
+// - complete 5
+//
+// - request cancel -1
+// - cancel -2

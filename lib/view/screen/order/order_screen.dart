@@ -1,5 +1,9 @@
 import 'package:brown_store/view/screen/order/page/order_all.dart';
+import 'package:brown_store/view/screen/order/page/order_cancelled.dart';
+import 'package:brown_store/view/screen/order/page/order_cooking.dart';
+import 'package:brown_store/view/screen/order/page/order_done.dart';
 import 'package:brown_store/view/screen/order/page/order_pending.dart';
+import 'package:brown_store/view/screen/order/page/order_pickup.dart';
 import 'package:brown_store/view/screen/order/page/order_request_cancel.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -26,7 +30,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
     return DefaultTabController(
 
-      length: 3,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
         elevation: 0,
@@ -49,17 +53,25 @@ class _OrderScreenState extends State<OrderScreen> {
 
             indicatorColor: Theme.of(context).primaryColor,
             tabs: const [
-              Tab(text: "All",),
               Tab(text: "Pending"),
+              Tab(text: "Cooking",),
+              Tab(text: "Pick-up"),
+              Tab(text: "Done"),
               Tab(text: "Request Cancel"),
+              Tab(text: "Cancelled"),
+              Tab(text: "All",),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            OrderAll(),
             const OrderPending(),
+            const OrderCooking(),
+            const OrderPickup(),
+            const OrderDone(),
             const OrderRequestCancel(),
+            const OrderCancelled(),
+            OrderAll(),
           ],
         ),
       ),

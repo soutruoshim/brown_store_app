@@ -1,8 +1,10 @@
 import 'dart:ffi';
 
 import 'package:brown_store/helper/status_check.dart';
+import 'package:brown_store/provider/parse_provider.dart';
 import 'package:brown_store/view/screen/order/order_detail_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../data/model/response/order.dart';
 import '../../../../utill/color_resources.dart';
 import '../../../../utill/dimensions.dart';
@@ -19,7 +21,8 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_MEDIUM),
+      //padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_MEDIUM),
+      padding: EdgeInsets.only(right: MediaQuery.of(context).size.height / 5, left: MediaQuery.of(context).size.height / 5, top: 8, bottom: 8),
       child: Column( crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
@@ -178,31 +181,85 @@ class OrderWidget extends StatelessWidget {
                           ),
 
                           Row(children: [
-                            StatusCheck.btnCancel(orderModel.status)?
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(50)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 16, left: 16, top: 6, bottom: 6),
-                                child: Text("Cancel",
-                                  style: robotoMedium.copyWith(color: Colors.white),),
-                              ),
-                            ):Container(),
                             orderModel.status  == 1 ? SizedBox(width: Dimensions.PADDING_SIZE_SMALL):Container(),
-                            orderModel.status  == 1 ?Container(
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: BorderRadius.circular(50)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 16, left: 16, top: 6, bottom: 6),
-                                child: Text("Accept",
-                                  style: robotoMedium.copyWith(color: Colors.white),),
+                            orderModel.status  == 1 ?InkWell(
+                              onTap: () => _updateOrder(context, orderModel, 2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                  child: Text("Accept",
+                                    style: robotoMedium.copyWith(color: Colors.white),),
+                                ),
                               ),
                             ):Container(),
 
+                            orderModel.status  == 2 ? SizedBox(width: Dimensions.PADDING_SIZE_SMALL):Container(),
+                            orderModel.status  == 2 ?InkWell(
+                              onTap: () => _updateOrder(context, orderModel, 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                  child: Text("Finish Cooking",
+                                    style: robotoMedium.copyWith(color: Colors.white),),
+                                ),
+                              ),
+                            ):Container(),
+
+                            orderModel.status  == 3 ? SizedBox(width: Dimensions.PADDING_SIZE_SMALL):Container(),
+                            orderModel.status  == 3 ?InkWell(
+                              onTap: () => _updateOrder(context, orderModel, 5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                  child: Text("Done",
+                                    style: robotoMedium.copyWith(color: Colors.white),),
+                                ),
+                              ),
+                            ):Container(),
+
+                            orderModel.status  == 4 ? SizedBox(width: Dimensions.PADDING_SIZE_SMALL):Container(),
+                            orderModel.status  == 4 ?InkWell(
+                              onTap: () => _updateOrder(context, orderModel, 5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                  child: Text("Done",
+                                    style: robotoMedium.copyWith(color: Colors.white),),
+                                ),
+                              ),
+                            ):Container(),
+                            SizedBox(width: 8,),
+                            StatusCheck.btnCancel(orderModel.status)?
+                            InkWell(
+                              onTap: () => _updateOrder(context, orderModel, -2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                  child: Text("Cancel",
+                                    style: robotoMedium.copyWith(color: Colors.white),),
+                                ),
+                              ),
+                            ):Container(),
                             // Text('ABA',
                             //     style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT, color: Theme.of(context).hintColor)),
                             // SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
@@ -221,6 +278,11 @@ class OrderWidget extends StatelessWidget {
       ),
     );
   }
+
+  void _updateOrder(BuildContext context, Order order, int status){
+       Provider.of<ParseProvider>(context, listen: false).updateOrder(context, order.objectId.toString(), status);
+  }
+
 
 }
 
