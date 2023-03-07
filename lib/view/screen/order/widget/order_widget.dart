@@ -6,6 +6,7 @@ import 'package:brown_store/view/screen/order/order_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../data/model/response/order.dart';
+import '../../../../helper/check_device.dart';
 import '../../../../utill/color_resources.dart';
 import '../../../../utill/dimensions.dart';
 import '../../../../utill/images.dart';
@@ -22,7 +23,7 @@ class OrderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       //padding: const EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_MEDIUM),
-      padding: EdgeInsets.only(right: MediaQuery.of(context).size.height / 5, left: MediaQuery.of(context).size.height / 5, top: 8, bottom: 8),
+      padding: getDeviceType() == "tablet"? EdgeInsets.only(right: MediaQuery.of(context).size.height / 5, left: MediaQuery.of(context).size.height / 5, top: 8, bottom: 8):EdgeInsets.only(top: 4, bottom: 4),
       child: Column( crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
