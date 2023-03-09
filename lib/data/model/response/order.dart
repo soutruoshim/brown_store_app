@@ -257,7 +257,7 @@ class Otherdetails {
     serviceCharge = json['Service_Charge'];
     estimatePickUp = json['EstimatePickUp'];
     paymentOpt = json['payment_opt'];
-    brownCardSpendBalance = json['brownCardSpendBalance'];
+    brownCardSpendBalance = json['brownCardSpendBalance'].toString();
     brownCardSpendPoint = json['brownCardSpendPoint'];
     couponNumber = json['couponNumber'];
     ulat = json['Ulat'].toString();

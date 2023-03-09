@@ -39,6 +39,9 @@ class ParseProvider with ChangeNotifier {
   late QueryBuilder<ParseObject>? _queryBuilderDone;
   QueryBuilder<ParseObject> get getQueryBuilderDone => _queryBuilderDone!;
 
+  late QueryBuilder<ParseObject>? _queryBuilderCancel;
+  QueryBuilder<ParseObject> get getQueryBuilderCancel => _queryBuilderCancel!;
+
 
   Future<void> getOrderListAll(BuildContext context, int orderStatus) async {
     parseRepo.initData().then((bool success) async {
@@ -59,10 +62,10 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPending = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
-          ..whereEqualTo("status", orderStatus)
+          //..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("status", orderStatus);
           //..whereContains("lastTry", getFormatedDate(DateTime.now()))
-          ..orderByDescending("createdAt");
+          //..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order pending status");
         notifyListeners();
@@ -76,7 +79,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderAccepted = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+         // ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("updatedAt");
@@ -145,7 +148,21 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderRequestCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+          //..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo('status', -1)
+          ..orderByDescending("createdAt");
+        notifyListeners();
+      }
+    }).catchError((dynamic _) {
+      print("Error: ${_.toString()}");
+    });
+  }
+
+  Future<void> getOrderListCancel(BuildContext context, int orderStatus) async {
+    parseRepo.initData().then((bool success) async {
+      if (success) {
+        _queryBuilderCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
+          //..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo('status', -1)
           ..orderByDescending("createdAt");
         notifyListeners();

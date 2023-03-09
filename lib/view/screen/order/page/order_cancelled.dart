@@ -25,8 +25,8 @@ class _OrderCancelledState extends State<OrderCancelled> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListPending(
-        context, 1);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(
+        context, -2);
   }
 
 
@@ -51,7 +51,7 @@ class _OrderCancelledState extends State<OrderCancelled> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
-          query: Provider.of<ParseProvider>(context, listen: false).getQueryPending,
+          query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderCancel,
           key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,

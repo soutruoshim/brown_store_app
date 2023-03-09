@@ -36,14 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
         Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4);
         Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5);
         Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1);
+        Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1);
 
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 1);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 2);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 3);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 4);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 5);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, -1);
-        Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, -2);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
+        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
 
 
         Timer(const Duration(seconds: 2), () {

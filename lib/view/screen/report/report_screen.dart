@@ -25,13 +25,13 @@ class _ReportScreenState extends State<ReportScreen> {
   }
   Future<Null> _onRefresh() async {
 
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 1);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 2);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 3);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 4);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, 5);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, -1);
-    Provider.of<ReportParseProvider>(context, listen: false).getPendingOrderTotal(context, -2);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
     await Future.delayed(Duration(seconds: 3));
   }
   @override

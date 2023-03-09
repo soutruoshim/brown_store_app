@@ -1,3 +1,4 @@
+import 'package:brown_store/helper/check_device.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,8 @@ class OngoingOrderWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(Dimensions.PADDING_SIZE_SMALL,0, Dimensions.PADDING_SIZE_SMALL,Dimensions.FONT_SIZE_SMALL),
           child: GridView.count(
             physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            childAspectRatio: (1 / .65),
+            crossAxisCount: getDeviceType() == "tablet" ? 4: 2,
+            childAspectRatio: getDeviceType() == "tablet" ? (2/ 1): (1/0.67),
             shrinkWrap: true,
             padding: EdgeInsets.zero,
             children: [

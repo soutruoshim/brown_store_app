@@ -54,7 +54,7 @@ class _OrderCookingState extends State<OrderCooking> {
           query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderAccepted,
           key:refreshKey,
           duration: const Duration(seconds: 1),
-          reverse: true,
+          reverse: false,
 
           listLoadingElement: Center(
             child: CircularProgressIndicator(),

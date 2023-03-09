@@ -30,7 +30,7 @@ class ReportParseProvider with ChangeNotifier {
   int get getTotalCancel => _totalCancel;
 
 
-  Future<void> getPendingOrderTotal(BuildContext context, int orderStatus) async {
+  Future<void> getReportOrderTotal(BuildContext context, int orderStatus) async {
     print("date"+getFormatedDate(DateTime.now()));
 
     parseRepo.initData().then((bool success) async {

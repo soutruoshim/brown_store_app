@@ -156,18 +156,18 @@ class AppConstants {
   // static const String keyParseLiveServerUrl = 'ws://store.b4a.io/';
   // static const bool keyDebug = true;
 
-  static const String keyApplicationName = 'store_s';
-  static const String keyParseApplicationId = 'k6xHaxjFcBJrDeZMBc6pAoXLNbeOGTf3bfyoGbqw';
-  static const String keyParseClientKey = 'kGVrgOZnstUPPD5vhRX9o4mJigxo7Uepek1RaeAm';
-  static const String keyParseServerUrl = 'https://parseapi.back4app.com';
-  static const String keyParseLiveServerUrl = 'ws://stores.b4a.io/';
-  static const bool keyDebug = true;
-
-  // static const String keyApplicationName = 'sa-parse-server';
+  // static const String keyApplicationName = 'store_s';
   // static const String keyParseApplicationId = 'k6xHaxjFcBJrDeZMBc6pAoXLNbeOGTf3bfyoGbqw';
   // static const String keyParseClientKey = 'kGVrgOZnstUPPD5vhRX9o4mJigxo7Uepek1RaeAm';
-  // static const String keyParseServerUrl = 'http://192.168.1.70:3003/parse-server';
-  // static const String keyParseLiveServerUrl = 'ws://192.168.1.70:3003/parse-server/';
+  // static const String keyParseServerUrl = 'https://parseapi.back4app.com';
+  // static const String keyParseLiveServerUrl = 'ws://stores.b4a.io/';
   // static const bool keyDebug = true;
+
+  static const String keyApplicationName = 'sa-parse-server';
+  static const String keyParseApplicationId = 'k6xHaxjFcBJrDeZMBc6pAoXLNbeOGTf3bfyoGbqw';
+  static const String keyParseClientKey = 'kGVrgOZnstUPPD5vhRX9o4mJigxo7Uepek1RaeAm';
+  static const String keyParseServerUrl = 'http://192.168.1.70:3003/parse-server';
+  static const String keyParseLiveServerUrl = 'ws://192.168.1.70:3003/parse-server/';
+  static const bool keyDebug = true;
 
 }

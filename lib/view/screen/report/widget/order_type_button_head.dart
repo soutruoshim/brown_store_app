@@ -46,9 +46,6 @@ class OrderTypeButtonHead extends StatelessWidget {
                             0xFFEAEAEA))),
                       ],
                       ),
-
-
-
                     ],
                   ),
                 ),
@@ -58,8 +55,8 @@ class OrderTypeButtonHead extends StatelessWidget {
               children: [
                 SizedBox.shrink(),
                 //Spacer(),
-                Container(width: MediaQuery.of(context).size.width/4,
-                  height:MediaQuery.of(context).size.width/4,
+                Container(width: MediaQuery.of(context).size.width/8,
+                  height:MediaQuery.of(context).size.width/8,
                   decoration: BoxDecoration(
                       color: Theme.of(context).cardColor.withOpacity(.10),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(100))
