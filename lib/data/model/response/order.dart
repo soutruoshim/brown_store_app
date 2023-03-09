@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Order {
   String? objectId;
   String? userId;
@@ -26,21 +28,23 @@ class Order {
         this.deliveryId,
         this.notifiCustomer,
         this.abaRefundStatus,
-        this.orderNo,
+        this.orderNo = "100",
         this.createdAt,
         this.updatedAt});
 
   Order.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'];
     userId = json['user_id'].toString();
-    if (json['ordereditems'] != null) {
+
+    if (json['ordereditems'] != null &&  json['ordereditems']!="") {
       ordereditems = <Ordereditems>[];
-      json['ordereditems'].forEach((v) {
+      jsonDecode(json['ordereditems']).forEach((v) {
         ordereditems!.add(new Ordereditems.fromJson(v));
       });
     }
+
     otherdetails = json['otherdetails'] != null
-        ? new Otherdetails.fromJson(json['otherdetails'])
+        ? new Otherdetails.fromJson(jsonDecode(json['otherdetails']))
         : null;
     lastTry = json['lastTry'];
     refId = json['ref_id'].toString();
@@ -49,7 +53,7 @@ class Order {
     deliveryId = json['delivery_id'];
     notifiCustomer = json['notifi_customer'];
     abaRefundStatus = json['aba_refund_status'];
-    orderNo = json['order_no'];
+    orderNo = json['order_no']??"100";
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -104,8 +108,8 @@ class Ordereditems {
 
   Ordereditems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    foodcode = json['foodcode'];
-    foodname = json['foodname'];
+    foodcode = json['foodcode']??"";
+    foodname = json['foodname']??"";
     sizecode = json['sizecode'];
     qty = json['qty'];
     isfree = json['isfree'];

@@ -10,9 +10,9 @@ class ParseRepo {
         AppConstants.keyParseApplicationId,
         AppConstants.keyParseServerUrl,
         clientKey: AppConstants.keyParseClientKey, // Required for some setups
-        debug: false, // When enabled, prints logs to console
+        debug: true, // When enabled, prints logs to console
         liveQueryUrl: AppConstants.keyParseLiveServerUrl, // Required if using LiveQuery
-        //autoSendSessionId: true,
+        autoSendSessionId: true,
       );
     }
     return (await Parse().healthCheck()).success;

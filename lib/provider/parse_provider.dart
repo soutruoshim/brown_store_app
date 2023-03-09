@@ -2,6 +2,7 @@ import 'package:brown_store/data/repository/parse_repo.dart';
 import 'package:brown_store/helper/status_check.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import '../utill/images.dart';
@@ -43,7 +44,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderAll = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..orderByDescending("createdAt");
         //_queryBuilderAll!.query();
         print("query order all status");
@@ -58,9 +59,9 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPending = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
-          //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
+          //..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order pending status");
@@ -75,7 +76,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderAccepted = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("updatedAt");
@@ -92,7 +93,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderFinishCooking = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
@@ -109,7 +110,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPickup = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
@@ -126,7 +127,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderDone = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
@@ -144,7 +145,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderRequestCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", 320161790839706500)
+          ..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo('status', -1)
           ..orderByDescending("createdAt");
         notifyListeners();
@@ -208,5 +209,12 @@ class ParseProvider with ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
+  }
+
+  getFormatedDate(_date) {
+    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
+    var inputDate = inputFormat.parse(_date.toString());
+    var outputFormat = DateFormat('yyyy-MM-dd');
+    return outputFormat.format(inputDate);
   }
 }
