@@ -1,5 +1,6 @@
 import 'package:brown_store/provider/parse_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
@@ -34,265 +35,268 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Widget buildBody(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-            child: ListView(
-          children: <Widget>[
-            Divider(
-              color: Theme.of(context).cardColor,
-              thickness: 6.3,
-            ),
-            InkWell(
-              onTap: () => (){},
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
-                child: Container(
-                  color: Colors.white54,
-                  child: Stack(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/image/2.png',
-                            scale: 1.6,
-                          ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Sanwitch",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold)),
-                              Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/image/ic_veg.png',
-                                      height: 16.0,
-                                      width: 16.7,
-                                    ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-                                    Text('\$ 3.50',
-                                        style:
-                                            Theme.of(context).textTheme.caption),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Positioned.directional(
-                        end: 0.0,
-                        bottom: 8.0,
-                        textDirection: Directionality.of(context),
-                        child: Row(
-                          children: [
-                            Text(
-                              'In stock',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 13.3,
-                                  fontWeight: FontWeight.bold),
+    return Padding(
+      padding: Device.get().isTablet ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6, top: 8, bottom: 8):EdgeInsets.only(right: 4, left: 4, top: 4, bottom: 4),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+              child: ListView(
+            children: <Widget>[
+              Divider(
+                color: Theme.of(context).cardColor,
+                thickness: 6.3,
+              ),
+              InkWell(
+                onTap: () => (){},
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
+                  child: Container(
+                    color: Colors.white54,
+                    child: Stack(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/image/2.png',
+                              scale: 1.6,
                             ),
-                            Switch(
-                              activeColor: Theme.of(context).primaryColor,
-                              activeTrackColor: Colors.grey[300],
-                              value: true,
-                              onChanged: (value) {
-                                setState(() {
-                                 //
-                                });
-                              },
-                            )
+                            SizedBox(
+                              width: 16.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Sanwitch",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold)),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/ic_veg.png',
+                                        height: 16.0,
+                                        width: 16.7,
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Text('\$ 3.50',
+                                          style:
+                                              Theme.of(context).textTheme.caption),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                        Positioned.directional(
+                          end: 0.0,
+                          bottom: 8.0,
+                          textDirection: Directionality.of(context),
+                          child: Row(
+                            children: [
+                              Text(
+                                'In stock',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 13.3,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Switch(
+                                activeColor: Theme.of(context).primaryColor,
+                                activeTrackColor: Colors.grey[300],
+                                value: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                   //
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () => (){},
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
-                child: Container(
-                  color: Colors.white54,
-                  child: Stack(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/image/2.png',
-                            scale: 1.6,
-                          ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Sanwitch",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold)),
-                              Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/image/ic_veg.png',
-                                      height: 16.0,
-                                      width: 16.7,
-                                    ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-                                    Text('\$ 3.50',
-                                        style:
-                                        Theme.of(context).textTheme.caption),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Positioned.directional(
-                        end: 0.0,
-                        bottom: 8.0,
-                        textDirection: Directionality.of(context),
-                        child: Row(
-                          children: [
-                            Text(
-                              'In Stock',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 13.3,
-                                  fontWeight: FontWeight.bold),
+              InkWell(
+                onTap: () => (){},
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
+                  child: Container(
+                    color: Colors.white54,
+                    child: Stack(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/image/2.png',
+                              scale: 1.6,
                             ),
-                            Switch(
-                              activeColor: Theme.of(context).primaryColor,
-                              activeTrackColor: Colors.grey[300],
-                              value: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  //
-                                });
-                              },
-                            )
+                            SizedBox(
+                              width: 16.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Sanwitch",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold)),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/ic_veg.png',
+                                        height: 16.0,
+                                        width: 16.7,
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Text('\$ 3.50',
+                                          style:
+                                          Theme.of(context).textTheme.caption),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                        Positioned.directional(
+                          end: 0.0,
+                          bottom: 8.0,
+                          textDirection: Directionality.of(context),
+                          child: Row(
+                            children: [
+                              Text(
+                                'In Stock',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 13.3,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Switch(
+                                activeColor: Theme.of(context).primaryColor,
+                                activeTrackColor: Colors.grey[300],
+                                value: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    //
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () => (){},
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
-                child: Container(
-                  color: Colors.white54,
-                  child: Stack(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/image/2.png',
-                            scale: 1.6,
-                          ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Sanwitch",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold)),
-                              Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      'assets/image/ic_veg.png',
-                                      height: 16.0,
-                                      width: 16.7,
-                                    ),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-                                    Text('\$ 3.50',
-                                        style:
-                                        Theme.of(context).textTheme.caption),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Positioned.directional(
-                        end: 0.0,
-                        bottom: 8.0,
-                        textDirection: Directionality.of(context),
-                        child: Row(
-                          children: [
-                            Text(
-                              'In Stock',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 13.3,
-                                  fontWeight: FontWeight.bold),
+              InkWell(
+                onTap: () => (){},
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 16.0),
+                  child: Container(
+                    color: Colors.white54,
+                    child: Stack(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/image/2.png',
+                              scale: 1.6,
                             ),
-                            Switch(
-                              activeColor: Theme.of(context).primaryColor,
-                              activeTrackColor: Colors.grey[300],
-                              value: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  //
-                                });
-                              },
-                            )
+                            SizedBox(
+                              width: 16.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Sanwitch",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold)),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/image/ic_veg.png',
+                                        height: 16.0,
+                                        width: 16.7,
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      Text('\$ 3.50',
+                                          style:
+                                          Theme.of(context).textTheme.caption),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                        Positioned.directional(
+                          end: 0.0,
+                          bottom: 8.0,
+                          textDirection: Directionality.of(context),
+                          child: Row(
+                            children: [
+                              Text(
+                                'In Stock',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 13.3,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Switch(
+                                activeColor: Theme.of(context).primaryColor,
+                                activeTrackColor: Colors.grey[300],
+                                value: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    //
+                                  });
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-          ],
-        )),
-        Container(
-          color: Colors.black12,
-        )
-      ],
+            ],
+          )),
+          Container(
+            color: Colors.black12,
+          )
+        ],
+      ),
     );
   }
 }

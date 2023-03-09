@@ -1,6 +1,7 @@
 import 'package:brown_store/view/screen/product/product_screen.dart';
 import 'package:brown_store/view/screen/report/report_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import '../../../utill/color_resources.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
@@ -88,6 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   _buildMoreMenu(){
     return  Container(
+      margin: Device.get().isTablet ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6): EdgeInsets.all(0),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.only(

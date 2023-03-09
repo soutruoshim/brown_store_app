@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 
 import '../../../helper/check_device.dart';
 import '../../../utill/dimensions.dart';
@@ -11,7 +12,7 @@ class AuthScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: getDeviceType() == "tablet" ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 2, left: MediaQuery.of(context).size.height / 2):EdgeInsets.only(right: 0),
+        padding: Device.get().isTablet ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 2, left: MediaQuery.of(context).size.height / 2):EdgeInsets.only(),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

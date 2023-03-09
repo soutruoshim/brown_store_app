@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/report_parse_provider.dart';
@@ -49,12 +50,15 @@ class _ReportScreenState extends State<ReportScreen> {
           title: Image.asset(Images.logo_with_app_name, height: 35),
         ),
         SliverToBoxAdapter(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                SizedBox(height: Dimensions.PADDING_SIZE),
-                OngoingOrderWidget(),
-                CompletedOrderWidget(),
-                SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-              ])
+              child: Padding(
+                padding: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6, top: 8, bottom: 8):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  SizedBox(height: Dimensions.PADDING_SIZE),
+                  OngoingOrderWidget(),
+                  CompletedOrderWidget(),
+                  SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                ]),
+              )
             ),
 
       ]),

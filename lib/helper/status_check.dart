@@ -8,7 +8,7 @@ class StatusCheck{
       case 4: statusString = "Delivered"; break;
       case 5 : statusString = "Done"; break;
       case -1: statusString = "Request Cancel"; break;
-      case -2: statusString = "Confirmed Cancel"; break;
+      case -2: statusString = "Cancelled"; break;
       default: statusString = "No status"; break;
     }
     return statusString;

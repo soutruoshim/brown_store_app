@@ -163,7 +163,7 @@ class ParseProvider with ChangeNotifier {
       if (success) {
         _queryBuilderCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
           //..whereEqualTo("store_id", "820161780837506397")
-          ..whereEqualTo('status', -1)
+          ..whereEqualTo('status', -2)
           ..orderByDescending("createdAt");
         notifyListeners();
       }
