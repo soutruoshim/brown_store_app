@@ -96,7 +96,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderFinishCooking = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+          //..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
@@ -113,7 +113,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPickup = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+          //..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
@@ -130,7 +130,7 @@ class ParseProvider with ChangeNotifier {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderDone = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+          //..whereEqualTo("store_id", "820161780837506397")
           ..whereEqualTo("status", orderStatus)
         //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
           ..orderByDescending("createdAt");
