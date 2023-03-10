@@ -61,7 +61,7 @@ class _OrderCookingState extends State<OrderCooking> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            print("reload pending.........");
+            print("loading cooking.........");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {

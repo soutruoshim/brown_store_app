@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:brown_store/data/model/body/login_model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,11 +13,13 @@ class AuthRepo {
   final SharedPreferences sharedPreferences;
   AuthRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<ApiResponse> login({String account="", String password="", String store=""}) async {
+  Future<ApiResponse> login({required LoginModel loginModel}) async {
+    print(AppConstants.LOGIN_URI);
     try {
       Response response = await dioClient.post(AppConstants.LOGIN_URI,
-        data: {"account": account, "password": password, "store": store},
+        data: loginModel.toJson(),
       );
+
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

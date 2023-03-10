@@ -65,6 +65,7 @@ class DioClient {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
+    print("starting");
     try {
       var response = await dio.post(
         uri,
@@ -75,8 +76,11 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+      print(response);
+
       return response;
     } on FormatException catch (_) {
+      print("how to ");
       throw FormatException("Unable to process the data");
     } catch (e) {
       throw e;

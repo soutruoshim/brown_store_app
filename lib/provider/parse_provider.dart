@@ -184,7 +184,7 @@ class ParseProvider with ChangeNotifier {
                 ..set('status', status);
               await order.save();
               Navigator.pop(context);
-              showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}', Thank you",context,isToaster: true, isError: false);
+              showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
             }, description: 'The order status will be update to ${StatusCheck.statusText(status)}',
 
         );

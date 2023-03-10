@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:brown_store/data/model/body/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,19 +57,19 @@ class AuthProvider with ChangeNotifier {
   FocusNode shopNameNode = FocusNode();
   FocusNode shopAddressNode = FocusNode();
 
-  Future<ApiResponse> login(BuildContext context,
-      {String account = "", String password = "", String store = ""}) async {
+  Future<ApiResponse> login(BuildContext context, LoginModel loginModel) async {
     _isLoading = true;
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.login(
-        account: account, password: password, store: store);
+    ApiResponse apiResponse = await authRepo.login(loginModel: loginModel);
 
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _isLoading = false;
       Map map = apiResponse.response!.data;
-      String token = map["token"];
-      authRepo.saveUserToken(token);
+      // String token = map["token"];
+      // authRepo.saveUserToken(token);
+      print("ktv ${map["code"]}");
+
     } else {
       _isLoading = false;
       showCustomSnackBar("invalid credential or account not verified yet", context);

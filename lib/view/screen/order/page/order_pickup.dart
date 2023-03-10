@@ -61,7 +61,7 @@ class _OrderPickupState extends State<OrderPickup> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            print("reload pending.........");
+            print("loading pick-up.........");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {

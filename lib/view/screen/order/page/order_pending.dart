@@ -61,7 +61,7 @@ class _OrderPendingState extends State<OrderPending> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            print("reload pending.........");
+            print("loading pending.........");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {

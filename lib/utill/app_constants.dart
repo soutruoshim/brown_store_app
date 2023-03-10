@@ -2,9 +2,10 @@ class AppConstants {
   static const String APP_NAME = 'Brown Store App';
   static const String APP_VERSION = '1.0';
   static const String COMPANY_NAME = 'Brown';
-  static const String BASE_URL = 'https://6valley.6amtech.com';
-  static const String LOGIN_URI = '/api/v3/seller/auth/login';
+  static const String BASE_URL = 'http://gtest.centralapi.browncoffee.local';
+  static const String LOGIN_URI = '/API_V13/user_cashier_login/';
   static const String CONFIG_URI = '/api/v1/config';
+
   static const String SELLER_URI = '/api/v3/seller/seller-info';
   static const String SELLER_AND_BANK_UPDATE = '/api/v3/seller/seller-update';
   static const String SHOP_URI = '/api/v3/seller/shop-info';

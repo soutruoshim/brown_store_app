@@ -23,7 +23,9 @@ class DeviceInfoService {
 
   init() async {
     if (Platform.isAndroid) {
+
       var device = await deviceInfoPlugin.androidInfo;
+      print(device.id);
       id = device.id;
       name = device.model;
       os = "Android";

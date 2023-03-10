@@ -52,7 +52,7 @@ class _OrderAllState extends State<OrderAll> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            //print("reload");
+            print("loading all.........");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {
