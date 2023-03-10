@@ -22,45 +22,45 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     NetworkInfo.checkConnectivity(context);
-    Provider.of<SplashProvider>(context, listen: false)
-        .initConfig(context)
-        .then((bool isSuccess) {
-      if (isSuccess) {
-        Provider.of<SplashProvider>(context, listen: false)
-            .initShippingTypeList(context, '');
+    // Provider.of<SplashProvider>(context, listen: false)
+    //     .initConfig(context)
+    //     .then((bool isSuccess) {
+    //   if (isSuccess) {
+    //     Provider.of<SplashProvider>(context, listen: false)
+    //         .initShippingTypeList(context, '');
+    //   }
+    // });
+    Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(context, 2);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(context, 3);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1);
+    Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1);
 
-        Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(context, 2);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(context, 3);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1);
-        Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1);
-
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
-        Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
+    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
 
 
-        Timer(const Duration(seconds: 2), () {
-          if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-            Provider.of<AuthProvider>(context, listen: false)
-                .updateToken(context);
+    Timer(const Duration(seconds: 2), () {
+      if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+        Provider.of<AuthProvider>(context, listen: false)
+            .updateToken(context);
 
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => const DashboardScreen()));
-          } else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => AuthScreen()));
-          }
-        });
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => const DashboardScreen()));
+      } else {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => AuthScreen()));
       }
-    });
+    }
+    );
   }
 
   @override

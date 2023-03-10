@@ -18,7 +18,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   late TextEditingController _passwordController;
   late GlobalKey<FormState> _formKeyLogin;
 
-  final List<String> _accounts = ["Cashier AM 3", "Cashier AM 4", "Cashier AM 5", "Cashier AM 6"];
+  final List<String> _accounts = ["Cashier AM 1", "Cashier AM 2", "Cashier AM 3", "Cashier PM 1", "Cashier PM 2", "Cashier PM 3"];
   final List<String> _stores = ["Store1", "Store2", "Store3"];
    String _accountSelected = "";
    String _storeSelected = "";
