@@ -25,8 +25,8 @@ class _OrderPickupState extends State<OrderPickup> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(
-        context, 3);
+    // Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(
+    //     context, 3);
   }
 
 

@@ -1,3 +1,4 @@
+import 'package:brown_store/data/model/body/store_model_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,15 @@ class SplashRepo {
   Future<ApiResponse> getConfig() async {
     try {
       final response = await dioClient.get(AppConstants.CONFIG_URI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getStoreList(StoreModelRequest storeModelRequest) async {
+    try {
+      final response = await dioClient.post(AppConstants.STORES_URI, data: storeModelRequest.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

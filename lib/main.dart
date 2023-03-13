@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:brown_store/provider/parse_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
+import 'package:brown_store/provider/theme_provider.dart';
+import 'package:brown_store/utill/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +49,7 @@ Future<void> main() async {
 
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ParseProvider>()),
@@ -62,10 +65,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Brown Store',
+      title: AppStrings.appTitle,
       debugShowCheckedModeBanner: false,
       theme: light,
-     home: const SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -10,6 +10,7 @@ import 'data/repository/auth_repo.dart';
 import 'data/repository/splash_repo.dart';
 import 'provider/auth_provider.dart';
 import 'provider/splash_provider.dart';
+import 'provider/theme_provider.dart';
 import 'utill/app_constants.dart';
 
 final sl = GetIt.instance;
@@ -26,6 +27,7 @@ Future<void> init() async {
 
 
   // Provider
+  sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl()));
   sl.registerFactory(() => ParseProvider(parseRepo: sl()));

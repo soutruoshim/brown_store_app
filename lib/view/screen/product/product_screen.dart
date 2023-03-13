@@ -16,8 +16,8 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
-    Provider.of<ParseProvider>(context, listen: false)
-        .getOrderListAll(context, 2);
+    // Provider.of<ParseProvider>(context, listen: false)
+    //     .getOrderListAll(context, 2);
     super.initState();
   }
 

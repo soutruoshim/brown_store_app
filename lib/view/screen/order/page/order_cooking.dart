@@ -25,8 +25,8 @@ class _OrderCookingState extends State<OrderCooking> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(
-        context, 2);
+    // Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(
+    //     context, 2, "120191051716312119");
   }
 
 
@@ -45,6 +45,7 @@ class _OrderCookingState extends State<OrderCooking> {
     // ]);
     return  _buildListAll();
   }
+
   _buildListAll() {
     Key refreshKey = UniqueKey();
     return Container(

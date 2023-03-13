@@ -20,8 +20,6 @@ class _OrderAllState extends State<OrderAll> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListAll(
-        context, 0);
   }
 
   @override

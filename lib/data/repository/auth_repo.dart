@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:brown_store/data/model/body/login_model.dart';
+import 'package:brown_store/data/model/body/login_model_info.dart';
+import 'package:brown_store/data/model/body/login_model_request.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,11 +16,11 @@ class AuthRepo {
   final SharedPreferences sharedPreferences;
   AuthRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<ApiResponse> login({required LoginModel loginModel}) async {
-    print(AppConstants.LOGIN_URI);
+  Future<ApiResponse> login({required LoginModelRequest loginModelRequest}) async {
+
     try {
-      Response response = await dioClient.post(AppConstants.LOGIN_URI,
-        data: loginModel.toJson(),
+      Response response = await dioClient.post(AppConstants.STORES_URI,
+        data: loginModelRequest.toJson(),
       );
 
       return ApiResponse.withSuccess(response);
@@ -66,6 +69,15 @@ class AuthRepo {
   }
 
   // for  user token
+
+  Future<void> saveUserInfo(LoginModelInfo loginModelInfo) async {
+    try {
+      await sharedPreferences.setString(AppConstants.USER_INFO, jsonEncode(loginModelInfo.toJson()));
+    } catch (e) {
+      throw e;
+    }
+  }
+
   Future<void> saveUserToken(String token) async {
     dioClient.token = token;
     dioClient.dio.options.headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
@@ -81,8 +93,19 @@ class AuthRepo {
     return sharedPreferences.getString(AppConstants.TOKEN) ?? "";
   }
 
+
+  String getUserInfo() {
+    return sharedPreferences.getString(AppConstants.USER_INFO) ?? "";
+  }
+
+
   bool isLoggedIn() {
-    return sharedPreferences.containsKey(AppConstants.TOKEN);
+    //return sharedPreferences.containsKey(AppConstants.TOKEN);
+    return sharedPreferences.containsKey(AppConstants.USER_INFO);
+  }
+  Future<bool> clearUserSharedData() async {
+    return sharedPreferences.remove(AppConstants.USER_INFO);
+    //return sharedPreferences.clear();
   }
 
   Future<bool> clearSharedData() async {

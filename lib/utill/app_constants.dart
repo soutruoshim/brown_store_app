@@ -2,10 +2,12 @@ class AppConstants {
   static const String APP_NAME = 'Brown Store App';
   static const String APP_VERSION = '1.0';
   static const String COMPANY_NAME = 'Brown';
-  static const String BASE_URL = 'http://gtest.centralapi.browncoffee.local';
+  static const String BASE_URL = 'https://gtest.www.browncoffee.com.kh';
+  static const String STORES_URI = '/Client_API/V4/?access';
+
+
   static const String LOGIN_URI = '/API_V13/user_cashier_login/';
   static const String CONFIG_URI = '/api/v1/config';
-
   static const String SELLER_URI = '/api/v3/seller/seller-info';
   static const String SELLER_AND_BANK_UPDATE = '/api/v3/seller/seller-update';
   static const String SHOP_URI = '/api/v3/seller/shop-info';
@@ -131,6 +133,7 @@ class AppConstants {
   static const String CURRENCY = 'currency';
   static const String SHIPPING_TYPE = 'shipping_type';
   static const String TOKEN = 'token';
+  static const String USER_INFO = 'user_info';
   static const String COUNTRY_CODE = 'country_code';
   static const String LANGUAGE_CODE = 'language_code';
   static const String CART_LIST = 'cart_list';
@@ -170,5 +173,14 @@ class AppConstants {
   static const String keyParseServerUrl = 'http://192.168.1.70:3003/parse-server';
   static const String keyParseLiveServerUrl = 'ws://192.168.1.70:3003/parse-server/';
   static const bool keyDebug = true;
+
+  //Access api
+
+
+  static const String dev_kid = '920210131814587895';
+  static const String store_app_function = 'StoreApp_Function';
+  static const String store_app_function_check_store_list = 'check_store_list';
+  static const String store_app_function_store_app_login = 'store_app_login';
+  static const String func_type = 'C';
 
 }

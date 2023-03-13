@@ -1,12 +1,18 @@
-import 'package:brown_store/data/model/body/login_model.dart';
+import 'package:brown_store/data/model/body/login_model_request.dart';
+import 'package:brown_store/data/model/response/store_model.dart';
+import 'package:brown_store/provider/splash_provider.dart';
+import 'package:brown_store/utill/app_constants.dart';
+import 'package:brown_store/utill/strings_manager.dart';
 import 'package:brown_store/view/base/custom_dropdown.dart';
+import 'package:brown_store/view/base/custom_dropdown_obj.dart';
 import 'package:brown_store/view/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/services/device_info_service.dart';
 import '../../../helper/security_helper.dart';
 import '../../../provider/auth_provider.dart';
+import '../../../provider/parse_provider.dart';
+import '../../../provider/report_parse_provider.dart';
 import '../../../utill/dimensions.dart';
 import '../../base/custom_button.dart';
 import '../../base/custom_snackbar.dart';
@@ -27,7 +33,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   final List<String> _accounts = ["Cashier AM 1", "Cashier AM 2", "Cashier AM 3", "Cashier PM 1", "Cashier PM 2", "Cashier PM 3"];
   final List<String> _stores = ["Store1", "Store2", "Store3"];
    String _accountSelected = "";
-   String _storeSelected = "";
+   late Store _storeSelected;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +49,8 @@ class _SignInWidgetState extends State<SignInWidget> {
   }
   @override
   Widget build(BuildContext context) {
+    List<Store>? storeList = Provider.of<SplashProvider>(context, listen: false).storeModelList.result;
+
     Provider.of<AuthProvider>(context, listen: false).isActiveRememberMe;
 
     return Consumer<AuthProvider>(
@@ -57,7 +65,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                     bottom: Dimensions.PADDING_SIZE_SMALL),
                     child: CustomDropdown(
                       border: true,
-                      hintText: "Select Account",
+                      hintText: AppStrings.select_account,
                       items: _accounts,
                       onChanged: (text){
                         setState(() {
@@ -74,7 +82,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                       border: true,
                       isPassword: true,
                       //prefixIconImage: Images.lock,
-                      hintText: "Password",
+                      hintText: AppStrings.password,
                       //focusNode: _passwordFocus,
                       textInputAction: TextInputAction.done,
                       controller: _passwordController,
@@ -83,12 +91,12 @@ class _SignInWidgetState extends State<SignInWidget> {
                 const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                 Container(margin: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE, right: Dimensions.PADDING_SIZE_LARGE,
                     bottom: Dimensions.PADDING_SIZE_SMALL),
-                    child: CustomDropdown(
+                    child: CustomDropdownObj(
                       border: true,
-                      hintText: "Select Store",
-                      items: _stores,
-                      onChanged: (text){
-                        _storeSelected = text;
+                      hintText: AppStrings.select_store,
+                      items: storeList??[],
+                      onChanged: (item){
+                        _storeSelected = item;
                       },)),
                 const SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                 Padding(
@@ -96,48 +104,70 @@ class _SignInWidgetState extends State<SignInWidget> {
                   child: CustomButton(
                     borderRadius: 100,
                     backgroundColor: Theme.of(context).primaryColor,
-                    btnTxt: "Login",
+                    btnTxt: AppStrings.login,
                     onTap: ()  {
-                      String dev_kid = "420161780354106364";
-                      String user_id =  _accountSelected;
-                      String user_name = "Housan Sokrey";
+                      String user_id = _accountSelected;
                       String password = _passwordController.text.trim();
-                      String store_id = "520180843155605044";
+                      String store_id = _storeSelected.storeId!;
 
-                      //String phoneEmail = "sovanrath.phorn@codingate.com";
-                      // String data_encs = SecurityHelper.getDataEncryptionKey(
-                      //   dataTypes: [
-                      //        "${DeviceInfoService().id + DeviceInfoService().os + DeviceInfoService().info + DeviceInfoService().name + phoneEmail}LOGIN_ACCOUNT",
-                      //   ],
-                      // );
-                      // print("enc= $data_encs");
+                      String data_enc = SecurityHelper.getDataEncryptionKey(
+                        dataTypes: [
+                             "${store_id}USER_CASHIER_LOGIN",
+                        ],
+                        dev_kit: AppConstants.dev_kid
+                      );
 
-                      String data_enc = "MjAyMzAzdbVRySceSNZoQSt0eUglmjoenrKxBFfNagrjwrZhbIetKZd0ZMQjCi53nfp82qK3fBjIdEBkbz2jzDobH/8zWA==";
+                      print("enc= $data_enc");
 
-                      // if (user_id.isEmpty) {
-                      //   showCustomSnackBar("Select User id", context);
-                      // }else if (password.isEmpty) {
-                      //   showCustomSnackBar("Enter Password", context);
-                      // }else {authProvider.login(context,LoginModel(devKid: dev_kid, username: user_name ,userId: user_id, password: password, storeId: store_id, dataEnc: data_enc)).then((status) async {
-                      //   if (status.response!.statusCode == 200) {
+
+                      if (user_id.isEmpty) {
+                        showCustomSnackBar("Select User id", context);
+                      }else if (password.isEmpty) {
+                        showCustomSnackBar("Enter Password", context);
+                      }else {authProvider.login(context,LoginModelRequest(devKid: AppConstants.dev_kid, function:AppConstants.store_app_function, storeappFunction:  AppConstants.store_app_function_store_app_login,datas: Datas(username: _accountSelected, userpassword: password, storeid: store_id, dataEncryption: data_enc)), _storeSelected).then((status) async {
+                        if (status.response!.statusCode == 200) {
+
+                          // if (authProvider.isActiveRememberMe) {
+                          //    authProvider.saveUserNumberAndPassword(password);
+                          // } else {
+                          //    authProvider.clearUserEmailAndPassword();
+                          // }
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0, _storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1, _storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(context, 2, _storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(context, 3, _storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4,_storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5, _storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1,_storeSelected.storeId!);
+                          Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1, _storeSelected.storeId!);
+
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
+
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
+
+                        }
+                      });
+                      }
+
+                      // String _password = _passwordController.text.trim();
+                      // print("Account: $_accountSelected, Pass: $_password, Store: $_storeSelected");
                       //
-                      //     if (authProvider.isActiveRememberMe) {
-                      //       // authProvider.saveUserNumberAndPassword(password);
-                      //     } else {
-                      //       // authProvider.clearUserEmailAndPassword();
-                      //     }
-                      //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
-                      //   }
-                      // });
-                      // }
-
-                      String _password = _passwordController.text.trim();
-                      print("Account: $_accountSelected, Pass: $_password, Store: $_storeSelected");
-
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const DashboardScreen()));
+                      // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const DashboardScreen()));
                     },
                   ),
-                )
+                ),
+                const SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                authProvider.isLoading?
+                Center( child: CircularProgressIndicator( valueColor: new AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                  )
+                ):Container(),
+
               ],
             ),
           ),

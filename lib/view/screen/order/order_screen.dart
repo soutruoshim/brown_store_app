@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:brown_store/data/model/body/login_model_info.dart';
 import 'package:brown_store/view/screen/order/page/order_all.dart';
 import 'package:brown_store/view/screen/order/page/order_cancelled.dart';
 import 'package:brown_store/view/screen/order/page/order_cooking.dart';
@@ -9,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/auth_provider.dart';
 import '../../../provider/parse_provider.dart';
 import '../../../utill/images.dart';
 class OrderScreen extends StatefulWidget {
@@ -28,6 +32,13 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final String userInfo = Provider.of<AuthProvider>(context,listen: false).getUserInfo();
+    Map<String, dynamic> jsonUserInfo = jsonDecode(userInfo);
+    var userModelInfo = LoginModelInfo.fromJson(jsonUserInfo);
+
+    print(userModelInfo.userId);
+    print(userModelInfo.storeId);
+
     return DefaultTabController(
 
       length: 7,
@@ -41,7 +52,7 @@ class _OrderScreenState extends State<OrderScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           Image.asset(Images.logo_with_app_name, height: 35),
-          Text("Stay: BROWN BKK", style: TextStyle(color: Colors.green, fontSize: 16),)
+          Text("Stay: ${userModelInfo.storeName}", style: TextStyle(color: Colors.green, fontSize: 16),)
         ],),),
           bottom: TabBar(
             isScrollable: true,

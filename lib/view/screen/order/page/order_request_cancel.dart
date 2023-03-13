@@ -25,8 +25,8 @@ class _OrderRequestCancelState extends State<OrderRequestCancel> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(
-        context, -1);
+    // Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(
+    //     context, -1);
   }
 
 

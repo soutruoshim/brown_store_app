@@ -25,8 +25,8 @@ class _OrderDoneState extends State<OrderDone> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ParseProvider>(context, listen: false).getOrderListDone(
-        context, 5);
+    // Provider.of<ParseProvider>(context, listen: false).getOrderListDone(
+    //     context, 5);
   }
 
 

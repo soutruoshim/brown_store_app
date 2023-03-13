@@ -1,6 +1,6 @@
-import 'dart:math';
-
-import 'package:brown_store/data/model/body/login_model.dart';
+import 'package:brown_store/data/model/body/login_model_info.dart';
+import 'package:brown_store/data/model/body/login_model_request.dart';
+import 'package:brown_store/data/model/response/store_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -57,19 +57,32 @@ class AuthProvider with ChangeNotifier {
   FocusNode shopNameNode = FocusNode();
   FocusNode shopAddressNode = FocusNode();
 
-  Future<ApiResponse> login(BuildContext context, LoginModel loginModel) async {
+  Future<ApiResponse> login(BuildContext context, LoginModelRequest loginModelRequest, Store store) async {
     _isLoading = true;
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.login(loginModel: loginModel);
+    ApiResponse apiResponse = await authRepo.login(loginModelRequest: loginModelRequest);
 
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       _isLoading = false;
+
       Map map = apiResponse.response!.data;
+
+      if(map["code"] == "100"){
+
+         String? user_id     = loginModelRequest.datas!.username;
+         String? store_id   = store.storeId;
+         String? store_name = store.name;
+
+         authRepo.saveUserInfo(LoginModelInfo(userId: user_id, storeId: store_id, storeName: store_name));
+
+      }else{
+        _isLoading = false;
+        showCustomSnackBar("invalid credential or account not verified yet", context);
+      }
       // String token = map["token"];
       // authRepo.saveUserToken(token);
-      print("ktv ${map["code"]}");
-
+      // print("ktv ${map["code"]}");
     } else {
       _isLoading = false;
       showCustomSnackBar("invalid credential or account not verified yet", context);
@@ -129,8 +142,17 @@ class AuthProvider with ChangeNotifier {
     return authRepo.clearUserNumberAndPassword();
   }
 
+  String getUserInfo() {
+    return authRepo.getUserInfo();
+  }
+
   String getUserToken() {
     return authRepo.getUserToken();
+  }
+
+  Future<bool> logOut()async {
+     authRepo.clearUserSharedData();
+     return isLoggedIn();
   }
 
   String _verificationCode = '';

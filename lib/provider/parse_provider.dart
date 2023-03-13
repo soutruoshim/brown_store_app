@@ -21,7 +21,7 @@ class ParseProvider with ChangeNotifier {
   QueryBuilder<ParseObject> get getQueryAll => _queryBuilderAll!;
 
 
-  late QueryBuilder<ParseObject>? _queryBuilderPending;
+  late QueryBuilder<ParseObject> _queryBuilderPending;
   QueryBuilder<ParseObject> get getQueryPending => _queryBuilderPending!;
 
   late QueryBuilder<ParseObject>? _queryBuilderAccepted;
@@ -43,11 +43,12 @@ class ParseProvider with ChangeNotifier {
   QueryBuilder<ParseObject> get getQueryBuilderCancel => _queryBuilderCancel!;
 
 
-  Future<void> getOrderListAll(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListAll(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderAll = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          ..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("store_id", store_id)
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderAll!.query();
         print("query order all status");
@@ -58,14 +59,14 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListPending(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListPending(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPending = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
-          ..whereEqualTo("status", orderStatus);
-          //..whereContains("lastTry", getFormatedDate(DateTime.now()))
-          //..orderByDescending("createdAt");
+          ..whereEqualTo("store_id", store_id)
+          ..whereEqualTo("status", orderStatus)
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
+          ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order pending status");
         notifyListeners();
@@ -75,14 +76,14 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListAccepted(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListAccepted(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderAccepted = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-         // ..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("store_id", store_id)
           ..whereEqualTo("status", orderStatus)
-        //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
-          ..orderByDescending("updatedAt");
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
+          ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order accepted status");
         notifyListeners();
@@ -92,13 +93,13 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListFinishCooking(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListFinishCooking(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderFinishCooking = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("store_id", store_id)
           ..whereEqualTo("status", orderStatus)
-        //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order accepted status");
@@ -109,13 +110,13 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListPickup(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListPickup(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPickup = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("store_id", store_id)
           ..whereEqualTo("status", orderStatus)
-        //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order accepted status");
@@ -126,13 +127,13 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListDone(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListDone(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderDone = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
+          ..whereEqualTo("store_id", store_id)
           ..whereEqualTo("status", orderStatus)
-        //..whereEqualTo("lastTry", "2023-01-18 16:57:11")
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order done status");
@@ -144,12 +145,13 @@ class ParseProvider with ChangeNotifier {
   }
 
 
-  Future<void> getOrderListRequestCancel(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListRequestCancel(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderRequestCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
-          ..whereEqualTo('status', -1)
+          ..whereEqualTo("store_id", store_id)
+          ..whereEqualTo("status", orderStatus)
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         notifyListeners();
       }
@@ -158,12 +160,13 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> getOrderListCancel(BuildContext context, int orderStatus) async {
+  Future<void> getOrderListCancel(BuildContext context, int orderStatus, String store_id) async {
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderCancel = await QueryBuilder<ParseObject>(ParseObject('Orders'))
-          //..whereEqualTo("store_id", "820161780837506397")
-          ..whereEqualTo('status', -2)
+          ..whereEqualTo("store_id", store_id)
+          ..whereEqualTo("status", orderStatus)
+          ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         notifyListeners();
       }
@@ -202,25 +205,25 @@ class ParseProvider with ChangeNotifier {
 
     if(_orderTypeIndex == 0){
       _orderType = 'all';
-      getOrderListAll(context, 0);
+      //getOrderListAll(context, 0);
     }else if(_orderTypeIndex == 1){
       _orderType = 'pending';
-      getOrderListPending(context, 1);
+      //getOrderListPending(context, 1);
     }else if(_orderTypeIndex == 2){
       _orderType = 'confirmed';
-      getOrderListAll(context, 2);
+      //getOrderListAll(context, 2);
     }else if(_orderTypeIndex == 3){
       _orderType = 'processing';
-      getOrderListAll(context, 3);
+      //getOrderListAll(context, 3);
     }else if(_orderTypeIndex == 4){
       _orderType = 'delivered';
-      getOrderListAll(context, 4);
+      //getOrderListAll(context, 4);
     }else if(_orderTypeIndex == 5){
       _orderType = 'return';
-      getOrderListAll(context, 5);
+      //getOrderListAll(context, 5);
     }else if(_orderTypeIndex == 6){
       _orderType = 'out_for_delivery';
-      getOrderListAll(context, 6);
+      //getOrderListAll(context, 6);
     }
     if(notify){
       notifyListeners();

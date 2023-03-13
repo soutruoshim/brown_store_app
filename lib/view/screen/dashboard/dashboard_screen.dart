@@ -2,10 +2,14 @@ import 'package:brown_store/view/screen/product/product_screen.dart';
 import 'package:brown_store/view/screen/report/report_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:provider/provider.dart';
+import '../../../provider/auth_provider.dart';
 import '../../../utill/color_resources.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
 import '../../../utill/styles.dart';
+import '../../base/confirmation_dialog.dart';
+import '../auth/auth_screen.dart';
 import '../order/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -113,7 +117,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(Images.logo_with_app_name, height: 35),
-                    Text("Stay: BROWN BKK", style: TextStyle(color: Colors.green, fontSize: 16),)
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<AuthProvider>(context, listen: false).logOut().then((value) =>  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => AuthScreen())));
+                      },
+                      child: Text("Logout", style: TextStyle(color: Colors.red, fontSize: 16),),
+                    )
+
                   ],
                 ),
                 SizedBox(height: 32,),

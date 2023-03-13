@@ -1,7 +1,9 @@
+import 'package:brown_store/data/model/body/store_model_request.dart';
 import 'package:flutter/material.dart';
 
 import '../data/model/response/base/api_response.dart';
 import '../data/model/response/config_model.dart';
+import '../data/model/response/store_model.dart';
 import '../data/repository/splash_repo.dart';
 import '../helper/api_checker.dart';
 
@@ -9,6 +11,8 @@ class SplashProvider extends ChangeNotifier {
   final SplashRepo splashRepo;
 
   SplashProvider({required this.splashRepo});
+
+  late StoreModel _storeModel;
 
   late ConfigModel _configModel;
   late BaseUrls _baseUrls;
@@ -23,11 +27,14 @@ class SplashProvider extends ChangeNotifier {
 
   List<String> get unitList => _unitList;
 
+
   int get unitIndex => _unitIndex;
 
   int get colorIndex => _colorIndex;
   List<String> _shippingTypeList = [];
   String _shippingStatusType = '';
+
+  StoreModel get storeModelList => _storeModel;
 
   List<String> get shippingTypeList => _shippingTypeList;
 
@@ -71,6 +78,28 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
     return isSuccess;
   }
+
+  Future<bool> initStores(BuildContext context, StoreModelRequest storeModelRequest) async {
+    _hasConnection = true;
+    //print("data " + storeModelRequest.toJson().toString());
+    ApiResponse apiResponse = await splashRepo.getStoreList(storeModelRequest);
+    bool isSuccess;
+    if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
+      _storeModel = StoreModel.fromJson(apiResponse.response!.data);
+      //print(apiResponse.response!.data);
+      isSuccess = true;
+    } else {
+      isSuccess = false;
+      ApiChecker.checkApi(context, apiResponse);
+      if (apiResponse.error.toString() ==
+          'Connection to API server failed due to internet connection') {
+        _hasConnection = false;
+      }
+    }
+    notifyListeners();
+    return isSuccess;
+  }
+
 
   void setFirstTimeConnectionCheck(bool isChecked) {
     _firstTimeConnectionCheck = isChecked;

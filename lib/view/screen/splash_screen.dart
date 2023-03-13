@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:brown_store/data/model/body/store_model_request.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../data/model/body/login_model_info.dart';
 import '../../helper/network_info.dart';
+import '../../helper/security_helper.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/parse_provider.dart';
 import '../../provider/splash_provider.dart';
+import '../../utill/app_constants.dart';
 import '../../utill/images.dart';
 import 'dashboard/dashboard_screen.dart';
 
@@ -22,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     NetworkInfo.checkConnectivity(context);
+
     // Provider.of<SplashProvider>(context, listen: false)
     //     .initConfig(context)
     //     .then((bool isSuccess) {
@@ -30,37 +36,52 @@ class _SplashScreenState extends State<SplashScreen> {
     //         .initShippingTypeList(context, '');
     //   }
     // });
-    Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(context, 2);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(context, 3);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1);
-    Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1);
-
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
-
-
-    Timer(const Duration(seconds: 2), () {
-      if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-        Provider.of<AuthProvider>(context, listen: false)
-            .updateToken(context);
-
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => const DashboardScreen()));
-      } else {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => AuthScreen()));
-      }
-    }
+    String data_enc = SecurityHelper.getDataEncryptionKey(
+        dataTypes: [
+          "CSTORE_LIST",
+        ],
+        dev_kit: AppConstants.dev_kid
     );
+    Provider.of<SplashProvider>(context, listen: false)
+        .initStores(context, StoreModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_check_store_list, datas: Datas(dataEncryption: data_enc, func: AppConstants.func_type)));
+    Timer(const Duration(seconds: 3), () async {
+          if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+
+                final String userInfo = Provider.of<AuthProvider>(context,listen: false).getUserInfo();
+                Map<String, dynamic> jsonUserInfo = jsonDecode(userInfo);
+                var userModelInfo = LoginModelInfo.fromJson(jsonUserInfo);
+                print("store save id: ${userModelInfo.storeId}");
+
+                if(userModelInfo.storeId != null){
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0, userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListPending(context, 1, userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListAccepted(context, 2, userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListFinishCooking(context, 3, userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListPickup(context, 4,userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5, userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1,userModelInfo.storeId!);
+                  await Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1, userModelInfo.storeId!);
+
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
+                }
+
+            // Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //     builder: (BuildContext context) => const DashboardScreen()));
+          } else {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) => AuthScreen()));
+          }
+          }
+        );
+
   }
 
   @override

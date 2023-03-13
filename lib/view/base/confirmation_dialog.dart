@@ -1,4 +1,5 @@
 
+import 'package:brown_store/utill/strings_manager.dart';
 import 'package:flutter/material.dart';
 import '../../utill/dimensions.dart';
 import '../../utill/images.dart';
@@ -46,14 +47,14 @@ class ConfirmationDialog extends StatelessWidget {
                   Expanded(child: InkWell(
                     onTap: () => Navigator.pop(context),
                     child: CustomButton(
-                      btnTxt: "No",
+                      btnTxt: AppStrings.no_string,
                       backgroundColor: Colors.red,
                       isColor: true, onTap: () => Navigator.pop(context), borderRadius: 20,
                     ),
                   )),
                   SizedBox(width: Dimensions.PADDING_SIZE_LARGE),
                   Expanded(child: CustomButton(
-                    btnTxt: "Confirm",
+                    btnTxt: AppStrings.confirm,
                     onTap: () =>  onYesPressed(),
                     backgroundColor: Colors.green,
                     isColor: true, borderRadius: 20,
