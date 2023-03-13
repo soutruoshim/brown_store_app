@@ -57,6 +57,7 @@ class _OrderScreenState extends State<OrderScreen> {
           bottom: TabBar(
             isScrollable: true,
             onTap: (index){
+              print("clicked");
                setState(() {
 
                });
@@ -76,12 +77,12 @@ class _OrderScreenState extends State<OrderScreen> {
         ),
         body: TabBarView(
           children: [
-            const OrderPending(),
-            const OrderCooking(),
-            const OrderPickup(),
-            const OrderDone(),
-            const OrderRequestCancel(),
-            const OrderCancelled(),
+             OrderPending(),
+             OrderCooking(),
+             OrderPickup(),
+             OrderDone(),
+             OrderRequestCancel(),
+             OrderCancelled(),
             OrderAll(),
           ],
         ),

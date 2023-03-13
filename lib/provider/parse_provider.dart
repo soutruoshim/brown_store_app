@@ -21,7 +21,7 @@ class ParseProvider with ChangeNotifier {
   QueryBuilder<ParseObject> get getQueryAll => _queryBuilderAll!;
 
 
-  late QueryBuilder<ParseObject> _queryBuilderPending;
+  late QueryBuilder<ParseObject>? _queryBuilderPending;
   QueryBuilder<ParseObject> get getQueryPending => _queryBuilderPending!;
 
   late QueryBuilder<ParseObject>? _queryBuilderAccepted;

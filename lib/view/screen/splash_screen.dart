@@ -71,6 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
+
                 }
 
             // Navigator.of(context).pushReplacement(MaterialPageRoute(
