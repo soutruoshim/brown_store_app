@@ -181,6 +181,8 @@ class AppConstants {
   static const String store_app_function = 'StoreApp_Function';
   static const String store_app_function_check_store_list = 'check_store_list';
   static const String store_app_function_store_app_login = 'store_app_login';
+  static const String store_app_function_check_all_menu_status = 'check_all_menu_status';
+  static const String store_app_function_dis_enable_menu = 'dis_enable_menu';
   static const String func_type = 'C';
 
 }

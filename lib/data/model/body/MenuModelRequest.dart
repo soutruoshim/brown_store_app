@@ -1,17 +1,17 @@
-class StoreModelRequest {
+class MenuModelRequest {
   String? devKid;
   String? function;
   String? storeappFunction;
-  DatasStoreModelRequest? datas;
+  DatasMenuRequest? datas;
 
-  StoreModelRequest(
+  MenuModelRequest(
       {this.devKid, this.function, this.storeappFunction, this.datas});
 
-  StoreModelRequest.fromJson(Map<String, dynamic> json) {
+  MenuModelRequest.fromJson(Map<String, dynamic> json) {
     devKid = json['dev_kid'];
     function = json['function'];
     storeappFunction = json['storeapp_function'];
-    datas = json['datas'] != null ? new DatasStoreModelRequest.fromJson(json['datas']) : null;
+    datas = json['datas'] != null ? new DatasMenuRequest.fromJson(json['datas']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -26,21 +26,24 @@ class StoreModelRequest {
   }
 }
 
-class DatasStoreModelRequest {
-  String? dataEncryption;
+class DatasMenuRequest {
   String? func;
+  String? storeid;
+  String? dataEncryption;
 
-  DatasStoreModelRequest({this.dataEncryption, this.func});
+  DatasMenuRequest({this.func, this.storeid, this.dataEncryption});
 
-  DatasStoreModelRequest.fromJson(Map<String, dynamic> json) {
-    dataEncryption = json['data_encryption'];
+  DatasMenuRequest.fromJson(Map<String, dynamic> json) {
     func = json['func'];
+    storeid = json['storeid'];
+    dataEncryption = json['data_encryption'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['data_encryption'] = this.dataEncryption;
     data['func'] = this.func;
+    data['storeid'] = this.storeid;
+    data['data_encryption'] = this.dataEncryption;
     return data;
   }
 }

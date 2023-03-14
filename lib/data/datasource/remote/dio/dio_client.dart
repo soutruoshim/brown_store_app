@@ -76,7 +76,7 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      print(response);
+      //print(response);
 
       return response;
     } on FormatException catch (_) {

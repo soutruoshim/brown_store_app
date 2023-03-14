@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:brown_store/provider/parse_provider.dart';
+import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/provider/theme_provider.dart';
 import 'package:brown_store/utill/strings_manager.dart';
@@ -53,6 +54,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ParseProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ReportParseProvider>()),
     ],
     child: MyApp(),

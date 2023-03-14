@@ -1,5 +1,7 @@
 import 'package:brown_store/data/repository/parse_repo.dart';
+import 'package:brown_store/data/repository/product_repo.dart';
 import 'package:brown_store/provider/parse_provider.dart';
+import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -24,6 +26,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(), dioClient: sl()));
   sl.registerLazySingleton(() => ParseRepo());
   sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerLazySingleton(() => ProductRepo(sharedPreferences: sl(), dioClient: sl()));
 
 
   // Provider
@@ -32,6 +35,7 @@ Future<void> init() async {
   sl.registerFactory(() => AuthProvider(authRepo: sl()));
   sl.registerFactory(() => ParseProvider(parseRepo: sl()));
   sl.registerFactory(() => ReportParseProvider(parseRepo: sl()));
+  sl.registerFactory(() => ProductProvider(productRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
