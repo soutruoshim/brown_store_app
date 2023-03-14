@@ -12,6 +12,8 @@ import '../view/base/custom_snackbar.dart';
 class ParseProvider with ChangeNotifier {
   final ParseRepo parseRepo;
 
+  bool isLoading = false;
+
   int _orderTypeIndex = 0;
   int get orderTypeIndex => _orderTypeIndex;
 
@@ -21,7 +23,7 @@ class ParseProvider with ChangeNotifier {
   QueryBuilder<ParseObject> get getQueryAll => _queryBuilderAll!;
 
 
-  late QueryBuilder<ParseObject>? _queryBuilderPending;
+  late QueryBuilder<ParseObject>? _queryBuilderPending = null;
   QueryBuilder<ParseObject> get getQueryPending => _queryBuilderPending!;
 
   late QueryBuilder<ParseObject>? _queryBuilderAccepted;
@@ -52,6 +54,7 @@ class ParseProvider with ChangeNotifier {
           ..orderByDescending("createdAt");
         //_queryBuilderAll!.query();
         print("query order all status");
+
         notifyListeners();
       }
     }).catchError((dynamic _) {
@@ -60,6 +63,7 @@ class ParseProvider with ChangeNotifier {
   }
 
   Future<void> getOrderListPending(BuildContext context, int orderStatus, String store_id) async {
+    isLoading = true;
     parseRepo.initData().then((bool success) async {
       if (success) {
         _queryBuilderPending = await QueryBuilder<ParseObject>(ParseObject('Orders'))
@@ -69,6 +73,7 @@ class ParseProvider with ChangeNotifier {
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
         print("query order pending status");
+        isLoading = false;
         notifyListeners();
       }
     }).catchError((dynamic _) {

@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
 
-                final String userInfo = Provider.of<AuthProvider>(context,listen: false).getUserInfo();
+                final String userInfo = await Provider.of<AuthProvider>(context,listen: false).getUserInfo();
                 Map<String, dynamic> jsonUserInfo = jsonDecode(userInfo);
                 var userModelInfo = LoginModelInfo.fromJson(jsonUserInfo);
                 print("store save id: ${userModelInfo.storeId}");

@@ -49,11 +49,12 @@ class _OrderPendingState extends State<OrderPending> {
   }
   _buildListAll() {
     Key refreshKey = UniqueKey();
-    return Container(
+    return context.watch<ParseProvider>().isLoading? Container(): Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child:ParseLiveListWidget<ParseObject>(
-          query: Provider.of<ParseProvider>(context, listen: false).getQueryPending,
+          //query: Provider.of<ParseProvider>(context, listen: false).getQueryPending,
+          query: context.watch<ParseProvider>().getQueryPending,
           key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
