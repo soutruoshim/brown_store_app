@@ -9,9 +9,11 @@ import 'package:brown_store/view/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/model/body/MenuModelRequest.dart';
 import '../../../helper/security_helper.dart';
 import '../../../provider/auth_provider.dart';
 import '../../../provider/parse_provider.dart';
+import '../../../provider/product_provider.dart';
 import '../../../provider/report_parse_provider.dart';
 import '../../../utill/dimensions.dart';
 import '../../base/custom_button.dart';
@@ -148,6 +150,19 @@ class _SignInWidgetState extends State<SignInWidget> {
                           Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
                           Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
                           Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
+
+                          //==========product=======
+                          String data_enc_menu = SecurityHelper.getDataEncryptionKey(
+                              dataTypes: [
+                                "CSTORE_LIST_MENU_STATUS",
+                              ],
+                              dev_kit: AppConstants.dev_kid
+                          );
+
+
+                          MenuModelRequest menuModelRequest = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_check_all_menu_status, datas: DatasMenuRequest(dataEncryption: data_enc_menu,storeid: _storeSelected.storeId, func: AppConstants.func_type));
+                          Provider.of<ProductProvider>(context, listen: false).getMenuList(context, menuModelRequest);
+
 
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
 
