@@ -46,16 +46,16 @@ class _OrderPickupState extends State<OrderPickup> {
     return  _buildListAll();
   }
   _buildListAll() {
-    Key refreshKey = UniqueKey();
+    //Key refreshKey = UniqueKey();
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderFinishCooking,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-
+          lazyLoading: false,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),

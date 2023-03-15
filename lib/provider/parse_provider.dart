@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
+import '../helper/api_checker.dart';
 import '../utill/images.dart';
 import '../view/base/confirmation_dialog.dart';
 import '../view/base/custom_snackbar.dart';
@@ -186,25 +188,36 @@ class ParseProvider with ChangeNotifier {
   }
 
   Future<void> updateOrder(BuildContext context, String id, int status) async {
+    ProgressDialog pd = ProgressDialog(context: context);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return ConfirmationDialog(icon: Images.deny_w,
             title : "Do you want to update this order to ${StatusCheck.statusText(status)} ?",
             onYesPressed: () async {
+
+              pd.show(max: 100, msg: 'Please waiting...server in working. Thank you!');
               var order = ParseObject('Orders')
                 ..objectId = id
                 ..set('status', status);
               await order.save();
-              Navigator.pop(context);
+
 
               var store_id = getLoginInfo(context).storeId!;
 
               if(store_id != null){
-                Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
-                Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status + 1, store_id);
+                 if(status == 5){
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3,store_id );
+                 }else{
+                   Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status - 1,store_id );
+                 }
+                 Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
               }
 
+              if(pd.isOpen()){
+                pd.close();
+              }
+              Navigator.pop(context);
               showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
             }, description: 'The order status will be update to ${StatusCheck.statusText(status)}',
 
@@ -247,12 +260,5 @@ class ParseProvider with ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
-  }
-
-  getFormatedDate(_date) {
-    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
-    var inputDate = inputFormat.parse(_date.toString());
-    var outputFormat = DateFormat('yyyy-MM-dd');
-    return outputFormat.format(inputDate);
   }
 }

@@ -52,7 +52,7 @@ class _OrderDoneState extends State<OrderDone> {
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderDone,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
 

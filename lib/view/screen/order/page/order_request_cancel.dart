@@ -24,11 +24,10 @@ class _OrderRequestCancelState extends State<OrderRequestCancel> {
   ScrollController scrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
   int index = 0;
-  final LiveQuery liveQuery = LiveQuery();
+
   @override
   void initState() {
     super.initState();
-    onUpdateOrder(context, liveQuery, getLoginInfo(context), -1);
   }
 
 
@@ -54,7 +53,7 @@ class _OrderRequestCancelState extends State<OrderRequestCancel> {
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).queryBuilderRequestCancel,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
 

@@ -6,7 +6,6 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/body/login_model_info.dart';
-import '../provider/auth_provider.dart';
 import '../provider/report_parse_provider.dart';
 
 Future<void> onCreateOrder(BuildContext context, LiveQuery liveQuery, LoginModelInfo userModelInfo, int status) async {
@@ -15,8 +14,7 @@ Future<void> onCreateOrder(BuildContext context, LiveQuery liveQuery, LoginModel
   Subscription subscription = await liveQuery.client.subscribe(query);
 
   subscription.on(LiveQueryEvent.create, (value) {
-    print("inserted");
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status, getLoginInfo(context).storeId!);
+     Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status, getLoginInfo(context).storeId!);
   });
 }
 

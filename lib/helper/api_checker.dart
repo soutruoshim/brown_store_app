@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../data/model/response/base/api_response.dart';
@@ -23,4 +24,11 @@ class ApiChecker {
       showCustomSnackBar(_errorMessage, context);
     }
   }
+}
+
+getFormatedDate(_date) {
+  var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
+  var inputDate = inputFormat.parse(_date.toString());
+  var outputFormat = DateFormat('yyyy-MM-dd');
+  return outputFormat.format(inputDate);
 }

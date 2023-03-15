@@ -53,10 +53,10 @@ class _OrderCookingState extends State<OrderCooking> {
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderAccepted,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-          lazyLoading: true,
+          lazyLoading: false,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),

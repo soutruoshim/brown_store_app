@@ -27,11 +27,11 @@ class _OrderPendingState extends State<OrderPending> {
   ScrollController scrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
   int index = 0;
-  final LiveQuery liveQuery = LiveQuery();
+  // final LiveQuery liveQuery = LiveQuery();
   @override
   void initState() {
     super.initState();
-    onCreateOrder(context, liveQuery, getLoginInfo(context), 1);
+
   }
 
 
@@ -48,10 +48,10 @@ class _OrderPendingState extends State<OrderPending> {
       child:ParseLiveListWidget<ParseObject>(
           //query: Provider.of<ParseProvider>(context, listen: false).getQueryPending,
           query: context.watch<ParseProvider>().getQueryPending,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-
+          lazyLoading: true,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),

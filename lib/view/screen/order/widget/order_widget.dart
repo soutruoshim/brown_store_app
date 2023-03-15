@@ -7,6 +7,7 @@ import 'package:brown_store/view/screen/order/order_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../../../../data/model/response/order.dart';
 import '../../../../helper/check_device.dart';
 import '../../../../utill/color_resources.dart';
@@ -282,10 +283,8 @@ class OrderWidget extends StatelessWidget {
     );
   }
 
-  void _updateOrder(BuildContext context, Order order, int status){
-       Provider.of<ParseProvider>(context, listen: false).updateOrder(context, order.objectId.toString(), status);
+  void _updateOrder(BuildContext context, Order order, int status) async{
+       await Provider.of<ParseProvider>(context, listen: false).updateOrder(context, order.objectId.toString(), status);
   }
-
-
 }
 

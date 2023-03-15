@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
+import '../helper/api_checker.dart';
+
 class ReportParseProvider with ChangeNotifier {
   final ParseRepo parseRepo;
 
@@ -29,6 +31,11 @@ class ReportParseProvider with ChangeNotifier {
 
   int _totalCancel = 0;
   int get getTotalCancel => _totalCancel;
+
+  void setTotalPending(int total){
+    _totalPending = total;
+    notifyListeners();
+  }
 
 
   Future<void> getReportOrderTotal(BuildContext context, int orderStatus, String store_id) async {
@@ -74,12 +81,5 @@ class ReportParseProvider with ChangeNotifier {
     }).catchError((dynamic _) {
        print("Error: ${_.toString()}");
     });
-  }
-
-  getFormatedDate(_date) {
-    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
-    var inputDate = inputFormat.parse(_date.toString());
-    var outputFormat = DateFormat('yyyy-MM-dd');
-    return outputFormat.format(inputDate);
   }
 }

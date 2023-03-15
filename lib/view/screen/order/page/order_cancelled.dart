@@ -52,7 +52,7 @@ class _OrderCancelledState extends State<OrderCancelled> {
       width: MediaQuery.of(context).size.width,
       child: ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).getQueryBuilderCancel,
-          key:refreshKey,
+          //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
 

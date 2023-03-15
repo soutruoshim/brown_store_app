@@ -41,7 +41,7 @@ class _OrderAllState extends State<OrderAll> {
       width: MediaQuery.of(context).size.width,
       child:  ParseLiveListWidget<ParseObject>(
           query: Provider.of<ParseProvider>(context, listen: false).getQueryAll,
-          key: UniqueKey(),
+          //key: UniqueKey(),
           duration: const Duration(seconds: 1),
           reverse: false,
           shrinkWrap: true,

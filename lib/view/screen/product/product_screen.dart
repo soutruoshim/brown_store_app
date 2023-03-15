@@ -94,6 +94,16 @@ class _ProductScreenState extends State<ProductScreen> {
                       placeholder: (ctx, url )=>Image.asset(Images.placeholder_image),
                       imageUrl: 'https://www.browncoffee.com.kh/uploads/ximg/item_menus/${menu.menuPicture}',
                       fit: BoxFit.cover, height: Dimensions.chat_image, width: Dimensions.chat_image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                              colorFilter: menu.status == "2"? ColorFilter.mode(Colors.black38, BlendMode.darken):ColorFilter.mode(Colors.white, BlendMode.darken)
+                              ),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -176,7 +186,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 dataEncryption: data_enc_menu
                             ));
                         MenuModelRequest menuModelRequest = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_check_all_menu_status, datas: DatasMenuRequest(dataEncryption: data_enc_menu,storeid: userModelInfo.storeId, func: AppConstants.func_type));
-                        pd.show(max: 100, msg: 'Please waiting... Thank you!');
+                        pd.show(max: 100, msg: 'Please waiting for server working... Thank you!');
                         await Provider.of<ProductProvider>(context, listen: false).setMenuStatus(context, menuModelStatusRequest, menuModelRequest);
                         if(pd.isOpen()){
                           pd.close();

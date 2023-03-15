@@ -26,20 +26,17 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-
+  final LiveQuery liveQuery = LiveQuery();
   @override
   void initState() {
     super.initState();
+    onCreateOrder(context, liveQuery, getLoginInfo(context), 1);
+    onUpdateOrder(context, liveQuery, getLoginInfo(context), -1);
   }
   @override
   Widget build(BuildContext context) {
 
-    final String userInfo = Provider.of<AuthProvider>(context,listen: false).getUserInfo();
-    Map<String, dynamic> jsonUserInfo = jsonDecode(userInfo);
-    var userModelInfo = LoginModelInfo.fromJson(jsonUserInfo);
-
-    print(userModelInfo.userId);
-    print(userModelInfo.storeId);
+    final userModelInfo = getLoginInfo(context);
 
     return DefaultTabController(
 

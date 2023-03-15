@@ -43,7 +43,7 @@ class Dimensions {
   static const double stock_out_image_size = 80.0;
   static const double image_size = 70.0;
   static const double profile_card_height = 70.0;
-  static const double chat_image = 60.0;
+  static const double chat_image = 80.0;
   static const double PRODUCT_IMAGE_SIZE = 50.0;
   static const double PRODUCT_IMAGE_SIZE_ITEM = 60.0;
   static const double HEIGHT_WIDTH_50 = 50.0;
