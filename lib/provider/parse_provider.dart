@@ -201,13 +201,8 @@ class ParseProvider with ChangeNotifier {
               var store_id = getLoginInfo(context).storeId!;
 
               if(store_id != null){
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1,store_id );
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, store_id);
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, store_id);
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, store_id);
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5, store_id);
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1, store_id);
-                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, store_id);
+                Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
+                Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status + 1, store_id);
               }
 
               showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
