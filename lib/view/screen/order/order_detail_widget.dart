@@ -36,7 +36,23 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
           // ],
         ),
         body: Container(
-          margin: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 8, left: MediaQuery.of(context).size.height / 8, top: 8, bottom: 8):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          margin: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 8, left: MediaQuery.of(context).size.height / 8, top: 8, bottom: 0):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(

@@ -30,7 +30,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     _screens = [
         OrderScreen(),
-        //OrderScreen(),
         ProductScreen(),
         ReportScreen(),
     ];

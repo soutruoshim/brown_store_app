@@ -69,6 +69,7 @@ class OrderWidget extends StatelessWidget {
                                   style: robotoRegular.copyWith(color: ColorResources.getPrimary(context),fontSize: Dimensions.FONT_SIZE_LARGE),),
                                 Text("${orderModel.orderNo}",
                                   style: robotoMedium.copyWith(color: Colors.black54,fontSize: Dimensions.FONT_SIZE_LARGE),),
+                                SizedBox(width: 16.0,),
                               ],
                             ),
                           ),
@@ -180,6 +181,28 @@ class OrderWidget extends StatelessWidget {
                                 child: Text(StatusCheck.statusText(orderModel.status),
                                     style: robotoRegular.copyWith(color: ColorResources.getPrimary(context))),
                               ),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (context) => OrderDetailWidget(order: orderModel,)
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      //border: Border.all(color: Colors.green, width: 1.0, style: BorderStyle.solid),
+                                      borderRadius: BorderRadius.circular(50)
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
+                                      child:Text("View",
+                                        style: robotoMedium.copyWith(color: Colors.white),),
+                                  ),
+                                ),
+                              )
 
                             ],
                           ),
@@ -270,6 +293,7 @@ class OrderWidget extends StatelessWidget {
                             // Container(height: Dimensions.ICON_SIZE_DEFAULT, width: Dimensions.ICON_SIZE_DEFAULT,
                             //   child: Image.asset(Images.pay_by_wallet_icon),),
                           ],),
+
 
                         ],),
                     ],),
