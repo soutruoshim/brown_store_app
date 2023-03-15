@@ -47,18 +47,18 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 1,
-                blurRadius: 7,
+                blurRadius: 2,
                 offset: Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
-          margin: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 8, left: MediaQuery.of(context).size.height / 8, top: 8, bottom: 0):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
+          margin: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 9, left: MediaQuery.of(context).size.height / 9, top: 8, bottom: 0):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Container(
               color: Colors.transparent,
               child: Padding(
-                padding: const EdgeInsets.only(top: 20.0, left: 17.0, right: 17.0, bottom: 0),
+                padding: Device.get().isTablet ? const EdgeInsets.only(top: 20.0, left: 36.0, right: 36.0, bottom: 0):const EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0, bottom: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -66,7 +66,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       "Pickup",
                       style:  TextStyle(
                         color: mainColor,
-                        fontSize: 15,
+                        fontSize: 16,
                         fontWeight: FontWeight.w900,
                         decoration: TextDecoration.none,
                       ),
@@ -81,7 +81,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Status",
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -90,7 +90,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           StatusCheck.statusText(widget.order.status),
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -104,7 +104,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Date",
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -113,7 +113,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           widget.order.otherdetails!.checkOutDateTime.toString(),
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -127,7 +127,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Store",
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -141,7 +141,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -156,7 +156,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Order ID",
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -165,7 +165,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           widget.order.orderNo.toString(),
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -195,7 +195,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             "Items",
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -208,7 +208,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.center,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -220,7 +220,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             "Amount",
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -265,7 +265,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: mainColor,
-                                          fontSize: 15,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                           decoration: TextDecoration.none,
                                         ),
@@ -279,7 +279,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: mainColor,
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.none,
                                       ),
@@ -294,7 +294,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                           color: mainColor,
-                                          fontSize: 15,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                           decoration: TextDecoration.none,
                                         ),
@@ -307,7 +307,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                       widget.order.ordereditems![index].price.toString(),
                                       style: TextStyle(
                                         color: mainColor,
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.none,
                                       ),
@@ -327,7 +327,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       color: mainColor,
-                                      fontSize: 15,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                       decoration: TextDecoration.none,
                                       fontStyle: FontStyle.italic,
@@ -353,14 +353,14 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                               child: SizedBox(
                                                 width: MediaQuery.of(context).size.width * 0.5,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(left: 15.0),
+                                                  padding: const EdgeInsets.only(left: 16.0),
                                                   child: Text(
                                                     widget.order.ordereditems![index].modifycode![indexmodify].toString(),
                                                     maxLines: 3,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       color: mainColor,
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight: FontWeight.w300,
                                                       decoration: TextDecoration.none,
                                                     ),
@@ -375,7 +375,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 '-',
                                                 style: TextStyle(
                                                   color: mainColor,
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w500,
                                                   decoration: TextDecoration.none,
                                                 ),
@@ -406,7 +406,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                               child: SizedBox(
                                                 width: MediaQuery.of(context).size.width * 0.5,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(left: 15.0),
+                                                  padding: const EdgeInsets.only(left: 16.0),
                                                   child: Text(
                                                     widget.order.ordereditems![index].addon![indexaddon].addoncode.toString(),
                                                     textAlign: TextAlign.start,
@@ -414,7 +414,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                     overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       color: mainColor,
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight: FontWeight.w300,
                                                       decoration: TextDecoration.none,
                                                     ),
@@ -429,7 +429,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   color: mainColor,
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w300,
                                                   decoration: TextDecoration.none,
                                                 ),
@@ -442,7 +442,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   color: mainColor,
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w300,
                                                   decoration: TextDecoration.none,
                                                 ),
@@ -455,7 +455,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 textAlign: TextAlign.end,
                                                 style: TextStyle(
                                                   color: mainColor,
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w300,
                                                   decoration: TextDecoration.none,
                                                 ),
@@ -489,7 +489,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Coupon",
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w800,
                             decoration: TextDecoration.none,
                           ),
@@ -517,7 +517,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             "Discount",
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.none,
                             ),
@@ -530,7 +530,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.none,
                             ),
@@ -542,7 +542,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             widget.order.otherdetails!.totalDiscount.toString(),
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.none,
                             ),
@@ -571,7 +571,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -584,7 +584,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -597,7 +597,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.end,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -614,13 +614,13 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(left: 16),
                             child: Text(
                               "Free Delivery",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 color: mainColor,
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.none,
                               ),
@@ -634,7 +634,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -647,7 +647,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -667,7 +667,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -680,7 +680,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -693,7 +693,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.end,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.none,
                             ),
@@ -711,7 +711,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Total Point Redeem",
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.none,
                           ),
@@ -720,7 +720,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           widget.order.otherdetails!.subTotalSpendPoint.toString() == "" ? "0" : widget.order.otherdetails!.subTotalSpendPoint.toString(),
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.none,
                           ),
@@ -759,7 +759,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           "Reward Earn",
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.none,
                           ),
@@ -775,13 +775,13 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               "Cash Back",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 color: mainColor,
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.none,
                               ),
@@ -795,7 +795,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -808,7 +808,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -823,12 +823,12 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
+                          padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
                             "Point Earned",
                             style: TextStyle(
                               color: mainColor,
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -838,7 +838,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           widget.order.otherdetails!.cashBackPoint.toString(),
                           style: TextStyle(
                             color: mainColor,
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.none,
                           ),
@@ -854,7 +854,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       height: 6,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 16,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),

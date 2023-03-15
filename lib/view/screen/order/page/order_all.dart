@@ -45,6 +45,7 @@ class _OrderAllState extends State<OrderAll> {
           duration: const Duration(seconds: 1),
           reverse: false,
           shrinkWrap: true,
+          lazyLoading: false,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),

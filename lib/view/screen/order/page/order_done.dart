@@ -55,7 +55,7 @@ class _OrderDoneState extends State<OrderDone> {
           //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-
+          lazyLoading: false,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),

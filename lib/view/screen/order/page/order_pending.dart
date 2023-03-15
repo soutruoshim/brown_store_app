@@ -51,7 +51,7 @@ class _OrderPendingState extends State<OrderPending> {
           //key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-          lazyLoading: true,
+          lazyLoading: false,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),
