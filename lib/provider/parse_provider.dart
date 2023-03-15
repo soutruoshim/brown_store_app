@@ -1,9 +1,12 @@
 import 'package:brown_store/data/repository/parse_repo.dart';
 import 'package:brown_store/helper/status_check.dart';
+import 'package:brown_store/helper/user_login_info.dart';
+import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:provider/provider.dart';
 
 import '../utill/images.dart';
 import '../view/base/confirmation_dialog.dart';
@@ -141,6 +144,7 @@ class ParseProvider with ChangeNotifier {
           ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         //_queryBuilderPending!.query();
+
         print("query order done status");
         notifyListeners();
       }
@@ -174,6 +178,7 @@ class ParseProvider with ChangeNotifier {
           ..whereContains("lastTry", getFormatedDate(DateTime.now()))
           ..orderByDescending("createdAt");
         notifyListeners();
+
       }
     }).catchError((dynamic _) {
       print("Error: ${_.toString()}");
@@ -192,6 +197,19 @@ class ParseProvider with ChangeNotifier {
                 ..set('status', status);
               await order.save();
               Navigator.pop(context);
+
+              var store_id = getLoginInfo(context).storeId!;
+
+              if(store_id != null){
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1,store_id );
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, store_id);
+              }
+
               showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
             }, description: 'The order status will be update to ${StatusCheck.statusText(status)}',
 

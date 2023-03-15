@@ -8,7 +8,10 @@ import 'package:provider/provider.dart';
 
 import '../../../../data/model/body/login_model_info.dart';
 import '../../../../data/model/response/order.dart';
+import '../../../../helper/parse_event.dart';
+import '../../../../helper/user_login_info.dart';
 import '../../../../provider/auth_provider.dart';
+import '../../../../provider/report_parse_provider.dart';
 
 
 
@@ -24,27 +27,17 @@ class _OrderPendingState extends State<OrderPending> {
   ScrollController scrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
   int index = 0;
+  final LiveQuery liveQuery = LiveQuery();
   @override
   void initState() {
     super.initState();
-
+    onCreateOrder(context, liveQuery, getLoginInfo(context), 1);
   }
+
 
 
   @override
   Widget build(BuildContext context) {
-
-    print("pending");
-    // return CustomScrollView(controller: _scrollController, slivers: [
-    //   SliverToBoxAdapter(
-    //     child: Column(
-    //       children: [
-    //         _buildListAll(),
-    //       ],
-    //     ),
-    //   )
-    // ]);
-
     return  _buildListAll();
   }
   _buildListAll() {
@@ -64,7 +57,8 @@ class _OrderPendingState extends State<OrderPending> {
           ),
           childBuilder: (BuildContext context,
               ParseLiveListElementSnapshot<ParseObject> snapshot) {
-            print("loading pending.........");
+            print("Loading pending.........");
+            //Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1, "120191051716312119");
             if (snapshot.failed) {
               return const Text('something went wrong!');
             } else if (snapshot.hasData) {

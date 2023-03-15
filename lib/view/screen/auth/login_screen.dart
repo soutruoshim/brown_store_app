@@ -33,7 +33,6 @@ class _SignInWidgetState extends State<SignInWidget> {
   late GlobalKey<FormState> _formKeyLogin;
 
   final List<String> _accounts = ["Cashier AM 1", "Cashier AM 2", "Cashier AM 3", "Cashier PM 1", "Cashier PM 2", "Cashier PM 3"];
-  final List<String> _stores = ["Store1", "Store2", "Store3"];
    String _accountSelected = "";
    late Store _storeSelected;
   @override
@@ -143,13 +142,13 @@ class _SignInWidgetState extends State<SignInWidget> {
                           Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1,_storeSelected.storeId!);
                           Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -1, _storeSelected.storeId!);
 
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1);
-                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1, _storeSelected.storeId!);
+                          Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, _storeSelected.storeId!);
 
                           //==========product=======
                           String data_enc_menu = SecurityHelper.getDataEncryptionKey(

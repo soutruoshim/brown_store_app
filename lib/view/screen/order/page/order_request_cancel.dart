@@ -7,6 +7,8 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../data/model/response/order.dart';
+import '../../../../helper/parse_event.dart';
+import '../../../../helper/user_login_info.dart';
 
 
 
@@ -22,11 +24,11 @@ class _OrderRequestCancelState extends State<OrderRequestCancel> {
   ScrollController scrollController = ScrollController();
   final ScrollController _scrollController = ScrollController();
   int index = 0;
+  final LiveQuery liveQuery = LiveQuery();
   @override
   void initState() {
     super.initState();
-    // Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(
-    //     context, -1);
+    onUpdateOrder(context, liveQuery, getLoginInfo(context), -1);
   }
 
 

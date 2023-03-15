@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'package:badges/badges.dart' as badges;
 import 'package:brown_store/data/model/body/login_model_info.dart';
+import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/order/page/order_all.dart';
 import 'package:brown_store/view/screen/order/page/order_cancelled.dart';
 import 'package:brown_store/view/screen/order/page/order_cooking.dart';
@@ -64,12 +65,70 @@ class _OrderScreenState extends State<OrderScreen> {
             },
 
             indicatorColor: Theme.of(context).primaryColor,
-            tabs: const [
-              Tab(text: "Pending"),
-              Tab(text: "Cooking",),
-              Tab(text: "Pick-up"),
-              Tab(text: "Done"),
-              Tab(text: "Request Cancel"),
+            tabs: [
+              //Tab(text: "Pending"),
+              Tab(
+                icon: badges.Badge(
+                  showBadge: context.watch<ReportParseProvider>().getTotalPending > 0 ?true:false,
+                  badgeStyle: badges.BadgeStyle(
+                    badgeColor: Colors.red,
+                  ),
+                  position: badges.BadgePosition.topEnd(top: -14),
+                  badgeContent: Text(
+                    context.watch<ReportParseProvider>().getTotalPending.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  child: Text("Pending"),
+                ),
+              ),
+              Tab(icon: badges.Badge(
+                showBadge: context.watch<ReportParseProvider>().getTotalConfirm > 0 ?true:false,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                position: badges.BadgePosition.topEnd(top: -14),
+                badgeContent: Text(
+                  context.watch<ReportParseProvider>().getTotalConfirm.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Text("Cooking"),
+              ),),
+              Tab(icon: badges.Badge(
+                showBadge: context.watch<ReportParseProvider>().getTotalFinishCooking > 0 ?true:false,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                position: badges.BadgePosition.topEnd(top: -14),
+                badgeContent: Text(
+                  context.watch<ReportParseProvider>().getTotalFinishCooking.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Text("Pick-up"),
+              ),),
+              Tab(icon: badges.Badge(
+                showBadge: false,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.green,
+                ),
+                position: badges.BadgePosition.topEnd(top: -14),
+                badgeContent: Text(
+                  context.watch<ReportParseProvider>().getTotal_totalDone.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Text("Done"),
+              ),),
+              Tab(icon: badges.Badge(
+                showBadge: context.watch<ReportParseProvider>().getTotalRequestCancel > 0 ?true:false,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                position: badges.BadgePosition.topEnd(top: -14),
+                badgeContent: Text(
+                  context.watch<ReportParseProvider>().getTotalRequestCancel.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Text("Request Cancel"),
+              ),),
               Tab(text: "Cancelled"),
               Tab(text: "All",),
             ],

@@ -53,7 +53,7 @@ class OngoingOrderWidget extends StatelessWidget {
                 color: Color(0xFF0F6E54),
                 text: "Delivery", index: 8,
                 subText: "Order",
-                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalDelivered,
+                numberOfOrder: Provider.of<ReportParseProvider>(context, listen: false).getTotalPickup,
               ),
             ],
           ),

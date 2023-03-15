@@ -56,7 +56,7 @@ class _OrderCookingState extends State<OrderCooking> {
           key:refreshKey,
           duration: const Duration(seconds: 1),
           reverse: false,
-
+          lazyLoading: true,
           listLoadingElement: Center(
             child: CircularProgressIndicator(),
           ),
