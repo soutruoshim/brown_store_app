@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:brown_store/data/model/body/MenuModelRequest.dart';
 import 'package:brown_store/data/model/body/store_model_request.dart';
+import 'package:brown_store/helper/user_login_info.dart';
 import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../data/model/body/login_model_info.dart';
 import '../../helper/network_info.dart';
 import '../../helper/security_helper.dart';
 import '../../provider/auth_provider.dart';
@@ -49,9 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
 
-                final String userInfo = await Provider.of<AuthProvider>(context,listen: false).getUserInfo();
-                Map<String, dynamic> jsonUserInfo = jsonDecode(userInfo);
-                var userModelInfo = LoginModelInfo.fromJson(jsonUserInfo);
+                var userModelInfo = await getLoginInfo(context);
                 print("store save id: ${userModelInfo.storeId}");
 
                 if(userModelInfo.storeId != null){

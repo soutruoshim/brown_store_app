@@ -74,7 +74,7 @@ class AuthProvider with ChangeNotifier {
          String? store_id   = store.storeId;
          String? store_name = store.name;
 
-         authRepo.saveUserInfo(LoginModelInfo(userId: user_id, storeId: store_id, storeName: store_name));
+         await authRepo.saveUserInfo(LoginModelInfo(userId: user_id, storeId: store_id, storeName: store_name));
 
       }else{
         _isLoading = false;
