@@ -39,7 +39,7 @@ class ReportParseProvider with ChangeNotifier {
 
 
   Future<void> getReportOrderTotal(BuildContext context, int orderStatus, String store_id) async {
-    print("starting report ");
+    //print("starting report ");
 
     parseRepo.initData().then((bool success) async {
       if (success) {

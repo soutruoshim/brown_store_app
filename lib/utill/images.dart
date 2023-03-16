@@ -148,5 +148,4 @@ class Images {
   static const String free_delivery = 'assets/image/free_delivery.png';
 
 
-
 }

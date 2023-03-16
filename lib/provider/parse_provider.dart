@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../helper/api_checker.dart';
+import '../helper/parse_event.dart';
 import '../utill/images.dart';
 import '../view/base/confirmation_dialog.dart';
 import '../view/base/custom_snackbar.dart';
@@ -187,6 +188,21 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
+  Future<void> liveQueryBooking(BuildContext context) async {
+    parseRepo.initData().then((bool success) async {
+      if (success) {
+        final LiveQuery liveQuery = LiveQuery();
+        onCreateOrder(context, liveQuery,
+            getLoginInfo(context), 1);
+        onUpdateOrder(context, liveQuery,
+            getLoginInfo(context), -1);
+        notifyListeners();
+      }
+    }).catchError((dynamic _) {
+      print("Error: ${_.toString()}");
+    });
+  }
+
   Future<void> updateOrder(BuildContext context, String id, int status) async {
     ProgressDialog pd = ProgressDialog(context: context);
     showDialog(
@@ -197,10 +213,12 @@ class ParseProvider with ChangeNotifier {
             onYesPressed: () async {
 
               pd.show(max: 100, msg: 'Please waiting...server in working. Thank you!');
+
               var order = ParseObject('Orders')
                 ..objectId = id
                 ..set('status', status);
               await order.save();
+
 
 
               var store_id = getLoginInfo(context).storeId!;
@@ -214,10 +232,10 @@ class ParseProvider with ChangeNotifier {
                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
               }
 
-              if(pd.isOpen()){
-                pd.close();
-              }
+              pd.close();
+
               Navigator.pop(context);
+
               showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
             }, description: 'The order status will be update to ${StatusCheck.statusText(status)}',
 

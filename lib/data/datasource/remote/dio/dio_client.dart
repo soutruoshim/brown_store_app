@@ -65,7 +65,7 @@ class DioClient {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    print("starting");
+    print("post starting");
     try {
       var response = await dio.post(
         uri,

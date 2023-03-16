@@ -1,9 +1,14 @@
 import 'package:brown_store/view/screen/product/product_screen.dart';
 import 'package:brown_store/view/screen/report/report_screen.dart';
+import 'package:brown_store/view/screen/service/service_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
+import '../../../helper/parse_event.dart';
+import '../../../helper/user_login_info.dart';
 import '../../../provider/auth_provider.dart';
+import '../../../provider/parse_provider.dart';
 import '../../../utill/color_resources.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
@@ -31,12 +36,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _screens = [
         OrderScreen(),
         ProductScreen(),
-        ReportScreen(),
+        ServiceScreen()
     ];
 
   }
   @override
   Widget build(BuildContext context) {
+    // LiveQuery liveQuery = LiveQuery();
+    // onCreateOrder(context, liveQuery, getLoginInfo(context), 1);
+    // onUpdateOrder(context, liveQuery, getLoginInfo(context), -1);
+    Provider.of<ParseProvider>(context,listen: false).liveQueryBooking(context);
     return WillPopScope(
       onWillPop: () async {
         if (_pageIndex != 0) {
@@ -59,8 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           type: BottomNavigationBarType.fixed,
           items: [
             _barItem(Images.home, "Order", 0),
-            _barItem(Images.order, "Product", 1),
-            _barItem(Images.refund, "Report", 2),
+            _barItem(Images.product_icon, "Product", 1),
+            _barItem(Images.order, "Service", 2),
             _barItem(Images.menu, "More", 3)
           ],
           onTap: (int index) {

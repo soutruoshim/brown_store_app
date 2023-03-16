@@ -54,7 +54,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 padding: Device.get().isTablet? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6, top: 8, bottom: 8):EdgeInsets.only(right:4, left: 4, top: 4, bottom: 4),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   SizedBox(height: Dimensions.PADDING_SIZE),
-                  OngoingOrderWidget(),
+                  //OngoingOrderWidget(),
                   CompletedOrderWidget(),
                   SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                 ]),

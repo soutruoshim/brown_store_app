@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   await Provider.of<ParseProvider>(context, listen: false).getOrderListDone(context, 5, userModelInfo.storeId!);
                   await Provider.of<ParseProvider>(context, listen: false).getOrderListRequestCancel(context, -1,userModelInfo.storeId!);
                   await Provider.of<ParseProvider>(context, listen: false).getOrderListCancel(context, -2, userModelInfo.storeId!);
-
+                  Provider.of<ParseProvider>(context,listen: false).liveQueryBooking(context);
                   //==========product=======
                   String data_enc_menu = SecurityHelper.getDataEncryptionKey(
                       dataTypes: [
@@ -74,14 +74,24 @@ class _SplashScreenState extends State<SplashScreen> {
                   MenuModelRequest menuModelRequest = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_check_all_menu_status, datas: DatasMenuRequest(dataEncryption: data_enc_menu,storeid: userModelInfo.storeId, func: AppConstants.func_type));
                   Provider.of<ProductProvider>(context, listen: false).getMenuList(context, menuModelRequest);
 
+                  //==========service=======
+                  String data_enc_menu_service = SecurityHelper.getDataEncryptionKey(
+                      dataTypes: [
+                        "CSERVICE_LIST",
+                      ],
+                      dev_kit: AppConstants.dev_kid
+                  );
+                  MenuModelRequest menuModelRequest_for_service = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_service_list, datas: DatasMenuRequest(dataEncryption: data_enc_menu_service,storeid: userModelInfo.storeId, func: AppConstants.func_type));
+                  Provider.of<ProductProvider>(context, listen: false).getServiceList(context, menuModelRequest_for_service);
+
                   //=========badges=======
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1, userModelInfo.storeId!);
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 5, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -1, userModelInfo.storeId!);
+                  await  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, userModelInfo.storeId!);
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => DashboardScreen()));
 

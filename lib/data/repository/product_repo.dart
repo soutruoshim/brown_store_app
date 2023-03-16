@@ -1,5 +1,6 @@
 import 'package:brown_store/data/model/body/MenuModelRequest.dart';
 import 'package:brown_store/data/model/body/menu_model_status_request.dart';
+import 'package:brown_store/data/model/body/service_model_status_request.dart';
 import 'package:brown_store/data/model/body/store_model_request.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class ProductRepo {
   Future<ApiResponse> getMenuList(MenuModelRequest menuModelRequest) async {
     try {
       final response = await dioClient.post(AppConstants.STORES_URI, data: menuModelRequest.toJson());
-      print(response);
+      //print(response);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -29,6 +30,14 @@ class ProductRepo {
   Future<ApiResponse> changeStatusMenu(MenuModelStatusRequest menuModelStatusRequest) async {
     try {
       final response = await dioClient.post(AppConstants.STORES_URI, data: menuModelStatusRequest.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  Future<ApiResponse> changeStatusService(ServiceModelStatusRequest serviceModelStatusRequest) async {
+    try {
+      final response = await dioClient.post(AppConstants.STORES_URI, data: serviceModelStatusRequest.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -20,7 +20,7 @@ class CompletedOrderWidget extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
         Padding(
           padding: const EdgeInsets.fromLTRB( Dimensions.PADDING_SIZE_DEFAULT, Dimensions.PADDING_SIZE_EXTRA_SMALL,Dimensions.PADDING_SIZE_DEFAULT,0 ),
-          child: Text("Complete Order",
+          child: Text("Service Order",
             style: robotoBold.copyWith(color: Theme.of(context).primaryColor),),
         ),
         ListView(
@@ -29,7 +29,7 @@ class CompletedOrderWidget extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: [
             OrderTypeButton(
-              color: Color(0xFFFFAA47),
+              color: Theme.of(context).primaryColor,
               icon: Images.delivered,
               text: "Done",
               index: 3,

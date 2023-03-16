@@ -168,7 +168,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appTitle,
       debugShowCheckedModeBanner: false,
       theme: light,
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
