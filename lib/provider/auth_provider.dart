@@ -80,9 +80,6 @@ class AuthProvider with ChangeNotifier {
         _isLoading = false;
         showCustomSnackBar("invalid credential or account not verified yet", context);
       }
-      // String token = map["token"];
-      // authRepo.saveUserToken(token);
-      // print("ktv ${map["code"]}");
     } else {
       _isLoading = false;
       showCustomSnackBar("invalid credential or account not verified yet", context);
@@ -91,63 +88,16 @@ class AuthProvider with ChangeNotifier {
     return apiResponse;
   }
 
-  Future<void> updateToken(BuildContext context) async {
-    ApiResponse apiResponse = await authRepo.updateToken();
-    if (apiResponse.response != null &&
-        apiResponse.response!.statusCode == 200) {
-    } else {
-      ApiChecker.checkApi(context, apiResponse);
-    }
-  }
-
-  void updateTermsAndCondition(bool value) {
-    _isTermsAndCondition = value;
-    notifyListeners();
-  }
-
-  toggleRememberMe() {
-    _isActiveRememberMe = !_isActiveRememberMe;
-    notifyListeners();
-  }
-
-  void setIndexForTabBar(int index, {bool isNotify = true}) {
-    _selectionTabIndex = index;
-    print('here is your current index =====>$_selectionTabIndex');
-    if (isNotify) {
-      notifyListeners();
-    }
-  }
-
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
   }
 
   Future<bool> clearSharedData() async {
-    return await authRepo.clearSharedData();
-  }
-
-  void saveUserNumberAndPassword(String number, String password) {
-    authRepo.saveUserNumberAndPassword(number, password);
-  }
-
-  String getUserEmail() {
-    return authRepo.getUserEmail() ?? "";
-  }
-
-  String getUserPassword() {
-    return authRepo.getUserPassword() ?? "";
-  }
-
-  Future<bool> clearUserEmailAndPassword() async {
-    return authRepo.clearUserNumberAndPassword();
+    return await authRepo.clearUserSharedData();
   }
 
   String getUserInfo() {
     return authRepo.getUserInfo();
-  }
-
-  String getUserToken() {
-    return authRepo.getUserToken();
   }
 
   Future<bool> logOut()async {
@@ -155,41 +105,4 @@ class AuthProvider with ChangeNotifier {
      return isLoggedIn();
   }
 
-  String _verificationCode = '';
-
-  String get verificationCode => _verificationCode;
-  bool _isEnableVerificationCode = false;
-
-  bool get isEnableVerificationCode => _isEnableVerificationCode;
-  String _verificationMsg = '';
-
-  String get verificationMessage => _verificationMsg;
-  String _email = '';
-  String _phone = '';
-
-  String get email => _email;
-
-  String get phone => _phone;
-  bool _isPhoneNumberVerificationButtonLoading = false;
-
-  bool get isPhoneNumberVerificationButtonLoading =>
-      _isPhoneNumberVerificationButtonLoading;
-
-  updateVerificationCode(String query) {
-    if (query.length == 4) {
-      _isEnableVerificationCode = true;
-    } else {
-      _isEnableVerificationCode = false;
-    }
-    _verificationCode = query;
-    notifyListeners();
-  }
-
-  String _countryDialCode = '+855';
-
-  String get countryDialCode => _countryDialCode;
-
-  void setCountryDialCode(String setValue) {
-    _countryDialCode = setValue;
-  }
 }

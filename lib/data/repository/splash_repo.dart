@@ -12,15 +12,6 @@ class SplashRepo {
   final SharedPreferences sharedPreferences;
   SplashRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<ApiResponse> getConfig() async {
-    try {
-      final response = await dioClient.get(AppConstants.CONFIG_URI);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
   Future<ApiResponse> getStoreList(StoreModelRequest storeModelRequest) async {
     try {
       final response = await dioClient.post(AppConstants.STORES_URI, data: storeModelRequest.toJson());

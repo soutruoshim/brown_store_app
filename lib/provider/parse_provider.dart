@@ -211,30 +211,31 @@ class ParseProvider with ChangeNotifier {
         return ConfirmationDialog(icon: Images.deny_w,
             title : "Do you want to update this order to ${StatusCheck.statusText(status)} ?",
             onYesPressed: () async {
-
+            if(!pd.isOpen()){
               pd.show(max: 100, msg: 'Please waiting...server in working. Thank you!');
+            }
 
-              var order = ParseObject('Orders')
-                ..objectId = id
-                ..set('status', status);
-              await order.save();
+              try{
+                var order = ParseObject('Orders')
+                  ..objectId = id
+                  ..set('status', status);
+                await order.save();
 
+                var store_id = getLoginInfo(context).storeId!;
+                if(store_id != null){
+                  if(status == 5){
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3,store_id );
+                  }else{
+                    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status - 1,store_id );
+                  }
+                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
+                }
+                pd.close();
+                Navigator.pop(context);
 
-
-              var store_id = getLoginInfo(context).storeId!;
-
-              if(store_id != null){
-                 if(status == 5){
-                  Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3,store_id );
-                 }else{
-                   Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status - 1,store_id );
-                 }
-                 Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status,store_id );
+              }catch(error){
+                print(error);
               }
-
-              pd.close();
-
-              Navigator.pop(context);
 
               showCustomSnackBar("Your order updated to ${StatusCheck.statusText(status)}, Thank you",context,isToaster: true, isError: false);
             }, description: 'The order status will be update to ${StatusCheck.statusText(status)}',

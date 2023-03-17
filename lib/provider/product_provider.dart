@@ -6,7 +6,6 @@ import 'package:brown_store/data/model/response/menu_model_status.dart';
 import 'package:brown_store/data/model/response/service_model.dart';
 import 'package:brown_store/data/repository/product_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../data/model/response/base/api_response.dart';
 import '../helper/api_checker.dart';

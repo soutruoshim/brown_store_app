@@ -46,6 +46,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   ];
   String _accountSelected = "";
   late Store _storeSelected;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -206,9 +207,8 @@ class _SignInWidgetState extends State<SignInWidget> {
                                         context, -2, _storeSelected.storeId!);
 
                                 Provider.of<ParseProvider>(context,
-                                    listen: false)
-                                    .liveQueryBooking(
-                                    context);
+                                        listen: false)
+                                    .liveQueryBooking(context);
 
                                 //==========product=======
                                 String data_enc_menu =
@@ -286,8 +286,6 @@ class _SignInWidgetState extends State<SignInWidget> {
                                         listen: false)
                                     .getReportOrderTotal(
                                         context, -2, userModelInfo.storeId!);
-
-
 
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(

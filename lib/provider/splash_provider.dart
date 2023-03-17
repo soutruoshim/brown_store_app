@@ -57,28 +57,6 @@ class SplashProvider extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Future<bool> initConfig(BuildContext context) async {
-    _hasConnection = true;
-    ApiResponse apiResponse = await splashRepo.getConfig();
-    bool isSuccess;
-    if (apiResponse.response != null &&
-        apiResponse.response!.statusCode == 200) {
-      _configModel = ConfigModel.fromJson(apiResponse.response!.data);
-      _baseUrls = ConfigModel.fromJson(apiResponse.response!.data).baseUrls;
-
-      isSuccess = true;
-    } else {
-      isSuccess = false;
-      ApiChecker.checkApi(context, apiResponse);
-      if (apiResponse.error.toString() ==
-          'Connection to API server failed due to internet connection') {
-        _hasConnection = false;
-      }
-    }
-    notifyListeners();
-    return isSuccess;
-  }
-
   Future<bool> initStores(BuildContext context, StoreModelRequest storeModelRequest) async {
     _hasConnection = true;
     //print("data " + storeModelRequest.toJson().toString());
