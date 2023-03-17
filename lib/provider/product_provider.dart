@@ -1,8 +1,11 @@
 import 'package:brown_store/data/model/body/MenuModelRequest.dart';
 import 'package:brown_store/data/model/body/menu_model_status_request.dart';
+import 'package:brown_store/data/model/body/order_status_model_request.dart';
 import 'package:brown_store/data/model/body/service_model_status_request.dart';
 import 'package:brown_store/data/model/response/menu_model.dart';
 import 'package:brown_store/data/model/response/menu_model_status.dart';
+import 'package:brown_store/data/model/response/order.dart';
+import 'package:brown_store/data/model/response/order_status_model.dart';
 import 'package:brown_store/data/model/response/service_model.dart';
 import 'package:brown_store/data/repository/product_repo.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +25,9 @@ class ProductProvider extends ChangeNotifier {
   late ServiceModel _serviceModel;
   ServiceModel get serviceModelList => _serviceModel;
 
+  late OrderStatus _orderStatus;
+  OrderStatus get orderStatus => _orderStatus;
+
   late MenuModelStatus _menuModelStatus;
   MenuModelStatus get menuModelStatus => _menuModelStatus;
 
@@ -36,7 +42,6 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<void> getMenuList(BuildContext context, MenuModelRequest menuModelRequest) async {
-
 
     _hasConnection = true;
     _isLoading = true;
@@ -130,6 +135,26 @@ class ProductProvider extends ChangeNotifier {
       if(map["code"] == "100"){
         _serviceModel = ServiceModel.fromJson(apiResponse.response!.data);
         await getServiceList(context, menuModelRequest);
+      }else{
+        //_isLoading = false;
+        showCustomSnackBar("Menu status can't set", context);
+      }
+    } else {
+      //_isLoading = false;
+      showCustomSnackBar("Menu status can't set", context);
+    }
+    notifyListeners();
+    return apiResponse;
+  }
+
+  Future<ApiResponse> setOrderStatus(BuildContext context, OrderStatusRequest orderStatusRequest) async {
+
+    ApiResponse apiResponse = await productRepo.changeStatusOrder(orderStatusRequest);
+    if (apiResponse.response != null &&
+        apiResponse.response!.statusCode == 200) {
+      Map map = apiResponse.response!.data;
+      if(map["code"] == "100"){
+        _orderStatus = OrderStatus.fromJson(apiResponse.response!.data);
       }else{
         //_isLoading = false;
         showCustomSnackBar("Menu status can't set", context);

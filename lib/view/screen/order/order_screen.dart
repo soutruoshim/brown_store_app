@@ -145,7 +145,7 @@ class _OrderScreenState extends State<OrderScreen> {
              OrderDone(),
              OrderRequestCancel(),
              OrderCancelled(),
-            OrderAll(),
+             OrderAll(),
           ],
         ),
       ),

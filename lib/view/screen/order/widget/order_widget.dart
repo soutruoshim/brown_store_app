@@ -308,7 +308,7 @@ class OrderWidget extends StatelessWidget {
   }
 
   void _updateOrder(BuildContext context, Order order, int status) async{
-       await Provider.of<ParseProvider>(context, listen: false).updateOrder(context, order.objectId.toString(), status);
+       await Provider.of<ParseProvider>(context, listen: false).updateOrder(context,order, order.objectId.toString(), status);
   }
 }
 

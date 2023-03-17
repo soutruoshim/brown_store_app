@@ -1,5 +1,6 @@
 import 'package:brown_store/data/model/body/MenuModelRequest.dart';
 import 'package:brown_store/data/model/body/menu_model_status_request.dart';
+import 'package:brown_store/data/model/body/order_status_model_request.dart';
 import 'package:brown_store/data/model/body/service_model_status_request.dart';
 import 'package:brown_store/data/model/body/store_model_request.dart';
 import 'package:dio/dio.dart';
@@ -35,9 +36,19 @@ class ProductRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   Future<ApiResponse> changeStatusService(ServiceModelStatusRequest serviceModelStatusRequest) async {
     try {
       final response = await dioClient.post(AppConstants.STORES_URI, data: serviceModelStatusRequest.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> changeStatusOrder(OrderStatusRequest orderModelStatusRequest) async {
+    try {
+      final response = await dioClient.post(AppConstants.STORES_URI, data: orderModelStatusRequest.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

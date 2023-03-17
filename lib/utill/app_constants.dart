@@ -62,8 +62,8 @@ class AppConstants {
   static const String keyApplicationName = 'sa-parse-server';
   static const String keyParseApplicationId = 'k6xHaxjFcBJrDeZMBc6pAoXLNbeOGTf3bfyoGbqw';
   static const String keyParseClientKey = 'kGVrgOZnstUPPD5vhRX9o4mJigxo7Uepek1RaeAm';
-  static const String keyParseServerUrl = 'http://192.168.1.70:3003/parse-server';
-  static const String keyParseLiveServerUrl = 'ws://192.168.1.70:3003/parse-server/';
+  static const String keyParseServerUrl = 'http://192.168.1.71:3003/parse-server';
+  static const String keyParseLiveServerUrl = 'ws://192.168.1.71:3003/parse-server/';
   static const bool keyDebug = true;
 
   //Access api
@@ -77,6 +77,7 @@ class AppConstants {
   static const String store_app_function_service_list = 'service_list';
   static const String store_app_function_dis_enable_menu = 'dis_enable_menu';
   static const String store_app_function_service_list_manage = 'service_list_manage';
+  static const String store_app_function_order_status = 'order_status';
   static const String func_type = 'C';
   static const String func_type_u = 'U';
 

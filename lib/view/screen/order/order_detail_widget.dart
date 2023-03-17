@@ -6,6 +6,7 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 
 import '../../../data/model/response/order.dart';
 import '../../../utill/images.dart';
+import '../../../utill/strings_manager.dart';
 
 class OrderDetailWidget extends StatefulWidget {
   // String? cardSeletedImage;
@@ -260,7 +261,8 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                     child: SizedBox(
                                       width: MediaQuery.of(context).size.width * 0.45,
                                       child: Text(
-                                        widget.order.ordereditems![index].foodname.toString(),
+                                        widget.order.ordereditems![index].foodname!,
+                                        //AppStrings.modify[]! ,
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -355,7 +357,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(left: 16.0),
                                                   child: Text(
-                                                    widget.order.ordereditems![index].modifycode![indexmodify].toString(),
+                                                    modify_item[widget.order.ordereditems![index].modifycode![indexmodify]]!,
                                                     maxLines: 3,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -408,7 +410,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(left: 16.0),
                                                   child: Text(
-                                                    widget.order.ordereditems![index].addon![indexaddon].addoncode.toString(),
+                                                    add_on[widget.order.ordereditems![index].addon![indexaddon].addoncode]!,
                                                     textAlign: TextAlign.start,
                                                     maxLines: 3,
                                                     overflow: TextOverflow.ellipsis,
@@ -451,7 +453,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                                             Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                widget.order.ordereditems![index].addon![indexaddon].isfree.toString(),
+                                                  (double.tryParse(add_on_price[widget.order.ordereditems![index].addon![indexaddon].addoncode]!)! * double.tryParse(widget.order.ordereditems![index].addon![indexaddon].qty!)!).toString(),
                                                 textAlign: TextAlign.end,
                                                 style: TextStyle(
                                                   color: mainColor,

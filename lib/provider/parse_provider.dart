@@ -1,6 +1,9 @@
+import 'package:brown_store/data/model/body/order_status_model_request.dart';
+import 'package:brown_store/data/model/response/order.dart';
 import 'package:brown_store/data/repository/parse_repo.dart';
 import 'package:brown_store/helper/status_check.dart';
 import 'package:brown_store/helper/user_login_info.dart';
+import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +12,11 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
+import '../data/model/response/base/api_response.dart';
 import '../helper/api_checker.dart';
 import '../helper/parse_event.dart';
+import '../helper/security_helper.dart';
+import '../utill/app_constants.dart';
 import '../utill/images.dart';
 import '../view/base/confirmation_dialog.dart';
 import '../view/base/custom_snackbar.dart';
@@ -262,7 +268,8 @@ class ParseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> updateOrder(BuildContext context, String id, int status) async {
+
+Future<void> updateOrder(BuildContext context,Order orderobject, String id, int status) async {
     ProgressDialog pd = ProgressDialog(context: context);
     showDialog(
       context: context,
@@ -279,11 +286,34 @@ class ParseProvider with ChangeNotifier {
             }
 
             try {
+
+              //=======update on parse
               var order = ParseObject('Orders')
                 ..objectId = id
                 ..set('status', status);
               await order.save();
 
+              //========update on server php
+              String data_enc = SecurityHelper.getDataEncryptionKey(
+                  dataTypes: [
+                    "ORDER_RECEIVE_LIST",
+                  ],
+                  dev_kit: AppConstants.dev_kid
+              );
+
+              OrderStatusRequest orderStatusRequest = OrderStatusRequest(
+                  devKid: AppConstants.dev_kid,
+                  function: AppConstants.store_app_function,
+                  storeappFunction: AppConstants.store_app_function_order_status,
+                  datas: DatasOrderStatusRequest(
+                      referenceId: orderobject.refId!,
+                      status: status.toString(),
+                      dataEncryption: data_enc
+                  ));
+              Provider.of<ProductProvider>(context, listen: false).setOrderStatus(context, orderStatusRequest);
+
+
+              //get total baget
               var store_id = getLoginInfo(context).storeId!;
               if (store_id != null) {
                 if (status == 5) {
@@ -296,6 +326,7 @@ class ParseProvider with ChangeNotifier {
                 Provider.of<ReportParseProvider>(context, listen: false)
                     .getReportOrderTotal(context, status, store_id);
               }
+
               pd.close();
               Navigator.pop(context);
             } catch (error) {
