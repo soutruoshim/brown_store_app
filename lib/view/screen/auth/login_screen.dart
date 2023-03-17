@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brown_store/data/model/body/login_model_request.dart';
 import 'package:brown_store/data/model/response/store_model.dart';
 import 'package:brown_store/provider/splash_provider.dart';
@@ -173,42 +175,17 @@ class _SignInWidgetState extends State<SignInWidget> {
                               print("store save id: ${userModelInfo.storeId}");
                               if (userModelInfo.storeId != null) {
                                 print("store id not null");
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListAll(
-                                        context, 0, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListPending(
-                                        context, 1, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListAccepted(
-                                        context, 2, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListFinishCooking(
-                                        context, 3, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListPickup(
-                                        context, 4, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListDone(
-                                        context, 5, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListRequestCancel(
-                                        context, -1, _storeSelected.storeId!);
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .getOrderListCancel(
-                                        context, -2, _storeSelected.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 1, userModelInfo.storeId!);
+                               Timer(const Duration(seconds: 3), () async {
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 0, userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 2, userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 3, userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 4,userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, 5, userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, -1,userModelInfo.storeId!);
+                                await Provider.of<ParseProvider>(context, listen: false).getOrderList(context, -2, userModelInfo.storeId!);
 
-                                Provider.of<ParseProvider>(context,
-                                        listen: false)
-                                    .liveQueryBooking(context);
+                                Provider.of<ParseProvider>(context,listen: false).liveQueryBooking(context);
 
                                 //==========product=======
                                 String data_enc_menu =
@@ -290,6 +267,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (_) => DashboardScreen()));
+                               });
                               }
                             }
                           });
