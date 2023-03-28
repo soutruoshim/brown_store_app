@@ -82,6 +82,8 @@ dependencies:
   badges: ^3.0.2
   flutter_platform_alert: ^0.3.0
   rxdart: ^0.27.7
+  map_launcher: ^2.5.0+1
+  maps_launcher: ^2.2.0
 
 dev_dependencies:
   flutter_test:

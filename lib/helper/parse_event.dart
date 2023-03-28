@@ -11,7 +11,8 @@ import '../provider/report_parse_provider.dart';
 
 
 Future<void> onCreateOrder(BuildContext context, LiveQuery liveQuery, LoginModelInfo userModelInfo, int status) async {
-  QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'));
+  QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'))
+                                    ..whereEqualTo("store_id", userModelInfo.storeId);
 
   Subscription subscription = await liveQuery.client.subscribe(query);
 
@@ -22,11 +23,22 @@ Future<void> onCreateOrder(BuildContext context, LiveQuery liveQuery, LoginModel
 }
 
 Future<void> onUpdateOrder(BuildContext context, LiveQuery liveQuery, LoginModelInfo userModelInfo, int status) async {
-  QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'));
+  QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'))
+                                    ..whereEqualTo("store_id", userModelInfo.storeId);
   Subscription subscription = await liveQuery.client.subscribe(query);
 
   subscription.on(LiveQueryEvent.update, (value) {
-    print(value);
-    Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status, getLoginInfo(context).storeId!);
+    if(value["status"] == -1){
+      showInboxNotification();
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 1, getLoginInfo(context).storeId!);
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 2, getLoginInfo(context).storeId!);
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 3, getLoginInfo(context).storeId!);
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, 4, getLoginInfo(context).storeId!);
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, -2, getLoginInfo(context).storeId!);
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status, getLoginInfo(context).storeId!);
+    }else{
+      Provider.of<ReportParseProvider>(context, listen: false).getReportOrderTotal(context, status, getLoginInfo(context).storeId!);
+    }
+
   });
 }

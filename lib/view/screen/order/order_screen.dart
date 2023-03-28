@@ -56,7 +56,14 @@ class _OrderScreenState extends State<OrderScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           Image.asset(Images.logo_with_app_name, height: 35),
-          Text("Stay: ${userModelInfo.storeName}", style: TextStyle(color: Colors.green, fontSize: 16),)
+          Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Store Name: ", style: TextStyle(color: Colors.black87, fontSize: 16),),
+              Text("${userModelInfo.storeName}", style: TextStyle(color: Colors.brown, fontSize: 18),),
+            ],
+          )
         ],),),
           bottom: TabBar(
             isScrollable: true,
@@ -106,7 +113,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   context.watch<ReportParseProvider>().getTotalFinishCooking.toString(),
                   style: TextStyle(color: Colors.white),
                 ),
-                child: Text("Pick-up"),
+                child: Text("Finish Cooking"),
               ),),
               Tab(icon: badges.Badge(
                 showBadge: false,

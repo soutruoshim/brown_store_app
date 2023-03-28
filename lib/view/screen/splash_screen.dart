@@ -6,6 +6,7 @@ import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../helper/network_info.dart';
 import '../../helper/security_helper.dart';
@@ -26,6 +27,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
     super.initState();
     NetworkInfo.checkConnectivity(context);
 

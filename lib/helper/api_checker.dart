@@ -32,3 +32,10 @@ getFormatedDate(_date) {
   var outputFormat = DateFormat('yyyy-MM-dd');
   return outputFormat.format(inputDate);
 }
+
+getFormatTime(_date) {
+  var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
+  var inputDate = inputFormat.parse(_date.toString());
+  var outputFormat = DateFormat('HH:mm a');
+  return outputFormat.format(inputDate);
+}

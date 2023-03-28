@@ -1,19 +1,23 @@
 
+import 'package:brown_store/utill/color_resources.dart';
 import 'package:brown_store/utill/strings_manager.dart';
 import 'package:flutter/material.dart';
+import '../../data/model/response/order.dart';
 import '../../utill/dimensions.dart';
 import '../../utill/images.dart';
 import '../../utill/styles.dart';
 import 'custom_button.dart';
-class ConfirmationDialog extends StatelessWidget {
+class ConfirmationThreeDialog extends StatelessWidget {
   final String icon;
   final String title;
   final String description;
-  final Function onYesPressed;
+  final Function onABAPressed;
+  final Function onBrownPressed;
   final bool isLogOut;
   final bool refund;
+  final Order order;
 
-  ConfirmationDialog({required this.icon, required this.title, required this.description, required this.onYesPressed, this.isLogOut = false, this.refund = false});
+  ConfirmationThreeDialog({required this.icon, required this.title, required this.description, required this.onABAPressed, required this.onBrownPressed, this.isLogOut = false, this.refund = false, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class ConfirmationDialog extends StatelessWidget {
         child: SizedBox(width: 500, child: Padding(
             padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
+
               Container(
                 child: Padding(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
@@ -43,7 +48,13 @@ class ConfirmationDialog extends StatelessWidget {
 
               Row(
                 children: [
-                  Expanded(child: InkWell(
+                  order.otherdetails!.paymentOpt != "BROWN Card"?
+                  Expanded(child: CustomButton(
+                    btnTxt: AppStrings.aba_confirm,
+                    onTap: () =>  onABAPressed(),
+                    backgroundColor: ColorResources.mainCardTwoColor(context),
+                    isColor: true, borderRadius: 20,
+                  )):Expanded(child: InkWell(
                     onTap: () => Navigator.pop(context),
                     child: CustomButton(
                       btnTxt: AppStrings.no_string,
@@ -52,10 +63,11 @@ class ConfirmationDialog extends StatelessWidget {
                     ),
                   )),
                   SizedBox(width: Dimensions.PADDING_SIZE_LARGE),
+
                   Expanded(child: CustomButton(
-                    btnTxt: AppStrings.confirm,
-                    onTap: () =>  onYesPressed(),
-                    backgroundColor: Colors.green,
+                    btnTxt: AppStrings.brown_confirm,
+                    onTap: () =>  onBrownPressed(),
+                    backgroundColor: ColorResources.getPrimary(context),
                     isColor: true, borderRadius: 20,
                   )),
                 ],

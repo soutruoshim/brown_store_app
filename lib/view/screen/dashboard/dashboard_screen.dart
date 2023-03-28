@@ -2,6 +2,7 @@ import 'package:brown_store/view/screen/product/product_screen.dart';
 import 'package:brown_store/view/screen/report/report_screen.dart';
 import 'package:brown_store/view/screen/service/service_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+
     super.initState();
     _screens = [
         OrderScreen(),
@@ -127,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Image.asset(Images.logo_with_app_name, height: 35),
                     GestureDetector(
                       onTap: () {
-                        Provider.of<AuthProvider>(context, listen: false).logOut().then((value) =>  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        Provider.of<AuthProvider>(context, listen: false).logOut(context).then((value) =>  Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) => AuthScreen())));
                       },
                       child: Text("Logout", style: TextStyle(color: Colors.red, fontSize: 16),),

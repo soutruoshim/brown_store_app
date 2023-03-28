@@ -146,6 +146,8 @@ class Images {
   static const String refund_policy = 'assets/image/refund_policy.png';
   static const String ratting = 'assets/image/ratting.png';
   static const String free_delivery = 'assets/image/free_delivery.png';
+  static const String g_map = 'assets/image/g_map.png';
+  static const String current_location_select = 'assets/image/current_location_select.png';
 
 
 }

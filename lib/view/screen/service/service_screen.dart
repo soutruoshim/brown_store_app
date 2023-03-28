@@ -206,11 +206,39 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         );
                         MenuModelRequest menuModelRequest_for_service = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_service_list, datas: DatasMenuRequest(dataEncryption: data_enc_menu_service,storeid: userModelInfo.storeId, func: AppConstants.func_type));
 
-                        pd.show(max: 100, msg: 'Please waiting for server working... Thank you!');
+                        //pd.show(max: 100, msg: 'Please waiting for server working... Thank you!');
+
+                        showDialog(
+                          // The user CANNOT close this dialog  by pressing outsite it
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                // The background color
+                                backgroundColor: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const [
+                                      // The loading indicator
+                                      CircularProgressIndicator(),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      // Some text
+                                      Text('Please wait...')
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+
                         await Provider.of<ProductProvider>(context, listen: false).setServiceStatus(context, serviceModelStatusRequest, menuModelRequest_for_service);
-                        if(pd.isOpen()){
-                          pd.close();
-                        }
+                        // if(pd.isOpen()){
+                        //   pd.close();
+                        // }
+                        Navigator.of(context).pop();
                       },
                     )
                   ],

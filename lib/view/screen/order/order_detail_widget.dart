@@ -64,7 +64,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Pickup",
+                      widget.order.otherdetails!.type.toString().toUpperCase(),
                       style:  TextStyle(
                         color: mainColor,
                         fontSize: 16,
@@ -163,7 +163,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           ),
                         ),
                         Text(
-                          widget.order.orderNo.toString(),
+                          widget.order.refId!.substring(widget.order.refId!.length - 3),
                           style: TextStyle(
                             color: mainColor,
                             fontSize: 16,
@@ -569,7 +569,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Sub Total Usd",
+                            "Sub Total",
                             textAlign: TextAlign.start,
                             style:  TextStyle(
                               color: Theme.of(context).primaryColor,
@@ -618,7 +618,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16),
                             child: Text(
-                              "Free Delivery",
+                              "Delivery Fee",
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 color: mainColor,
@@ -645,7 +645,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "0",
+                            widget.order.otherdetails!.serviceCharge ?? '0',
                             textAlign: TextAlign.end,
                             style: TextStyle(
                               color: mainColor,
@@ -758,7 +758,7 @@ class _OrderDetailWidgetState extends State<OrderDetailWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Reward Earn",
+                          "Rewards Earned",
                           style:  TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 16,

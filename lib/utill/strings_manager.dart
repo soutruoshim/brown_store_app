@@ -1,12 +1,15 @@
 class AppStrings{
   static const String appTitle = "Brown Store";
   static const String confirm = "Confirm";
+  static const String aba_confirm = "By ABA";
+  static const String brown_confirm = "By Brown Card";
   static const String no_string = "No";
   static const String select_account = "Select Account";
   static const String password = "Password";
   static const String select_store = "Select Store";
   static const String login = "Login";
 }
+
 var modify_item = {
   "01013": "Default (white sugar)",
   "01062": "Decafe",
@@ -96,7 +99,7 @@ var add_on = {
 };
 var add_on_price = {
   "MEX-EXDI-00138": "0.5",
-  "01201": "0.5",
+  "01201": "0.75",
   "FF-0323": "0.75",
   "FF-0324": "0.75",
   "FF-0325": "0.95",

@@ -9,6 +9,7 @@ import 'package:brown_store/view/base/custom_dropdown.dart';
 import 'package:brown_store/view/base/custom_dropdown_obj.dart';
 import 'package:brown_store/view/screen/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class SignInWidget extends StatefulWidget {
 class _SignInWidgetState extends State<SignInWidget> {
   //FocusNode _passwordFocus = FocusNode();
 
+  late ProgressDialog pd;
   late TextEditingController _passwordController;
   late GlobalKey<FormState> _formKeyLogin;
 
@@ -53,6 +55,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    pd = ProgressDialog(context: context);
     _formKeyLogin = GlobalKey<FormState>();
     _passwordController = TextEditingController();
   }
@@ -130,9 +133,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                     padding: const EdgeInsets.symmetric(horizontal: 70),
                     child: CustomButton(
                       borderRadius: 100,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      btnTxt: AppStrings.login,
-                      onTap: () {
+                      backgroundColor: authProvider.isLoading?Theme.of(context).hintColor: Theme.of(context).primaryColor,
+                      btnTxt: authProvider.isLoading?"Waiting...": AppStrings.login,
+                      onTap: authProvider.isLoading?(){}: () {
                         String user_id = _accountSelected;
                         String password = _passwordController.text.trim();
                         String store_id = _storeSelected.storeId!;
@@ -149,6 +152,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                         } else if (password.isEmpty) {
                           showCustomSnackBar("Enter Password", context);
                         } else {
+                          //pd.show(max: 100, msg: 'Please waiting...!');
                           authProvider
                               .login(
                                   context,
@@ -264,6 +268,10 @@ class _SignInWidgetState extends State<SignInWidget> {
                                     .getReportOrderTotal(
                                         context, -2, userModelInfo.storeId!);
 
+                                // if(pd.isOpen()){
+                                //   pd.close();
+                                // }
+                                Provider.of<AuthProvider>(context, listen: false).setLoading(false);
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (_) => DashboardScreen()));

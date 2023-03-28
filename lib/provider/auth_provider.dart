@@ -3,10 +3,12 @@ import 'package:brown_store/data/model/body/login_model_request.dart';
 import 'package:brown_store/data/model/response/store_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import '../data/model/response/base/api_response.dart';
 import '../data/repository/auth_repo.dart';
 import '../helper/api_checker.dart';
+import '../helper/user_login_info.dart';
 import '../view/base/custom_snackbar.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -17,6 +19,11 @@ class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
+
+  void setLoading(bool loading){
+      _isLoading = loading;
+  }
+
   String _loginErrorMessage = '';
 
   String get loginErrorMessage => _loginErrorMessage;
@@ -64,7 +71,7 @@ class AuthProvider with ChangeNotifier {
 
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
-      _isLoading = false;
+      //_isLoading = false;
 
       Map map = apiResponse.response!.data;
 
@@ -81,7 +88,7 @@ class AuthProvider with ChangeNotifier {
         showCustomSnackBar("invalid credential or account not verified yet", context);
       }
     } else {
-      _isLoading = false;
+        _isLoading = false;
       showCustomSnackBar("invalid credential or account not verified yet", context);
     }
     notifyListeners();
@@ -100,7 +107,12 @@ class AuthProvider with ChangeNotifier {
     return authRepo.getUserInfo();
   }
 
-  Future<bool> logOut()async {
+  Future<bool> logOut(BuildContext context) async {
+     final LiveQuery liveQuery = LiveQuery();
+     QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'))
+       ..whereEqualTo("store_id", getLoginInfo(context).storeId);
+     Subscription subscription = await liveQuery.client.subscribe(query);
+     liveQuery.client.unSubscribe(subscription);
      authRepo.clearUserSharedData();
      return isLoggedIn();
   }

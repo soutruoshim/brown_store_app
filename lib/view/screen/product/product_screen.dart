@@ -56,6 +56,20 @@ class _ProductScreenState extends State<ProductScreen> {
       padding: Device.get().isTablet ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6, top: 8, bottom: 8):EdgeInsets.only(right: 4, left: 4, top: 4, bottom: 4),
       child: Column(
         children: <Widget>[
+          // Container(
+          //     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+          //     child: TextFormField(
+          //       textAlignVertical: TextAlignVertical.center,
+          //       decoration: InputDecoration(
+          //           prefixIcon: Icon(Icons.search),
+          //           hintText: "Search menu",
+          //           contentPadding: EdgeInsets.symmetric(vertical: 0),
+          //           filled: true,
+          //           fillColor: Theme.of(context).secondaryHeaderColor,
+          //           border: OutlineInputBorder(
+          //               borderSide: BorderSide.none,
+          //               borderRadius: BorderRadius.circular(40))),
+          //     )),
           Expanded(
               child: ListView.builder(
                 itemCount: menuModels.result!.length,
@@ -186,11 +200,37 @@ class _ProductScreenState extends State<ProductScreen> {
                                 dataEncryption: data_enc_menu
                             ));
                         MenuModelRequest menuModelRequest = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_check_all_menu_status, datas: DatasMenuRequest(dataEncryption: data_enc_menu,storeid: userModelInfo.storeId, func: AppConstants.func_type));
-                        pd.show(max: 100, msg: 'Please waiting for server working... Thank you!');
+                        //pd.show(max: 90, msg: 'Please waiting...');
+                        showDialog(
+                          // The user CANNOT close this dialog  by pressing outsite it
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                // The background color
+                                backgroundColor: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const [
+                                      // The loading indicator
+                                      CircularProgressIndicator(),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      // Some text
+                                      Text('Please wait...')
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
                         await Provider.of<ProductProvider>(context, listen: false).setMenuStatus(context, menuModelStatusRequest, menuModelRequest);
-                        if(pd.isOpen()){
-                          pd.close();
-                        }
+                        // if(pd.isOpen()){
+                        //   pd.close();
+                        // }
+                        Navigator.of(context).pop();
                       },
                     )
                   ],

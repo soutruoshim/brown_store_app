@@ -29,13 +29,19 @@ class OrderStatusRequest {
 class DatasOrderStatusRequest {
   String? referenceId;
   String? status;
+  String returnPaymentType="";
   String? dataEncryption;
 
-  DatasOrderStatusRequest({this.referenceId, this.status, this.dataEncryption});
+  DatasOrderStatusRequest(
+      {this.referenceId,
+        this.status,
+        this.returnPaymentType="",
+        this.dataEncryption});
 
   DatasOrderStatusRequest.fromJson(Map<String, dynamic> json) {
     referenceId = json['reference_id'];
     status = json['status'];
+    returnPaymentType = json['return_payment_type'];
     dataEncryption = json['data_encryption'];
   }
 
@@ -43,7 +49,32 @@ class DatasOrderStatusRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['reference_id'] = this.referenceId;
     data['status'] = this.status;
+    data['return_payment_type'] = this.returnPaymentType;
     data['data_encryption'] = this.dataEncryption;
     return data;
   }
 }
+
+
+
+// class DatasOrderStatusRequest {
+//   String? referenceId;
+//   String? status;
+//   String? dataEncryption;
+//
+//   DatasOrderStatusRequest({this.referenceId, this.status, this.dataEncryption});
+//
+//   DatasOrderStatusRequest.fromJson(Map<String, dynamic> json) {
+//     referenceId = json['reference_id'];
+//     status = json['status'];
+//     dataEncryption = json['data_encryption'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['reference_id'] = this.referenceId;
+//     data['status'] = this.status;
+//     data['data_encryption'] = this.dataEncryption;
+//     return data;
+//   }
+// }

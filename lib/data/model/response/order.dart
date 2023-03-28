@@ -9,7 +9,7 @@ class Order {
   String? refId;
   int? status;
   String? updateDate;
-  int? deliveryId;
+  String? deliveryId;
   String? notifiCustomer;
   int? abaRefundStatus;
   String? orderNo;
@@ -196,6 +196,7 @@ class Otherdetails {
   String? couponNumber;
   String? ulat;
   String? ulong;
+  String? customer_status;
 
   Otherdetails(
       {this.checkOutDateTime,
@@ -228,9 +229,13 @@ class Otherdetails {
         this.brownCardSpendPoint,
         this.couponNumber,
         this.ulat,
-        this.ulong});
+        this.ulong,
+        this.customer_status
+      });
 
   Otherdetails.fromJson(Map<String, dynamic> json) {
+    print("json from map ${json['Ulong']}");
+
     checkOutDateTime = json['CheckOut_DateTime'];
     type = json['Type'];
     userID = json['UserID'];
@@ -262,6 +267,9 @@ class Otherdetails {
     couponNumber = json['couponNumber'];
     ulat = json['Ulat'].toString();
     ulong = json['Ulong'].toString();
+    customer_status = json['customer_status']==null? "": json['customer_status'].toString();
+
+
   }
 
   Map<String, dynamic> toJson() {
@@ -297,6 +305,7 @@ class Otherdetails {
     data['couponNumber'] = this.couponNumber;
     data['Ulat'] = this.ulat;
     data['Ulong'] = this.ulong;
+    data['customer_status'] = this.customer_status;
     return data;
   }
 }

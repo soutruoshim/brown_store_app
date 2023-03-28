@@ -174,6 +174,8 @@ class ColorResources {
   static const Color GREEN = Color(0xff23CB60);
   static const Color FLOATING_BTN = Color(0xff7DB6F5);
   static const Color COLOR_LIGHT_BLACK = Color(0xFF4A4B4D);
+  static const Color CARD_DELIVERY = Color(0xFFF9DFFF);
+  static const Color CARD_PICKUP = Color(0xFFfceab6);
   static Color nevDefaultColor = const Color(0xFFAAAAAA);
 
   static const Map<int, Color> colorMap = {

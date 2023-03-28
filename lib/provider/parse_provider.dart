@@ -5,6 +5,7 @@ import 'package:brown_store/helper/status_check.dart';
 import 'package:brown_store/helper/user_login_info.dart';
 import 'package:brown_store/provider/product_provider.dart';
 import 'package:brown_store/provider/report_parse_provider.dart';
+import 'package:brown_store/view/base/confirmation_threebutton_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -271,27 +272,114 @@ class ParseProvider with ChangeNotifier {
 
 Future<void> updateOrder(BuildContext context,Order orderobject, String id, int status) async {
     ProgressDialog pd = ProgressDialog(context: context);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return ConfirmationDialog(
-          icon: Images.deny_w,
-          title:
-              "Do you want to update this order to ${StatusCheck.statusText(status)} ?",
-          onYesPressed: () async {
-            if (!pd.isOpen()) {
+    if(status == -2){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmationThreeDialog(
+            icon: Images.deny_w,
+            title:
+            "Do you want to update this order to ${StatusCheck.statusText(
+                status)} ?",
+            onABAPressed: () async {
+              if (!pd.isOpen()) {
+                pd.show(
+                    max: 100,
+                    msg: 'Please waiting...server in working. Thank you!');
+              }
+
+              try {
+                //=======update on parse
+                var order = ParseObject('Orders')
+                  ..objectId = id
+                  ..set('status', status);
+                await order.save();
+
+                pd.close();
+                Navigator.pop(context);
+
+                //========update on server php
+                String data_enc = SecurityHelper.getDataEncryptionKey(
+                    dataTypes: [
+                      "ORDER_RECEIVE_LIST",
+                    ],
+                    dev_kit: AppConstants.dev_kid
+                );
+
+                OrderStatusRequest orderStatusRequest = OrderStatusRequest(
+                    devKid: AppConstants.dev_kid,
+                    function: AppConstants.store_app_function,
+                    storeappFunction: AppConstants
+                        .store_app_function_order_status,
+                    datas: DatasOrderStatusRequest(
+                        referenceId: orderobject.refId!,
+                        status: status.toString(),
+                        returnPaymentType: "CANCEL_ABA",
+                        dataEncryption: data_enc
+                    ));
+                Provider.of<ProductProvider>(context, listen: false)
+                    .setOrderStatus(context, orderStatusRequest);
+
+
+                //get total baget
+                var store_id = getLoginInfo(context).storeId!;
+                if (store_id != null) {
+                  if (status == 5) {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 3, store_id);
+                  } else if (status == -1 || status == -2) {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, status, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 1, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 2, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 3, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 4, store_id);
+                  } else {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, status - 1, store_id);
+                  }
+
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, status, store_id);
+                }
+              } catch (error) {
+                print(error);
+                pd.close();
+                Navigator.pop(context);
+              }
+
+              showCustomSnackBar(
+                  "Your order updated to ${StatusCheck.statusText(
+                      status)}, Thank you",
+                  context,
+                  isToaster: true,
+                  isError: false);
+            },
+
+            description:
+            'The order status will be update to ${StatusCheck.statusText(
+                status)}',
+            onBrownPressed: () async {
+
+              if (!pd.isOpen()) {
               pd.show(
                   max: 100,
                   msg: 'Please waiting...server in working. Thank you!');
-            }
+              }
 
             try {
-
               //=======update on parse
               var order = ParseObject('Orders')
                 ..objectId = id
                 ..set('status', status);
               await order.save();
+
+              pd.close();
+              Navigator.pop(context);
 
               //========update on server php
               String data_enc = SecurityHelper.getDataEncryptionKey(
@@ -304,13 +392,15 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
               OrderStatusRequest orderStatusRequest = OrderStatusRequest(
                   devKid: AppConstants.dev_kid,
                   function: AppConstants.store_app_function,
-                  storeappFunction: AppConstants.store_app_function_order_status,
+                  storeappFunction: AppConstants
+                      .store_app_function_order_status,
                   datas: DatasOrderStatusRequest(
                       referenceId: orderobject.refId!,
                       status: status.toString(),
                       dataEncryption: data_enc
                   ));
-              Provider.of<ProductProvider>(context, listen: false).setOrderStatus(context, orderStatusRequest);
+              Provider.of<ProductProvider>(context, listen: false)
+                  .setOrderStatus(context, orderStatusRequest);
 
 
               //get total baget
@@ -319,16 +409,27 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 if (status == 5) {
                   Provider.of<ReportParseProvider>(context, listen: false)
                       .getReportOrderTotal(context, 3, store_id);
+                }else if (status == -1 || status == -2) {
+
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, status, store_id);
+
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, 1, store_id);
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, 2, store_id);
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, 3, store_id);
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, 4, store_id);
                 } else {
                   Provider.of<ReportParseProvider>(context, listen: false)
                       .getReportOrderTotal(context, status - 1, store_id);
                 }
+
                 Provider.of<ReportParseProvider>(context, listen: false)
                     .getReportOrderTotal(context, status, store_id);
               }
-
-              pd.close();
-              Navigator.pop(context);
             } catch (error) {
               print(error);
               pd.close();
@@ -336,15 +437,107 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
             }
 
             showCustomSnackBar(
-                "Your order updated to ${StatusCheck.statusText(status)}, Thank you",
+                "Your order updated to ${StatusCheck.statusText(
+                    status)}, Thank you",
                 context,
                 isToaster: true,
                 isError: false);
-          },
-          description:
-              'The order status will be update to ${StatusCheck.statusText(status)}',
-        );
-      },
-    );
+          }, order: orderobject,
+
+          );
+        },
+      );
+    }else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmationDialog(
+            icon: Images.deny_w,
+            title:
+            "Do you want to update this order to ${StatusCheck.statusText(
+                status)} ?",
+            onYesPressed: () async {
+              if (!pd.isOpen()) {
+                pd.show(
+                    max: 100,
+                    msg: 'Please waiting...server in working. Thank you!');
+              }
+
+              try {
+                //=======update on parse
+                var order = ParseObject('Orders')
+                  ..objectId = id
+                  ..set('status', status);
+                await order.save();
+
+                pd.close();
+                Navigator.pop(context);
+
+                //========update on server php
+                String data_enc = SecurityHelper.getDataEncryptionKey(
+                    dataTypes: [
+                      "ORDER_RECEIVE_LIST",
+                    ],
+                    dev_kit: AppConstants.dev_kid
+                );
+
+                OrderStatusRequest orderStatusRequest = OrderStatusRequest(
+                    devKid: AppConstants.dev_kid,
+                    function: AppConstants.store_app_function,
+                    storeappFunction: AppConstants
+                        .store_app_function_order_status,
+                    datas: DatasOrderStatusRequest(
+                        referenceId: orderobject.refId!,
+                        status: status.toString(),
+                        dataEncryption: data_enc
+                    ));
+                Provider.of<ProductProvider>(context, listen: false)
+                    .setOrderStatus(context, orderStatusRequest);
+
+
+                //get total baget
+                var store_id = getLoginInfo(context).storeId!;
+                if (store_id != null) {
+                  if (status == 5) {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 3, store_id);
+                  } else if (status == -1) {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 1, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 2, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 3, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 4, store_id);
+                  } else {
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, status - 1, store_id);
+                  }
+
+
+                  Provider.of<ReportParseProvider>(context, listen: false)
+                      .getReportOrderTotal(context, status, store_id);
+                }
+              } catch (error) {
+                print(error);
+                pd.close();
+                Navigator.pop(context);
+              }
+
+              showCustomSnackBar(
+                  "Your order updated to ${StatusCheck.statusText(
+                      status)}, Thank you",
+                  context,
+                  isToaster: true,
+                  isError: false);
+            },
+            description:
+            'The order status will be update to ${StatusCheck.statusText(
+                status)}',
+          );
+        },
+      );
+    }
   }
 }
