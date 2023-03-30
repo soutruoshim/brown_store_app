@@ -282,21 +282,43 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
             "Do you want to update this order to ${StatusCheck.statusText(
                 status)} ?",
             onABAPressed: () async {
-              if (!pd.isOpen()) {
-                pd.show(
-                    max: 100,
-                    msg: 'Please waiting...server in working. Thank you!');
-              }
+
+              showDialog(
+                // The user CANNOT close this dialog  by pressing outsite it
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return Dialog(
+                      // The background color
+                      backgroundColor: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            // The loading indicator
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            // Some text
+                            Text('Please wait...')
+                          ],
+                        ),
+                      ),
+                    );
+                  });
 
               try {
                 //=======update on parse
-                var order = ParseObject('Orders')
-                  ..objectId = id
-                  ..set('status', status);
-                await order.save();
 
-                pd.close();
-                Navigator.pop(context);
+                // var order = ParseObject('Orders')
+                //   ..objectId = id
+                //   ..set('status', status);
+                // await order.save();
+                //
+                //
+                // Navigator.pop(context);
 
                 //========update on server php
                 String data_enc = SecurityHelper.getDataEncryptionKey(
@@ -317,8 +339,37 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                         returnPaymentType: "CANCEL_ABA",
                         dataEncryption: data_enc
                     ));
-                Provider.of<ProductProvider>(context, listen: false)
-                    .setOrderStatus(context, orderStatusRequest);
+
+                // Provider.of<ProductProvider>(context, listen: false)
+                //     .setOrderStatus(context, orderStatusRequest);
+
+                await Provider.of<ProductProvider>(context, listen: false)
+                    .setOrderStatus(context, orderStatusRequest).then((value) async {
+                  print("===============res");
+                  print(value.response!.data["code"]);
+                  //=======update on parse
+                  if(value.response!.data["code"] == "100" || value.response!.data["code"] == 100){
+                    var order = ParseObject('Orders')
+                      ..objectId = id
+                      ..set('status', status);
+                    await order.save();
+
+                    //pd.close();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+
+                    showCustomSnackBar(
+                        "Your order updated to ${StatusCheck.statusText(
+                            status)}, Thank you",
+                        context,
+                        isToaster: true,
+                        isError: false);
+                  }else{
+                    pd.close();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                });
 
 
                 //get total baget
@@ -327,6 +378,8 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                   if (status == 5) {
                     Provider.of<ReportParseProvider>(context, listen: false)
                         .getReportOrderTotal(context, 3, store_id);
+                    Provider.of<ReportParseProvider>(context, listen: false)
+                        .getReportOrderTotal(context, 4, store_id);
                   } else if (status == -1 || status == -2) {
                     Provider.of<ReportParseProvider>(context, listen: false)
                         .getReportOrderTotal(context, status, store_id);
@@ -348,7 +401,7 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 }
               } catch (error) {
                 print(error);
-                pd.close();
+                Navigator.pop(context);
                 Navigator.pop(context);
               }
 
@@ -363,23 +416,49 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
             description:
             'The order status will be update to ${StatusCheck.statusText(
                 status)}',
+
             onBrownPressed: () async {
 
-              if (!pd.isOpen()) {
-              pd.show(
-                  max: 100,
-                  msg: 'Please waiting...server in working. Thank you!');
-              }
+              // if (!pd.isOpen()) {
+              // pd.show(
+              //     max: 100,
+              //     msg: 'Please waiting...server in working. Thank you!');
+              // }
+              showDialog(
+                // The user CANNOT close this dialog  by pressing outsite it
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return Dialog(
+                      // The background color
+                      backgroundColor: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            // The loading indicator
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            // Some text
+                            Text('Please wait...')
+                          ],
+                        ),
+                      ),
+                    );
+                  });
 
             try {
               //=======update on parse
-              var order = ParseObject('Orders')
-                ..objectId = id
-                ..set('status', status);
-              await order.save();
-
-              pd.close();
-              Navigator.pop(context);
+              // var order = ParseObject('Orders')
+              //   ..objectId = id
+              //   ..set('status', status);
+              // await order.save();
+              //
+              // pd.close();
+              // Navigator.pop(context);
 
               //========update on server php
               String data_enc = SecurityHelper.getDataEncryptionKey(
@@ -399,8 +478,37 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                       status: status.toString(),
                       dataEncryption: data_enc
                   ));
-              Provider.of<ProductProvider>(context, listen: false)
-                  .setOrderStatus(context, orderStatusRequest);
+
+              // Provider.of<ProductProvider>(context, listen: false)
+              //     .setOrderStatus(context, orderStatusRequest);
+
+              await Provider.of<ProductProvider>(context, listen: false)
+                  .setOrderStatus(context, orderStatusRequest).then((value) async {
+                print("===============res");
+                print(value.response!.data["code"]);
+                //=======update on parse
+                if(value.response!.data["code"] == "100" || value.response!.data["code"] == 100){
+                  var order = ParseObject('Orders')
+                    ..objectId = id
+                    ..set('status', status);
+                  await order.save();
+
+                  //pd.close();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+
+                  showCustomSnackBar(
+                      "Your order updated to ${StatusCheck.statusText(
+                          status)}, Thank you",
+                      context,
+                      isToaster: true,
+                      isError: false);
+                }else{
+                  pd.close();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              });
 
 
               //get total baget
@@ -432,7 +540,8 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
               }
             } catch (error) {
               print(error);
-              pd.close();
+
+              Navigator.pop(context);
               Navigator.pop(context);
             }
 
@@ -457,22 +566,34 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
             "Do you want to update this order to ${StatusCheck.statusText(
                 status)} ?",
             onYesPressed: () async {
-              if (!pd.isOpen()) {
-                pd.show(
-                    max: 100,
-                    msg: 'Please waiting...server in working. Thank you!');
-              }
+
+              showDialog(
+                // The user CANNOT close this dialog  by pressing outsite it
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return Dialog(
+                      // The background color
+                      backgroundColor: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            // The loading indicator
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            // Some text
+                            Text('Please wait...')
+                          ],
+                        ),
+                      ),
+                    );
+                  });
 
               try {
-                //=======update on parse
-                var order = ParseObject('Orders')
-                  ..objectId = id
-                  ..set('status', status);
-                await order.save();
-
-                pd.close();
-                Navigator.pop(context);
-
                 //========update on server php
                 String data_enc = SecurityHelper.getDataEncryptionKey(
                     dataTypes: [
@@ -491,8 +612,34 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                         status: status.toString(),
                         dataEncryption: data_enc
                     ));
-                Provider.of<ProductProvider>(context, listen: false)
-                    .setOrderStatus(context, orderStatusRequest);
+
+                await Provider.of<ProductProvider>(context, listen: false)
+                    .setOrderStatus(context, orderStatusRequest).then((value) async {
+                      print("===============res");
+                      print(value.response!.data["code"]);
+                     //=======update on parse
+                      if(value.response!.data["code"] == "100" || value.response!.data["code"] == 100){
+                        var order = ParseObject('Orders')
+                          ..objectId = id
+                          ..set('status', status);
+                        await order.save();
+
+                        //pd.close();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+
+                        showCustomSnackBar(
+                            "Your order updated to ${StatusCheck.statusText(
+                                status)}, Thank you",
+                            context,
+                            isToaster: true,
+                            isError: false);
+                      }else{
+                        pd.close();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                });
 
 
                 //get total baget
@@ -524,13 +671,6 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 pd.close();
                 Navigator.pop(context);
               }
-
-              showCustomSnackBar(
-                  "Your order updated to ${StatusCheck.statusText(
-                      status)}, Thank you",
-                  context,
-                  isToaster: true,
-                  isError: false);
             },
             description:
             'The order status will be update to ${StatusCheck.statusText(

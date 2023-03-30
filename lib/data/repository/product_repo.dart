@@ -48,6 +48,9 @@ class ProductRepo {
 
   Future<ApiResponse> changeStatusOrder(OrderStatusRequest orderModelStatusRequest) async {
     try {
+      print("======request change");
+      print(orderModelStatusRequest.toJson());
+
       final response = await dioClient.post(AppConstants.STORES_URI, data: orderModelStatusRequest.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {

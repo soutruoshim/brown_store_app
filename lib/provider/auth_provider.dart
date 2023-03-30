@@ -108,11 +108,11 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<bool> logOut(BuildContext context) async {
-     final LiveQuery liveQuery = LiveQuery();
-     QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'))
-       ..whereEqualTo("store_id", getLoginInfo(context).storeId);
-     Subscription subscription = await liveQuery.client.subscribe(query);
-     liveQuery.client.unSubscribe(subscription);
+     // final LiveQuery liveQuery = LiveQuery();
+     // QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(ParseObject('Orders'))
+     //   ..whereEqualTo("store_id", getLoginInfo(context).storeId);
+     // Subscription subscription = await liveQuery.client.subscribe(query);
+     // liveQuery.client.unSubscribe(subscription);
      authRepo.clearUserSharedData();
      return isLoggedIn();
   }

@@ -150,18 +150,19 @@ class ProductProvider extends ChangeNotifier {
   Future<ApiResponse> setOrderStatus(BuildContext context, OrderStatusRequest orderStatusRequest) async {
 
     ApiResponse apiResponse = await productRepo.changeStatusOrder(orderStatusRequest);
+
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       Map map = apiResponse.response!.data;
       if(map["code"] == "100"){
         _orderStatus = OrderStatus.fromJson(apiResponse.response!.data);
       }else{
-        //_isLoading = false;
-        showCustomSnackBar("Menu status can't set", context);
+        _isLoading = false;
+        showCustomSnackBar("Order status can't set", context);
       }
     } else {
-      //_isLoading = false;
-      showCustomSnackBar("Menu status can't set", context);
+      _isLoading = false;
+      showCustomSnackBar("Order status can't set", context);
     }
     notifyListeners();
     return apiResponse;

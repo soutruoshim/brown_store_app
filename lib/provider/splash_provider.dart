@@ -12,7 +12,7 @@ class SplashProvider extends ChangeNotifier {
 
   SplashProvider({required this.splashRepo});
 
-  late StoreModel _storeModel;
+   StoreModel _storeModel = StoreModel();
 
   late ConfigModel _configModel;
   late BaseUrls _baseUrls;

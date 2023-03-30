@@ -70,6 +70,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
         var userModelInfo =  getLoginInfo(context);
+        print(userModelInfo.toJson());
+
         if (userModelInfo.storeId != null) {
           //==========screen order======
           // await Provider.of<ParseProvider>(context, listen: false).getOrderListAll(context, 0, userModelInfo.storeId!);

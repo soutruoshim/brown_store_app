@@ -5,6 +5,7 @@ import 'package:brown_store/provider/report_parse_provider.dart';
 import 'package:brown_store/view/screen/order/page/order_all.dart';
 import 'package:brown_store/view/screen/order/page/order_cancelled.dart';
 import 'package:brown_store/view/screen/order/page/order_cooking.dart';
+import 'package:brown_store/view/screen/order/page/order_delivery.dart';
 import 'package:brown_store/view/screen/order/page/order_done.dart';
 import 'package:brown_store/view/screen/order/page/order_pending.dart';
 import 'package:brown_store/view/screen/order/page/order_pickup.dart';
@@ -45,7 +46,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
     return DefaultTabController(
 
-      length: 7,
+      length: 8,
       child: Scaffold(
         appBar: AppBar(
         elevation: 0,
@@ -116,6 +117,18 @@ class _OrderScreenState extends State<OrderScreen> {
                 child: Text("Finish Cooking"),
               ),),
               Tab(icon: badges.Badge(
+                showBadge: context.watch<ReportParseProvider>().getTotalPickup > 0 ?true:false,
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                position: badges.BadgePosition.topEnd(top: -14),
+                badgeContent: Text(
+                  context.watch<ReportParseProvider>().getTotalPickup.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Text("Pick-up | Delivery"),
+              ),),
+              Tab(icon: badges.Badge(
                 showBadge: false,
                 badgeStyle: badges.BadgeStyle(
                   badgeColor: Colors.green,
@@ -149,6 +162,7 @@ class _OrderScreenState extends State<OrderScreen> {
              OrderPending(),
              OrderCooking(),
              OrderPickup(),
+             OrderDelivery(),
              OrderDone(),
              OrderRequestCancel(),
              OrderCancelled(),
