@@ -148,6 +148,10 @@ class Images {
   static const String free_delivery = 'assets/image/free_delivery.png';
   static const String g_map = 'assets/image/g_map.png';
   static const String current_location_select = 'assets/image/current_location_select.png';
+  static const String ic_veg = 'assets/image/ic_veg.png';
+  static const String ic_no_veg = 'assets/image/ic_no_veg.png';
+
+
 
 
 }

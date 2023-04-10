@@ -8,6 +8,22 @@ class AppStrings{
   static const String password = "Password";
   static const String select_store = "Select Store";
   static const String login = "Login";
+
+  //===========String service screen
+  static const String delivery = "Delivery";
+  static const String pick_up = "Pick-up";
+  static const String dine_in = "Dine-in";
+
+
+  static const String authentication_issues = "Check your network connectivity or Contact the service provider to report the issue so they can assist you further";
+  static const String empty_list_item = "There are no records to display at this time";
+  static const String something_wrong = "Something went wrong!";
+  static const String service_for_customer = "Service for customer";
+  static const String available = "Available";
+  static const String unavailable = "Unavailable";
+  static const String please_wait = "Please wait...";
+  static const String search_menu = "Search menu";
+
 }
 
 var modify_item = {

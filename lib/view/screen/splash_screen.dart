@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //   }
     // });
     String data_enc = SecurityHelper.getDataEncryptionKey(dataTypes: [
-      "CSTORE_LIST",
+      AppConstants.CSTORE_LIST,
     ], dev_kit: AppConstants.dev_kid);
     Provider.of<SplashProvider>(context, listen: false).initStores(
         context,
@@ -105,7 +105,7 @@ class _SplashScreenState extends State<SplashScreen> {
           //==========product=======
           String data_enc_menu =
               SecurityHelper.getDataEncryptionKey(dataTypes: [
-            "CSTORE_LIST_MENU_STATUS",
+            AppConstants.CSTORE_LIST_MENU_STATUS,
           ], dev_kit: AppConstants.dev_kid);
 
           MenuModelRequest menuModelRequest = MenuModelRequest(
@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
           //==========service=======
           String data_enc_menu_service =
               SecurityHelper.getDataEncryptionKey(dataTypes: [
-            "CSERVICE_LIST",
+            AppConstants.CSERVICE_LIST,
           ], dev_kit: AppConstants.dev_kid);
           MenuModelRequest menuModelRequest_for_service = MenuModelRequest(
               devKid: AppConstants.dev_kid,

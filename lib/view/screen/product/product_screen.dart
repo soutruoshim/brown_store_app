@@ -1,23 +1,23 @@
 import 'dart:convert';
-
 import 'package:brown_store/data/model/body/menu_model_status_request.dart';
 import 'package:brown_store/data/model/response/menu_model.dart';
-import 'package:brown_store/provider/parse_provider.dart';
 import 'package:brown_store/provider/product_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../data/model/body/MenuModelRequest.dart';
 import '../../../data/model/body/login_model_info.dart';
 import '../../../helper/security_helper.dart';
+import '../../../helper/user_login_info.dart';
 import '../../../provider/auth_provider.dart';
 import '../../../utill/app_constants.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
+import '../../../utill/strings_manager.dart';
+import '../../base/custom_dialog.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -29,12 +29,14 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   late ProgressDialog pd;
   late MenuModel menuModels;
+  late TextEditingController _searchController;
   @override
   void initState() {
     // Provider.of<ParseProvider>(context, listen: false)
     //     .getOrderListAll(context, 2);
     super.initState();
     pd = ProgressDialog(context: context);
+    _searchController = TextEditingController();
   }
 
   @override
@@ -48,31 +50,70 @@ class _ProductScreenState extends State<ProductScreen> {
           backgroundColor: Theme.of(context).highlightColor,
           title: Image.asset(Images.logo_with_app_name, height: 35),
         ),
-        body: buildBody(context));
+        body: buildBody(context)
+    );
   }
 
   Widget buildBody(BuildContext context) {
+    //==========product=======
+    var userModelInfo =  getLoginInfo(context);
+    String data_enc_menu =
+    SecurityHelper.getDataEncryptionKey(dataTypes: [
+      AppConstants.CSTORE_LIST_MENU_STATUS,
+    ], dev_kit: AppConstants.dev_kid);
+
+    MenuModelRequest menuModelRequest = MenuModelRequest(
+        devKid: AppConstants.dev_kid,
+        function: AppConstants.store_app_function,
+        storeappFunction:
+        AppConstants.store_app_function_check_all_menu_status,
+        datas: DatasMenuRequest(
+            dataEncryption: data_enc_menu,
+            storeid: userModelInfo.storeId,
+            func: AppConstants.func_type));
+
     return Padding(
       padding: Device.get().isTablet ? EdgeInsets.only(right: MediaQuery.of(context).size.height / 6, left: MediaQuery.of(context).size.height / 6, top: 8, bottom: 8):EdgeInsets.only(right: 4, left: 4, top: 4, bottom: 4),
       child: Column(
         children: <Widget>[
-          // Container(
-          //     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-          //     child: TextFormField(
-          //       textAlignVertical: TextAlignVertical.center,
-          //       decoration: InputDecoration(
-          //           prefixIcon: Icon(Icons.search),
-          //           hintText: "Search menu",
-          //           contentPadding: EdgeInsets.symmetric(vertical: 0),
-          //           filled: true,
-          //           fillColor: Theme.of(context).secondaryHeaderColor,
-          //           border: OutlineInputBorder(
-          //               borderSide: BorderSide.none,
-          //               borderRadius: BorderRadius.circular(40))),
-          //     )),
-          Expanded(
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+              child: TextFormField(
+                textAlignVertical: TextAlignVertical.center,
+                controller: _searchController,
+                onChanged: (String query) {
+                    if(query.isEmpty){
+                      Provider.of<ProductProvider>(context, listen: false)
+                          .getMenuList(context, menuModelRequest, query: _searchController.text.trim());
+                    }
+                },
+                onTapOutside: (event){
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                onEditingComplete: (){
+                    print("query ${_searchController.text}");
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    Provider.of<ProductProvider>(context, listen: false)
+                        .getMenuList(context, menuModelRequest, query: _searchController.text.trim());
+
+                },
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: AppStrings.search_menu,
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                    filled: true,
+                    fillColor: Theme.of(context).backgroundColor,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(40))),
+              )),
+
+              // context.watch<ProductProvider>().isLoading?
+              // Expanded(child: Container(child: Center(child: CircularProgressIndicator(),),)):
+              Expanded(
               child: ListView.builder(
                 itemCount: menuModels.result!.length,
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 itemBuilder: (context, index) {
                   return _item(menuModels.result![index]);
                 },
@@ -138,7 +179,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         child: Row(
                           children: [
                             Image.asset(
-                              menu.status == "3"?'assets/image/ic_veg.png':'assets/image/ic_no_veg.png',
+                              menu.status == "3"?Images.ic_veg:Images.ic_no_veg,
                               height: 16.0,
                               width: 16.7,
                             ),
@@ -205,28 +246,9 @@ class _ProductScreenState extends State<ProductScreen> {
                           // The user CANNOT close this dialog  by pressing outsite it
                             barrierDismissible: false,
                             context: context,
-                            builder: (_) {
-                              return Dialog(
-                                // The background color
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      // The loading indicator
-                                      CircularProgressIndicator(),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      // Some text
-                                      Text('Please wait...')
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                        await Provider.of<ProductProvider>(context, listen: false).setMenuStatus(context, menuModelStatusRequest, menuModelRequest);
+                            builder: (_) => CustomDialog(title: AppStrings.please_wait,)
+                         );
+                        await Provider.of<ProductProvider>(context, listen: false).setMenuStatus(context, menuModelStatusRequest, menuModelRequest, query: _searchController.text.trim());
                         // if(pd.isOpen()){
                         //   pd.close();
                         // }

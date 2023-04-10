@@ -10,6 +10,7 @@ ThemeData light = ThemeData(
   disabledColor:  Color(0xFF343A40),
   canvasColor: Color(0xFFFCFCFC),
   errorColor: Color(0xFFFF5A5A),
+  backgroundColor:Color(0xFFD7D7D7),
   colorScheme: const ColorScheme.light(
     primary: Color(0xffcc9900),
     secondary: Color(0xfff3b602),
@@ -22,6 +23,7 @@ ThemeData light = ThemeData(
     surfaceTint: Color(0xff7c5d00),
     onPrimary: Color(0xffcc9900),
     onSecondary: Color(0xffcc9900),
+    onBackground: Color(0xffffeed2),
   ),
 
   pageTransitionsTheme: PageTransitionsTheme(builders: {

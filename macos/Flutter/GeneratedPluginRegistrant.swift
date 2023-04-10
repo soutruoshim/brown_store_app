@@ -11,6 +11,7 @@ import firebase_core
 import firebase_messaging
 import flutter_local_notifications
 import flutter_platform_alert
+import maps_launcher
 import network_info_plus_macos
 import package_info_plus_macos
 import path_provider_foundation
@@ -25,6 +26,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseMessagingPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseMessagingPlugin"))
   FlutterLocalNotificationsPlugin.register(with: registry.registrar(forPlugin: "FlutterLocalNotificationsPlugin"))
   FlutterPlatformAlertPlugin.register(with: registry.registrar(forPlugin: "FlutterPlatformAlertPlugin"))
+  MapsLauncherPlugin.register(with: registry.registrar(forPlugin: "MapsLauncherPlugin"))
   NetworkInfoPlusPlugin.register(with: registry.registrar(forPlugin: "NetworkInfoPlusPlugin"))
   FLTPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FLTPackageInfoPlusPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))

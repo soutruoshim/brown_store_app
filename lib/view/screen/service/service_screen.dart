@@ -1,26 +1,20 @@
-import 'dart:convert';
-
-import 'package:brown_store/data/model/body/menu_model_status_request.dart';
-import 'package:brown_store/data/model/response/menu_model.dart';
 import 'package:brown_store/data/model/response/service_model.dart';
 import 'package:brown_store/helper/user_login_info.dart';
-import 'package:brown_store/provider/parse_provider.dart';
 import 'package:brown_store/provider/product_provider.dart';
+import 'package:brown_store/view/base/custom_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../data/model/body/MenuModelRequest.dart';
-import '../../../data/model/body/login_model_info.dart';
 import '../../../data/model/body/service_model_status_request.dart';
 import '../../../helper/security_helper.dart';
-import '../../../provider/auth_provider.dart';
 import '../../../utill/app_constants.dart';
 import '../../../utill/dimensions.dart';
 import '../../../utill/images.dart';
+import '../../../utill/strings_manager.dart';
 
 class ServiceScreen extends StatefulWidget {
   const ServiceScreen({Key? key}) : super(key: key);
@@ -34,8 +28,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
   late ServiceModel serviceModels;
   @override
   void initState() {
-    // Provider.of<ParseProvider>(context, listen: false)
-    //     .getOrderListAll(context, 2);
     super.initState();
     pd = ProgressDialog(context: context);
   }
@@ -66,17 +58,17 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   color: Theme.of(context).cardColor,
                   thickness: 6.3,
                  ),
-                 _item("Delivery", "delivery", serviceModels.result!.delivery, "https://static.vecteezy.com/system/resources/previews/005/337/737/original/icon-delivery-silhouette-illustration-free-vector.jpg"),
+                 _item(AppStrings.delivery, AppConstants.delivery, serviceModels.result!.delivery, AppConstants.delivery_pic),
                    Divider(
                      color: Theme.of(context).cardColor,
                      thickness: 6.3,
                    ),
-                   _item("Pick-up","pickup", serviceModels.result!.pickup, "https://cdn-icons-png.flaticon.com/128/4537/4537278.png"),
+                   _item(AppStrings.pick_up,AppConstants.pickup, serviceModels.result!.pickup, AppConstants.pickup_pic),
                    Divider(
                      color: Theme.of(context).cardColor,
                      thickness: 6.3,
                    ),
-                   _item("Dine-in","dinein", serviceModels.result!.dinein, "https://cdn-icons-png.flaticon.com/128/2086/2086880.png"),
+                   _item(AppStrings.dine_in,AppConstants.dinein, serviceModels.result!.dinein, AppConstants.dinein_pic),
                  ]
               )
           ),
@@ -140,14 +132,14 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         child: Row(
                           children: [
                             Image.asset(
-                              status == "1"?'assets/image/ic_veg.png':'assets/image/ic_no_veg.png',
+                              status == "1"?Images.ic_veg:Images.ic_no_veg,
                               height: 16.0,
                               width: 16.7,
                             ),
                             SizedBox(
                               width: 10.0,
                             ),
-                            Text('Service for customer',
+                            Text(AppStrings.service_for_customer,
                                 style:
                                 Theme.of(context).textTheme.caption),
                           ],
@@ -163,8 +155,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 textDirection: Directionality.of(context),
                 child: Row(
                   children: [
-                    Text( status == "1"?'Available':'Unavailable',
-
+                    Text( status == "1"?AppStrings.available:AppStrings.unavailable,
                       style: TextStyle(
                           color: status == "1"? Theme.of(context).primaryColor:Theme.of(context).hintColor,
                           fontSize: 13.3,
@@ -179,7 +170,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         //==========product=======
                         String data_enc_service = SecurityHelper.getDataEncryptionKey(
                             dataTypes: [
-                              "USERVICE_LIST_MANAGE",
+                              AppConstants.USERVICE_LIST_MANAGE,
                             ],
                             dev_kit: AppConstants.dev_kid
                         );
@@ -200,44 +191,19 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
                         String data_enc_menu_service = SecurityHelper.getDataEncryptionKey(
                             dataTypes: [
-                              "CSERVICE_LIST",
+                              AppConstants.CSERVICE_LIST,
                             ],
                             dev_kit: AppConstants.dev_kid
                         );
                         MenuModelRequest menuModelRequest_for_service = MenuModelRequest(devKid: AppConstants.dev_kid, function: AppConstants.store_app_function, storeappFunction: AppConstants.store_app_function_service_list, datas: DatasMenuRequest(dataEncryption: data_enc_menu_service,storeid: userModelInfo.storeId, func: AppConstants.func_type));
 
-                        //pd.show(max: 100, msg: 'Please waiting for server working... Thank you!');
-
                         showDialog(
                           // The user CANNOT close this dialog  by pressing outsite it
                             barrierDismissible: false,
                             context: context,
-                            builder: (_) {
-                              return Dialog(
-                                // The background color
-                                backgroundColor: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: const [
-                                      // The loading indicator
-                                      CircularProgressIndicator(),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      // Some text
-                                      Text('Please wait...')
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-
+                             builder: (_) => CustomDialog(title: AppStrings.please_wait,)
+                          );
                         await Provider.of<ProductProvider>(context, listen: false).setServiceStatus(context, serviceModelStatusRequest, menuModelRequest_for_service);
-                        // if(pd.isOpen()){
-                        //   pd.close();
-                        // }
                         Navigator.of(context).pop();
                       },
                     )

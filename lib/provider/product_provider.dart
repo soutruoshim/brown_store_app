@@ -19,8 +19,10 @@ class ProductProvider extends ChangeNotifier {
 
   ProductProvider({required this.productRepo});
 
+
   late MenuModel _menuModel;
   MenuModel get menuModelList => _menuModel;
+
 
   late ServiceModel _serviceModel;
   ServiceModel get serviceModelList => _serviceModel;
@@ -41,7 +43,7 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMenuList(BuildContext context, MenuModelRequest menuModelRequest) async {
+  Future<void> getMenuList(BuildContext context, MenuModelRequest menuModelRequest, {String query = ""}) async {
 
     _hasConnection = true;
     _isLoading = true;
@@ -54,7 +56,13 @@ class ProductProvider extends ChangeNotifier {
     bool isSuccess;
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       _menuModel = MenuModel.fromJson(apiResponse.response!.data);
-      //print(apiResponse.response!.data);
+
+      if(query!=""){
+        _menuModel.result = _menuModel.result!.where((element) => element.menuName!.toLowerCase().contains(query.toLowerCase())).toList();
+        print("=============menu========");
+        print(_menuModel.result);
+      }
+
       isSuccess = true;
       _isLoading = false;
       //print("Loading1 ${_isLoading}");
@@ -101,7 +109,7 @@ class ProductProvider extends ChangeNotifier {
   }
 
 
-  Future<ApiResponse> setMenuStatus(BuildContext context, MenuModelStatusRequest menuModelStatusRequest, MenuModelRequest menuModelRequest) async {
+  Future<ApiResponse> setMenuStatus(BuildContext context, MenuModelStatusRequest menuModelStatusRequest, MenuModelRequest menuModelRequest, {String query = ""}) async {
     _isLoading = true;
     ApiResponse apiResponse = await productRepo.changeStatusMenu(menuModelStatusRequest);
 
@@ -111,7 +119,7 @@ class ProductProvider extends ChangeNotifier {
       Map map = apiResponse.response!.data;
       if(map["code"] == "100"){
         _menuModelStatus = MenuModelStatus.fromJson(apiResponse.response!.data);
-        await getMenuList(context, menuModelRequest);
+        await getMenuList(context, menuModelRequest, query: query);
       }else{
         //_isLoading = false;
         showCustomSnackBar("Menu status can't set", context);
@@ -154,11 +162,13 @@ class ProductProvider extends ChangeNotifier {
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
       Map map = apiResponse.response!.data;
+      print(map["description"]);
       if(map["code"] == "100"){
         _orderStatus = OrderStatus.fromJson(apiResponse.response!.data);
       }else{
         _isLoading = false;
-        showCustomSnackBar("Order status can't set", context);
+
+        showCustomSnackBar(map["description"], context);
       }
     } else {
       _isLoading = false;

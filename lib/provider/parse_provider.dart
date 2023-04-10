@@ -19,7 +19,9 @@ import '../helper/parse_event.dart';
 import '../helper/security_helper.dart';
 import '../utill/app_constants.dart';
 import '../utill/images.dart';
+import '../utill/strings_manager.dart';
 import '../view/base/confirmation_dialog.dart';
+import '../view/base/custom_dialog.dart';
 import '../view/base/custom_snackbar.dart';
 
 class ParseProvider with ChangeNotifier {
@@ -32,32 +34,32 @@ class ParseProvider with ChangeNotifier {
 
   ParseProvider({required this.parseRepo});
 
-  late QueryBuilder<ParseObject>? _queryBuilderAll;
-  QueryBuilder<ParseObject> get getQueryAll => _queryBuilderAll!;
 
-  late QueryBuilder<ParseObject>? _queryBuilderAccepted;
-  QueryBuilder<ParseObject> get getQueryBuilderAccepted =>
-      _queryBuilderAccepted!;
+  QueryBuilder<ParseObject>? _queryBuilderPending= null;
+  QueryBuilder<ParseObject>? get getQueryPending => _queryBuilderPending??null;
 
-  late QueryBuilder<ParseObject>? _queryBuilderFinishCooking;
-  QueryBuilder<ParseObject> get getQueryBuilderFinishCooking =>
-      _queryBuilderFinishCooking!;
+  late QueryBuilder<ParseObject>? _queryBuilderAccepted = null;
+  QueryBuilder<ParseObject>? get getQueryBuilderAccepted => _queryBuilderAccepted??null;
 
-  late QueryBuilder<ParseObject>? _queryBuilderRequestCancel;
-  QueryBuilder<ParseObject> get queryBuilderRequestCancel =>
-      _queryBuilderRequestCancel!;
+  late QueryBuilder<ParseObject>? _queryBuilderFinishCooking= null;
+  QueryBuilder<ParseObject>? get getQueryBuilderFinishCooking =>_queryBuilderFinishCooking??null;
 
-  late QueryBuilder<ParseObject>? _queryBuilderPickup;
-  QueryBuilder<ParseObject> get getQueryBuilderPickup => _queryBuilderPickup!;
+  late QueryBuilder<ParseObject>? _queryBuilderPickup=null;
+  QueryBuilder<ParseObject>? get getQueryBuilderPickup => _queryBuilderPickup??null;
 
-  late QueryBuilder<ParseObject>? _queryBuilderDone;
-  QueryBuilder<ParseObject> get getQueryBuilderDone => _queryBuilderDone!;
+  late QueryBuilder<ParseObject>? _queryBuilderDone=null;
+  QueryBuilder<ParseObject>? get getQueryBuilderDone => _queryBuilderDone??null;
 
-  late QueryBuilder<ParseObject>? _queryBuilderCancel;
-  QueryBuilder<ParseObject> get getQueryBuilderCancel => _queryBuilderCancel!;
+  late QueryBuilder<ParseObject>? _queryBuilderRequestCancel=null;
+  QueryBuilder<ParseObject>? get queryBuilderRequestCancel =>
+      _queryBuilderRequestCancel??null;
 
-  QueryBuilder<ParseObject>? _queryBuilderPending;
-  QueryBuilder<ParseObject> get getQueryPending => _queryBuilderPending!;
+  late QueryBuilder<ParseObject>? _queryBuilderCancel=null;
+  QueryBuilder<ParseObject>? get getQueryBuilderCancel => _queryBuilderCancel??null;
+
+
+  late QueryBuilder<ParseObject>? _queryBuilderAll=null;
+  QueryBuilder<ParseObject>? get getQueryAll => _queryBuilderAll??null;
 
   Future<void> getOrderList(
       BuildContext context, int orderStatus, String store_id) async {
@@ -287,38 +289,10 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 // The user CANNOT close this dialog  by pressing outsite it
                   barrierDismissible: false,
                   context: context,
-                  builder: (_) {
-                    return Dialog(
-                      // The background color
-                      backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            // The loading indicator
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            // Some text
-                            Text('Please wait...')
-                          ],
-                        ),
-                      ),
-                    );
-                  });
+                  builder: (_) => CustomDialog(title: AppStrings.please_wait,)
+              );
 
               try {
-                //=======update on parse
-
-                // var order = ParseObject('Orders')
-                //   ..objectId = id
-                //   ..set('status', status);
-                // await order.save();
-                //
-                //
-                // Navigator.pop(context);
 
                 //========update on server php
                 String data_enc = SecurityHelper.getDataEncryptionKey(
@@ -418,37 +392,12 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 status)}',
 
             onBrownPressed: () async {
-
-              // if (!pd.isOpen()) {
-              // pd.show(
-              //     max: 100,
-              //     msg: 'Please waiting...server in working. Thank you!');
-              // }
               showDialog(
                 // The user CANNOT close this dialog  by pressing outsite it
                   barrierDismissible: false,
                   context: context,
-                  builder: (_) {
-                    return Dialog(
-                      // The background color
-                      backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            // The loading indicator
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            // Some text
-                            Text('Please wait...')
-                          ],
-                        ),
-                      ),
-                    );
-                  });
+                  builder: (_) => CustomDialog(title: AppStrings.please_wait,)
+              );
 
             try {
               //=======update on parse
@@ -571,27 +520,9 @@ Future<void> updateOrder(BuildContext context,Order orderobject, String id, int 
                 // The user CANNOT close this dialog  by pressing outsite it
                   barrierDismissible: false,
                   context: context,
-                  builder: (_) {
-                    return Dialog(
-                      // The background color
-                      backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            // The loading indicator
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            // Some text
-                            Text('Please wait...')
-                          ],
-                        ),
-                      ),
-                    );
-                  });
+                  builder: (_) => CustomDialog(title: AppStrings.please_wait,)
+              );
+
 
               try {
                 //========update on server php

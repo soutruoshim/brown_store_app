@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:brown_store/data/model/body/login_model_info.dart';
 import 'package:brown_store/data/model/body/login_model_request.dart';
 import 'package:brown_store/data/model/response/store_model.dart';
@@ -9,6 +11,7 @@ import '../data/model/response/base/api_response.dart';
 import '../data/repository/auth_repo.dart';
 import '../helper/api_checker.dart';
 import '../helper/user_login_info.dart';
+import '../utill/strings_manager.dart';
 import '../view/base/custom_snackbar.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -85,11 +88,11 @@ class AuthProvider with ChangeNotifier {
 
       }else{
         _isLoading = false;
-        showCustomSnackBar("invalid credential or account not verified yet", context);
+        showCustomSnackBar(map["description"], context);
       }
     } else {
         _isLoading = false;
-      showCustomSnackBar("invalid credential or account not verified yet", context);
+      showCustomSnackBar(AppStrings.authentication_issues, context);
     }
     notifyListeners();
     return apiResponse;
